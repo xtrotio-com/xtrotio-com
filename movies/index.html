@@ -56,7 +56,7 @@
         /* MOVIE GRID */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
             padding: 40px 20px;
             max-width: 1200px;
@@ -66,24 +66,32 @@
         /* MOVIE CARD STYLING */
         .movie-card {
             background: #111;
-            border-radius: 15px;
+            border-radius: 12px;
             overflow: hidden;
             border: 1px solid #222;
             transition: 0.4s;
-            position: relative;
+            display: flex;
+            flex-direction: column;
         }
         .movie-card:hover { 
-            transform: scale(1.03); 
+            transform: translateY(-10px);
             border-color: #e50914;
-            box-shadow: 0 0 25px rgba(229, 9, 20, 0.3);
+            box-shadow: 0 10px 30px rgba(229, 9, 20, 0.4);
         }
 
-        /* MOVIE BANNER */
-        .banner {
+        /* FIXED BANNER BOX (2:3 Ratio) */
+        .banner-container {
             width: 100%;
-            height: 400px;
+            padding-top: 150%; 
+            position: relative;
+            background: #222;
+        }
+
+        .banner {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             object-fit: cover;
-            border-bottom: 3px solid #e50914;
         }
 
         .movie-info {
@@ -92,30 +100,23 @@
         }
 
         .movie-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 900;
-            margin: 0 0 10px 0;
-            text-transform: uppercase;
+            margin-bottom: 15px;
             color: #fff;
+            text-transform: uppercase;
         }
 
-        .movie-meta {
-            font-size: 12px;
-            color: #888;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-        }
-
-        /* TELEGRAM BUTTON */
+        /* BOT BUTTON */
         .tg-button {
             display: block;
             background: #e50914;
             color: #fff;
             text-decoration: none;
             padding: 12px;
-            border-radius: 8px;
+            border-radius: 6px;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
             transition: 0.3s;
             text-transform: uppercase;
         }
@@ -143,28 +144,41 @@
 
     <div class="grid">
         <div class="movie-card">
-            <img src="https://images.alphacoders.com/121/1210111.jpg" class="banner" alt="The Batman">
+            <div class="banner-container">
+                <img src="https://image.tmdb.org/t/p/w500/74xTEgt7R36FpZuB7buR3pC7N7t.jpg" class="banner" alt="The Batman">
+            </div>
             <div class="movie-info">
                 <div class="movie-title">The Batman</div>
-                <div class="movie-meta">2022 • Action/Crime • 4K</div>
                 <a href="https://t.me/ProSearchM7Bot" class="tg-button">SEARCH IN BOT</a>
             </div>
         </div>
 
         <div class="movie-card">
-            <img src="https://images.alphacoders.com/550/550579.jpg" class="banner" alt="Interstellar">
+            <div class="banner-container">
+                <img src="https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6v36G1pC6pQY9.jpg" class="banner" alt="Interstellar">
+            </div>
             <div class="movie-info">
                 <div class="movie-title">Interstellar</div>
-                <div class="movie-meta">2014 • Sci-Fi/Drama • 4K</div>
                 <a href="https://t.me/ProSearchM7Bot" class="tg-button">SEARCH IN BOT</a>
             </div>
         </div>
 
         <div class="movie-card">
-            <img src="https://images.alphacoders.com/128/1287714.jpg" class="banner" alt="Avatar: Way of Water">
+            <div class="banner-container">
+                <img src="https://image.tmdb.org/t/p/w500/t6SlsnzhnR36C3s89sZtVJsFq0m.jpg" class="banner" alt="Avatar">
+            </div>
             <div class="movie-info">
                 <div class="movie-title">Avatar: Way of Water</div>
-                <div class="movie-meta">2022 • Sci-Fi/Action • 4K</div>
+                <a href="https://t.me/ProSearchM7Bot" class="tg-button">SEARCH IN BOT</a>
+            </div>
+        </div>
+
+        <div class="movie-card">
+            <div class="banner-container">
+                <img src="https://image.tmdb.org/t/p/w500/8GxvA9zDZUGwhQpS3y8P1YMc979.jpg" class="banner" alt="Oppenheimer">
+            </div>
+            <div class="movie-info">
+                <div class="movie-title">Oppenheimer</div>
                 <a href="https://t.me/ProSearchM7Bot" class="tg-button">SEARCH IN BOT</a>
             </div>
         </div>
