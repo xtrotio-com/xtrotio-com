@@ -3,123 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XTROTIO | Pro Editors</title>
+    <title>XTROTIO | Download Center</title>
     <style>
-        body { margin: 0; padding: 0; background-color: #000; color: #fff; font-family: 'Segoe UI', sans-serif; }
-        
-        /* Nav Bar matches main page */
+        /* GLOBAL STYLES */
+        body { 
+            margin: 0; padding: 0; 
+            background-color: #000; color: white; 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            overflow-x: hidden;
+        }
+
+        /* NAVIGATION BAR */
         nav {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 15px 0;
+            background: rgba(0, 0, 0, 0.95);
+            padding: 18px 0;
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid #00d4ff;
+            border-bottom: 2px solid #00d4ff; /* Blue theme for Editors/Downloads */
             display: flex;
             justify-content: center;
-            gap: 25px;
+            gap: 30px;
+            backdrop-filter: blur(15px);
         }
-        nav a { color: #fff; text-decoration: none; font-weight: bold; font-size: 13px; letter-spacing: 2px; }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+        nav a:hover { color: #00d4ff; text-shadow: 0 0 10px #00d4ff; }
 
+        /* HEADER */
         .category-header {
             text-align: center;
             padding: 60px 20px;
             background: linear-gradient(180deg, #001a1a 0%, #000 100%);
         }
         .category-header h1 {
-            font-size: 50px;
+            font-size: clamp(30px, 8vw, 50px);
             color: #00d4ff;
             text-shadow: 0 0 20px #00d4ff;
             margin: 0;
+            text-transform: uppercase;
         }
 
+        /* DOWNLOAD GRID */
         .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            padding: 40px;
-            max-width: 1100px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            padding: 40px 20px;
+            max-width: 1000px;
             margin: auto;
         }
 
+        /* CARD STYLING */
         .card {
             background: #0a0a0a;
             border: 1px solid #1a1a1a;
             border-radius: 20px;
-            padding: 30px;
+            padding: 40px 30px;
             text-align: center;
+            width: 100%;
+            max-width: 350px;
             transition: 0.3s;
             position: relative;
-            overflow: hidden;
         }
-        .card:hover { border-color: #00d4ff; transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2); }
+        .card:hover { border-color: #00d4ff; transform: translateY(-10px); }
 
-        .app-icon { width: 80px; height: 80px; border-radius: 18px; margin-bottom: 15px; }
+        .app-icon { width: 90px; height: 90px; border-radius: 20px; margin-bottom: 20px; object-fit: cover; }
         
         .badge {
             background: #00d4ff;
             color: #000;
-            font-size: 10px;
-            font-weight: bold;
-            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 5px 12px;
             border-radius: 5px;
             display: inline-block;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
         }
 
         .dl-button {
             display: block;
-            margin-top: 20px;
-            padding: 12px;
+            margin-top: 25px;
+            padding: 15px;
             border: 2px solid #00d4ff;
             color: #00d4ff;
             text-decoration: none;
             border-radius: 10px;
-            font-weight: bold;
+            font-weight: 900;
             transition: 0.3s;
+            text-transform: uppercase;
         }
-        .dl-button:hover { background: #00d4ff; color: #000; }
+        .dl-button:hover { background: #00d4ff; color: #000; box-shadow: 0 0 20px #00d4ff; }
+
+        footer { text-align: center; padding: 40px; color: #333; font-size: 11px; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="/">HOME</a>
-        <a href="/movies">MOVIES</a>
-        <a href="/editors" style="color:#00d4ff">EDITORS</a>
-        <a href="/tools">AI TOOLS</a>
+        <a href="https://www.xtrotio.com">HOME</a>
+        <a href="/movies/">MOVIES</a>
+        <a href="/editors/">EDITORS</a>
+        <a href="/tools/">AI TOOLS</a>
     </nav>
 
     <div class="category-header">
-        <h1>VIDEO EDITORS</h1>
-        <p style="color: #555;">PREMIUM UNLOCKED • NO WATERMARK • 4K EXPORT</p>
+        <h1>DOWNLOAD CENTER</h1>
+        <p style="color: #555; letter-spacing: 2px;">SECURE LINKS • LATEST MODS • NO VIRUS</p>
     </div>
 
     <div class="grid">
         <div class="card">
-            <div class="badge">PRO UNLOCKED</div>
-            <img src="https://upload.wikimedia.org/wikipedia/en/a/ad/CapCut_logo.png" class="app-icon">
-            <h3>CapCut</h3>
-            <p style="font-size: 13px; color: #888;">All effects and transitions unlocked.</p>
-            <a href="YOUR_LINK_HERE" class="dl-button">DOWNLOAD</a>
+            <div class="badge">PREMIUM UNLOCKED</div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png" class="app-icon">
+            <h3>Netflix Premium</h3>
+            <p style="font-size: 14px; color: #888;">Watch 4K movies and shows without ads.</p>
+            <a href="https://shrinkme.click/NetflixPremiumMod" class="dl-button">START DOWNLOAD</a>
         </div>
 
         <div class="card">
-            <div class="badge">PREMIUM</div>
-            <img src="https://play-lh.googleusercontent.com/9AsV5jG-npsP_Z25Sj0S5u9kYv8Q_D2_7k8C-vH-X1XoG-N6N-K9V_Vj0X0" class="app-icon" style="background:#000;">
-            <h3>Alight Motion</h3>
-            <p style="font-size: 13px; color: #888;">No watermark XML support.</p>
-            <a href="YOUR_LINK_HERE" class="dl-button">DOWNLOAD</a>
-        </div>
-
-        <div class="card">
-            <div class="badge">GOLD MOD</div>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/KineMaster_logo.png/600px-KineMaster_logo.png" class="app-icon">
-            <h3>KineMaster</h3>
-            <p style="font-size: 13px; color: #888;">Full asset store access.</p>
-            <a href="YOUR_LINK_HERE" class="dl-button">DOWNLOAD</a>
+            <div class="badge">GOLD UNLOCKED</div>
+            <img src="https://picsart.com/apple-touch-icon.png" class="app-icon">
+            <h3>Picsart Gold</h3>
+            <p style="font-size: 14px; color: #888;">Access all AI photo editing tools for free.</p>
+            <a href="https://shrinkme.click/PicsartPremiumMod" class="dl-button">START DOWNLOAD</a>
         </div>
     </div>
+
+    <footer>
+        XTROTIO SYSTEMS V1.0 • SECURE DOWNLOAD PORTAL
+    </footer>
 
 </body>
 </html>
