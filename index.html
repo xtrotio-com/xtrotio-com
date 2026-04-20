@@ -3,174 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XTROTIO | Premium Mods</title>
+    <title>XTROTIO | Premium Portals</title>
     <style>
         /* GLOBAL STYLES */
         body { 
-            margin: 0; 
-            padding: 0; 
-            background-color: #000; 
-            color: white; 
+            margin: 0; padding: 0; 
+            background-color: #000; color: white; 
             font-family: 'Segoe UI', Roboto, sans-serif; 
             overflow-x: hidden;
+        }
+
+        /* PERMANENT NAVIGATION BAR */
+        nav {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 18px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #ff007f;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            backdrop-filter: blur(15px);
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+        nav a:hover { 
+            color: #ff007f; 
+            text-shadow: 0 0 10px #ff007f; 
         }
 
         /* HEADER SECTION */
         .header-container {
             width: 100%;
             padding: 60px 0;
-            background: linear-gradient(180deg, rgba(26, 0, 26, 0.9) 0%, rgba(0, 0, 0, 1) 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border-bottom: 2px solid #ff007f;
-            box-shadow: 0 10px 30px rgba(255, 0, 127, 0.3);
+            text-align: center;
+            background: linear-gradient(180deg, #1a001a 0%, #000 100%);
+            border-bottom: 1px solid #333;
         }
         .logo-text {
-            font-size: clamp(40px, 10vw, 70px);
+            font-size: clamp(40px, 10vw, 75px);
             font-weight: 900;
             letter-spacing: 8px;
             margin: 0;
-            text-shadow: 0 0 7px #fff, 0 0 42px #ff007f;
-            animation: flicker 2s infinite alternate;
+            text-shadow: 0 0 15px #ff007f, 0 0 30px #ff007f;
+            animation: pulse 3s infinite ease-in-out;
         }
-        @keyframes flicker {
-            0%, 18%, 22%, 25%, 53%, 57%, 100% { text-shadow: 0 0 7px #fff, 0 0 42px #ff007f; }
-            20%, 24%, 55% { text-shadow: none; color: #333; }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.02); opacity: 0.8; }
         }
 
-        /* MOD SECTION LAYOUT */
+        /* CONTENT GRID */
         .content-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
-            padding: 60px 20px;
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: auto;
         }
 
-        /* UNIVERSAL MOD BOX STYLING */
+        /* MOD BOX STYLING */
         .mod-box {
-            background: #000;
+            background: #0b0b0b;
             padding: 40px 30px;
-            border-radius: 15px;
+            border-radius: 20px;
             text-align: center;
             position: relative;
             overflow: hidden;
-            width: 100%;
-            max-width: 400px;
-            transition: transform 0.3s;
+            border: 1px solid #1a1a1a;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .mod-box:hover { transform: translateY(-10px); }
-
-        /* NETFLIX GREEN THEME */
-        .netflix-theme { 
-            border: 2px solid #00ff41; 
-            box-shadow: 0 0 20px #00ff41, inset 0 0 10px #00ff4133; 
+        .mod-box:hover { 
+            transform: translateY(-10px); 
+            border-color: #fff;
+            box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
         }
         
-        /* PICSART PURPLE THEME */
-        .picsart-theme { 
-            border: 2px solid #8b3dff; 
-            box-shadow: 0 0 20px #8b3dff, inset 0 0 10px #8b3dff33; 
+        .app-logo { 
+            width: 85px; height: 85px; 
+            margin-bottom: 20px; 
+            border-radius: 20px; 
+            object-fit: cover; 
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
         }
-
-        .app-logo {
-            width: 90px; height: 90px;
-            margin-bottom: 20px;
-            border-radius: 20%;
-            object-fit: contain;
-        }
-        .netflix-theme .app-logo { filter: drop-shadow(0 0 10px #00ff41); }
-        .picsart-theme .app-logo { filter: drop-shadow(0 0 10px #8b3dff); }
-
-        .status-badge {
-            display: inline-block;
-            font-size: 11px;
-            padding: 5px 15px;
-            border-radius: 4px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #000;
-            text-transform: uppercase;
-        }
-        .netflix-theme .status-badge { background: #00ff41; }
-        .picsart-theme .status-badge { background: #8b3dff; color: #fff; }
-
-        .description {
-            font-size: 14px;
-            margin-bottom: 30px;
-            font-weight: 600;
-        }
-        .netflix-theme .description { color: #00ff41; }
-        .picsart-theme .description { color: #8b3dff; }
-
+        
         .download-btn {
-            display: inline-block;
-            padding: 18px 45px;
-            border-radius: 5px;
+            display: block;
+            margin-top: 25px;
+            padding: 15px;
+            background: transparent;
+            border: 2px solid;
+            border-radius: 10px;
             text-decoration: none;
             font-weight: 900;
-            font-size: 18px;
-            text-transform: uppercase;
+            font-size: 16px;
+            letter-spacing: 1px;
             transition: 0.3s;
         }
-        .netflix-theme .download-btn { border: 2px solid #00ff41; color: #00ff41; box-shadow: 0 0 15px #00ff41; }
-        .netflix-theme .download-btn:hover { background: #00ff41; color: #000; }
-        
-        .picsart-theme .download-btn { border: 2px solid #8b3dff; color: #8b3dff; box-shadow: 0 0 15px #8b3dff; }
-        .picsart-theme .download-btn:hover { background: #8b3dff; color: #fff; }
 
-        /* SCANNER ANIMATION */
-        .scanner {
-            width: 100%; height: 3px;
-            position: absolute; left: 0;
-            animation: scan 3s linear infinite;
-            opacity: 0.6;
-        }
-        .netflix-theme .scanner { background: #00ff41; }
-        .picsart-theme .scanner { background: #8b3dff; }
-        @keyframes scan { 0% { top: -5%; } 100% { top: 105%; } }
+        /* THEMES */
+        .netflix { border-left: 4px solid #00ff41; }
+        .netflix h3 { color: #00ff41; }
+        .netflix .download-btn { border-color: #00ff41; color: #00ff41; }
+        .netflix .download-btn:hover { background: #00ff41; color: #000; box-shadow: 0 0 20px #00ff41; }
 
-        .footer-info {
+        .picsart { border-left: 4px solid #8b3dff; }
+        .picsart h3 { color: #8b3dff; }
+        .picsart .download-btn { border-color: #8b3dff; color: #8b3dff; }
+        .picsart .download-btn:hover { background: #8b3dff; color: #fff; box-shadow: 0 0 20px #8b3dff; }
+
+        .capcut { border-left: 4px solid #00d4ff; }
+        .capcut h3 { color: #00d4ff; }
+        .capcut .download-btn { border-color: #00d4ff; color: #00d4ff; }
+        .capcut .download-btn:hover { background: #00d4ff; color: #000; box-shadow: 0 0 20px #00d4ff; }
+
+        /* FOOTER */
+        footer {
             text-align: center;
+            padding: 40px;
             color: #444;
             font-size: 12px;
-            margin-top: 50px;
-            padding-bottom: 20px;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
         }
     </style>
 </head>
 <body>
 
+    <nav>
+        <a href="https://www.xtrotio.com">HOME</a>
+        <a href="/movies">MOVIES</a>
+        <a href="/editors">EDITORS</a>
+        <a href="/tools">AI TOOLS</a>
+    </nav>
+
     <header class="header-container">
         <h1 class="logo-text">XTROTIO</h1>
-        <p style="color: #00ff41; letter-spacing: 5px; font-weight: bold;">MODS • AI • FUTURE</p>
+        <p style="color: #666; letter-spacing: 4px; font-weight: bold; margin-top: 10px;">PREMIUM APP PORTAL</p>
     </header>
 
     <div class="content-wrapper">
-        <div class="mod-box netflix-theme">
-            <div class="scanner"></div>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png" alt="Netflix" class="app-logo">
+        <div class="mod-box netflix">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png" class="app-logo">
             <h3>Netflix Premium</h3>
-            <div class="status-badge">LATEST VERSION</div>
-            <p class="description">4K UHD | NO ADS | UNLOCKED</p>
-            <a href="https://shrinkme.click/NetflixPremiumMod" class="download-btn" target="_blank">DOWNLOAD</a>
+            <p style="color: #888; font-size: 14px;">4K HDR | Multi-Screen | Ad-Free</p>
+            <a href="https://shrinkme.click/NetflixPremiumMod" class="download-btn">DOWNLOAD NOW</a>
         </div>
 
-        <div class="mod-box picsart-theme">
-            <div class="scanner"></div>
-            <img src="https://picsart.com/apple-touch-icon.png" alt="Picsart" class="app-logo">
+        <div class="mod-box picsart">
+            <img src="https://picsart.com/apple-touch-icon.png" class="app-logo">
             <h3>Picsart Gold</h3>
-            <div class="status-badge">LATEST VERSION</div>
-            <p class="description">AI TOOLS | PREMIUM UNLOCKED</p>
-            <a href="https://shrinkme.click/PicsartPremiumMod" class="download-btn" target="_blank">DOWNLOAD</a>
+            <p style="color: #888; font-size: 14px;">All AI Tools | Gold Unlocked</p>
+            <a href="https://shrinkme.click/PicsartPremiumMod" class="download-btn">DOWNLOAD NOW</a>
+        </div>
+
+        <div class="mod-box capcut">
+            <img src="https://upload.wikimedia.org/wikipedia/en/a/ad/CapCut_logo.png" class="app-logo">
+            <h3>CapCut Pro</h3>
+            <p style="color: #888; font-size: 14px;">No Watermark | 4K Export</p>
+            <a href="/editors" class="download-btn">VIEW ALL EDITORS</a>
         </div>
     </div>
 
-    <div class="footer-info">
-        SECURE LINK GENERATION • XTROTIO SYSTEM V1.0
-    </div>
+    <footer>
+        &copy; 2026 XTROTIO SYSTEMS • ENCRYPTED CONNECTION
+    </footer>
 
 </body>
 </html>
