@@ -6,125 +6,20 @@
     <title>XTROTIO | Cinema Portal</title>
     <link rel="icon" type="image/png" href="/fevicon.png">
     <style>
-        body { 
-            margin: 0; padding: 0; 
-            background-color: #000; color: white; 
-            font-family: 'Segoe UI', Roboto, sans-serif; 
-            overflow-x: hidden;
-        }
-
-        nav {
-            background: rgba(0, 0, 0, 0.95);
-            padding: 18px 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 2px solid #e50914;
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            backdrop-filter: blur(15px);
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 13px;
-            letter-spacing: 2px;
-            transition: 0.3s;
-        }
-        nav a:hover { color: #e50914; text-shadow: 0 0 10px #e50914; }
-
-        .category-header {
-            text-align: center;
-            padding: 60px 20px;
-            background: linear-gradient(180deg, #2b0000 0%, #000 100%);
-        }
-        .category-header h1 {
-            font-size: clamp(30px, 8vw, 50px);
-            color: #e50914;
-            text-shadow: 0 0 20px #e50914;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 30px;
-            padding: 40px 20px;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        .movie-card {
-            background: #111;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid #222;
-            transition: 0.4s;
-            display: flex;
-            flex-direction: column;
-        }
-        .movie-card:hover { 
-            transform: translateY(-10px);
-            border-color: #e50914;
-            box-shadow: 0 10px 30px rgba(229, 9, 20, 0.5);
-        }
-
-        .banner-container {
-            width: 100%;
-            padding-top: 150%; 
-            position: relative;
-            background: #1a1a1a;
-        }
-
-        .banner {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            object-fit: cover;
-        }
-
-        .movie-info {
-            padding: 20px;
-            text-align: center;
-        }
-
-        .movie-title {
-            font-size: 18px;
-            font-weight: 900;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            color: #fff;
-            min-height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .tg-button {
-            display: block;
-            width: 100%;
-            background: #e50914;
-            color: #fff;
-            border: none;
-            padding: 12px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 13px;
-            cursor: pointer;
-            transition: 0.3s;
-            text-transform: uppercase;
-            font-family: inherit;
-        }
-        .tg-button:hover { 
-            background: #ff1e2b;
-            box-shadow: 0 0 15px #e50914;
-        }
-
+        body { margin: 0; padding: 0; background-color: #000; color: white; font-family: 'Segoe UI', sans-serif; overflow-x: hidden; }
+        nav { background: rgba(0,0,0,0.95); padding: 18px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid #e50914; display: flex; justify-content: center; gap: 30px; backdrop-filter: blur(15px); }
+        nav a { color: #fff; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 13px; letter-spacing: 2px; }
+        .category-header { text-align: center; padding: 60px 20px; background: linear-gradient(180deg, #2b0000 0%, #000 100%); }
+        .category-header h1 { font-size: clamp(30px, 8vw, 50px); color: #e50914; text-shadow: 0 0 20px #e50914; margin: 0; text-transform: uppercase; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; padding: 40px 20px; max-width: 1200px; margin: auto; }
+        .movie-card { background: #111; border-radius: 12px; overflow: hidden; border: 1px solid #222; transition: 0.4s; display: flex; flex-direction: column; }
+        .movie-card:hover { transform: translateY(-10px); border-color: #e50914; box-shadow: 0 10px 30px rgba(229, 9, 20, 0.5); }
+        .banner-container { width: 100%; padding-top: 150%; position: relative; background: #1a1a1a; }
+        .banner { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .movie-info { padding: 20px; text-align: center; }
+        .movie-title { font-size: 18px; font-weight: 900; margin-bottom: 15px; text-transform: uppercase; min-height: 44px; display: flex; align-items: center; justify-content: center; }
+        .tg-button { display: block; width: 100%; background: #e50914; color: #fff; text-decoration: none; padding: 12px; border-radius: 6px; font-weight: bold; font-size: 13px; text-align: center; text-transform: uppercase; transition: 0.3s; }
+        .tg-button:hover { background: #ff1e2b; box-shadow: 0 0 15px #e50914; }
         footer { text-align: center; padding: 40px; color: #444; font-size: 11px; }
     </style>
 </head>
@@ -139,90 +34,60 @@
 
     <div class="category-header">
         <h1>CINEMA PORTAL</h1>
-        <p style="color: #888; letter-spacing: 2px;">CLICK TO COPY NAME & SEARCH IN BOT</p>
+        <p style="color: #888; letter-spacing: 2px;">DIRECT SEARCH IN BOT</p>
     </div>
 
     <div class="grid">
         <div class="movie-card">
             <div class="banner-container"><img src="posters/m1.jpeg" class="banner" alt="3 Body Problem"></div>
             <div class="movie-info">
-                <div class="movie-title" id="m1">3 Body Problem</div>
-                <button onclick="copyAndGo('m1')" class="tg-button">SEARCH IN BOT</button>
+                <div class="movie-title">3 Body Problem</div>
+                <a href="https://t.me/ProSearchM7Bot?start=3BodyProblem" class="tg-button">SEARCH IN BOT</a>
             </div>
         </div>
 
         <div class="movie-card">
             <div class="banner-container"><img src="posters/m2.jpeg" class="banner" alt="Coyotes"></div>
             <div class="movie-info">
-                <div class="movie-title" id="m2">Coyotes</div>
-                <button onclick="copyAndGo('m2')" class="tg-button">SEARCH IN BOT</button>
+                <div class="movie-title">Coyotes</div>
+                <a href="https://t.me/ProSearchM7Bot?start=Coyotes" class="tg-button">SEARCH IN BOT</a>
             </div>
         </div>
 
         <div class="movie-card">
             <div class="banner-container"><img src="posters/m3.jpeg" class="banner" alt="Michael"></div>
             <div class="movie-info">
-                <div class="movie-title" id="m3">Michael</div>
-                <button onclick="copyAndGo('m3')" class="tg-button">SEARCH IN BOT</button>
+                <div class="movie-title">Michael</div>
+                <a href="https://t.me/ProSearchM7Bot?start=Michael" class="tg-button">SEARCH IN BOT</a>
             </div>
         </div>
 
         <div class="movie-card">
             <div class="banner-container"><img src="posters/m4.jpeg" class="banner" alt="Mickey 17"></div>
             <div class="movie-info">
-                <div class="movie-title" id="m4">Mickey 17</div>
-                <button onclick="copyAndGo('m4')" class="tg-button">SEARCH IN BOT</button>
+                <div class="movie-title">Mickey 17</div>
+                <a href="https://t.me/ProSearchM7Bot?start=Mickey17" class="tg-button">SEARCH IN BOT</a>
             </div>
         </div>
 
         <div class="movie-card">
             <div class="banner-container"><img src="posters/m5.jpeg" class="banner" alt="Mortal Kombat II"></div>
             <div class="movie-info">
-                <div class="movie-title" id="m5">Mortal Kombat II</div>
-                <button onclick="copyAndGo('m5')" class="tg-button">SEARCH IN BOT</button>
+                <div class="movie-title">Mortal Kombat II</div>
+                <a href="https://t.me/ProSearchM7Bot?start=MortalKombat2" class="tg-button">SEARCH IN BOT</a>
             </div>
         </div>
 
         <div class="movie-card">
             <div class="banner-container"><img src="posters/m6.jpeg" class="banner" alt="The Super Mario Galaxy Movie"></div>
             <div class="movie-info">
-                <div class="movie-title" id="m6">The Super Mario Galaxy Movie</div>
-                <button onclick="copyAndGo('m6')" class="tg-button">SEARCH IN BOT</button>
+                <div class="movie-title">Mario Galaxy Movie</div>
+                <a href="https://t.me/ProSearchM7Bot?start=MarioGalaxyMovie" class="tg-button">SEARCH IN BOT</a>
             </div>
         </div>
     </div>
 
-    <footer>
-        XTROTIO MOVIE NETWORK • 2026
-    </footer>
-
-    <script>
-        function copyAndGo(titleId) {
-            // Get the text from the movie-title div
-            const movieName = document.getElementById(titleId).innerText;
-
-            // Use the Clipboard API
-            navigator.clipboard.writeText(movieName).then(() => {
-                // Change button text temporarily to show success
-                const btn = event.target;
-                const originalText = btn.innerText;
-                btn.innerText = "COPIED!";
-                btn.style.background = "#28a745"; // Green
-
-                setTimeout(() => {
-                    btn.innerText = originalText;
-                    btn.style.background = "#e50914"; // Back to Red
-                    
-                    // Redirect to Telegram
-                    window.open("https://t.me/ProSearchM7Bot", "_blank");
-                }, 800);
-
-            }).catch(err => {
-                // Fallback: If copy fails, still redirect
-                window.open("https://t.me/ProSearchM7Bot", "_blank");
-            });
-        }
-    </script>
+    <footer>XTROTIO MOVIE NETWORK • 2026</footer>
 
 </body>
 </html>
