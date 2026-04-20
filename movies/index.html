@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XTROTIO | Premium Movies</title>
+    <link rel="icon" type="image/png" href="/fevicon.png">
+    <style>
+        /* GLOBAL STYLES */
+        body { 
+            margin: 0; padding: 0; 
+            background-color: #000; color: white; 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            overflow-x: hidden;
+        }
+
+        /* NAVIGATION BAR */
+        nav {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 18px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #e50914; /* Netflix Red */
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            backdrop-filter: blur(15px);
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+        nav a:hover { color: #e50914; text-shadow: 0 0 10px #e50914; }
+
+        /* HEADER */
+        .category-header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(180deg, #2b0000 0%, #000 100%);
+        }
+        .category-header h1 {
+            font-size: clamp(30px, 8vw, 50px);
+            color: #e50914;
+            text-shadow: 0 0 20px #e50914;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        /* GRID */
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        /* CARD */
+        .card {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            width: 100%;
+            max-width: 320px;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .card:hover { border-color: #e50914; transform: translateY(-10px); }
+
+        .app-icon { 
+            width: 90px; height: 90px; 
+            border-radius: 20px; margin-bottom: 20px; 
+            object-fit: cover; 
+        }
+        
+        .badge {
+            background: #e50914;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 5px 12px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .dl-button {
+            display: block;
+            width: 80%;
+            margin-top: 25px;
+            padding: 15px;
+            border: 2px solid #e50914;
+            color: #e50914;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 900;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+        .dl-button:hover { background: #e50914; color: #fff; box-shadow: 0 0 20px #e50914; }
+
+        footer { text-align: center; padding: 40px; color: #333; font-size: 11px; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="https://www.xtrotio.com">HOME</a>
+        <a href="/movies/">MOVIES</a>
+        <a href="/editors/">EDITORS</a>
+        <a href="/tools/">AI TOOLS</a>
+    </nav>
+
+    <div class="category-header">
+        <h1>CINEMA PORTAL</h1>
+        <p style="color: #666; letter-spacing: 2px;">PREMIUM STREAMING • NO ADS • 4K HDR</p>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <div class="badge">4K UNLOCKED</div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png" class="app-icon">
+            <h3>Netflix Premium</h3>
+            <p style="font-size: 14px; color: #888;">Unlimited Movies & TV Shows. Multi-Screen active.</p>
+            <a href="https://shrinkme.click/NetflixPremiumMod" class="dl-button">START DOWNLOAD</a>
+        </div>
+
+        <div class="card">
+            <div class="badge">PREMIUM</div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Prime_Video_logo.svg" class="app-icon" style="background:white; padding:10px;">
+            <h3>Prime Video</h3>
+            <p style="font-size: 14px; color: #888;">Amazon Originals and exclusive movies unlocked.</p>
+            <a href="#" class="dl-button">START DOWNLOAD</a>
+        </div>
+
+        <div class="card">
+            <div class="badge">ALL ACCESS</div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_Hotstar_logo.png" class="app-icon" style="background: #001726; padding: 5px;">
+            <h3>Disney+ Hotstar</h3>
+            <p style="font-size: 14px; color: #888;">Live Sports & Disney+ Originals unlocked.</p>
+            <a href="#" class="dl-button">START DOWNLOAD</a>
+        </div>
+    </div>
+
+    <footer>
+        XTROTIO MOVIE NETWORK • 2026
+    </footer>
+
+</body>
+</html>
