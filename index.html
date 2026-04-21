@@ -12,9 +12,10 @@
             background-color: #000; color: white;
             font-family: 'Segoe UI', Roboto, sans-serif;
             display: flex; flex-direction: column; min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* PREMIUM GLASS MENU */
+        /* PREMIUM NAVIGATION MENU */
         nav {
             background: rgba(15, 15, 15, 0.8);
             backdrop-filter: blur(15px);
@@ -23,31 +24,36 @@
             position: sticky; top: 0; z-index: 1000;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex; justify-content: center; align-items: center;
-            gap: clamp(15px, 4vw, 40px);
+            gap: clamp(10px, 3vw, 30px); /* Responsive gap */
         }
 
         nav a {
             color: #aaa;
             text-decoration: none;
             font-weight: 700;
-            font-size: 13px;
-            letter-spacing: 2px;
+            font-size: 11px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             transition: 0.3s;
             position: relative;
         }
 
-        /* HOVER EFFECTS */
+        /* HOVER & ACTIVE EFFECTS */
         nav a:hover { color: #fff; }
-        
-        /* THE RED INDICATOR FOR ACTIVE PAGE */
         nav a.active { color: #e50914; }
-        nav a.active::after {
-            content: '';
-            position: absolute; bottom: -5px; left: 0;
-            width: 100%; height: 2px;
-            background: #e50914;
-            box-shadow: 0 0 10px #e50914;
+        
+        /* VIP GOLD LINK STYLING */
+        .vip-link { 
+            color: #d4af37 !important; 
+            border: 1px solid #d4af37;
+            padding: 5px 12px;
+            border-radius: 4px;
+            transition: 0.4s;
+        }
+        .vip-link:hover { 
+            background: #d4af37; 
+            color: #000 !important;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
         }
 
         /* HERO SECTION */
@@ -61,22 +67,29 @@
         }
 
         .logo-main {
-            font-size: clamp(40px, 10vw, 80px);
+            font-size: clamp(50px, 12vw, 90px);
             font-weight: 900;
             color: #fff;
-            letter-spacing: -2px;
+            letter-spacing: -3px;
             margin: 0;
             text-transform: lowercase;
+            animation: glow 3s ease-in-out infinite alternate;
         }
 
         .logo-main span { color: #e50914; }
 
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255,255,255,0.1); }
+            to { text-shadow: 0 0 30px rgba(229, 9, 20, 0.3); }
+        }
+
         .tagline {
-            color: #666;
-            font-size: 14px;
-            letter-spacing: 5px;
+            color: #888;
+            font-size: 12px;
+            letter-spacing: 6px;
             text-transform: uppercase;
-            margin-top: 10px;
+            margin-top: 20px;
+            opacity: 0.8;
         }
 
         /* FOOTER */
@@ -84,8 +97,9 @@
             text-align: center;
             padding: 30px;
             color: #222;
-            font-size: 11px;
+            font-size: 10px;
             letter-spacing: 2px;
+            border-top: 1px solid #111;
         }
     </style>
 </head>
@@ -94,18 +108,19 @@
     <nav>
         <a href="/" class="active">HOME</a>
         <a href="/movies/">MOVIES</a>
+        <a href="/live/">LIVE CHAT</a>
         <a href="/editors/">EDITORS</a>
         <a href="/tools/">AI TOOLS</a>
-        <a href="/18plus/" style="color: #d4af37;">VIP 18+</a>
+        <a href="/18plus/" class="vip-link">VIP 18+</a>
     </nav>
 
     <div class="hero">
         <h1 class="logo-main">xtrotio<span>.</span></h1>
-        <p class="tagline">The Future of Content</p>
+        <p class="tagline">Global Content Network</p>
     </div>
 
     <footer>
-        © 2026 XTROTIO GLOBAL NETWORK
+        © 2026 XTROTIO GLOBAL NETWORK • KOZHIKODE
     </footer>
 
 </body>
