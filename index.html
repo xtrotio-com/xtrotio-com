@@ -128,6 +128,24 @@ nav {
 
 .btn-ghost:hover { border-color: var(--orange); color: var(--orange); }
 
+.btn-fav {
+  background: transparent;
+  color: #e85d26;
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-fav:hover { background: rgba(232,93,38,0.05); border-color: var(--orange); }
+.fav-count {
+  background: var(--orange);
+  color: white;
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 100px;
+  font-weight: 700;
+}
+
 .btn-chef {
   background: var(--orange);
   color: #fff;
@@ -282,6 +300,8 @@ nav {
 
 /* ─── CATEGORY PILLS ─── */
 .cat-strip {
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
   overflow-x: auto;
   display: flex;
@@ -418,6 +438,7 @@ nav {
   border: none;
   cursor: pointer;
   transition: transform 0.2s;
+  z-index: 10;
 }
 
 .recipe-fav:hover { transform: scale(1.15); }
@@ -1122,7 +1143,7 @@ footer .footer-logo span { color: var(--gold); }
 @media (max-width: 700px) {
   .nav-search { display: none; }
   .hamburger { display: flex; }
-  .nav-right .nav-btn:not(.btn-chef) { display: none; }
+  .nav-right .nav-btn:not(.btn-chef):not(.btn-fav) { display: none; }
   .featured-card { grid-template-columns: 1fr; }
   .feat-emoji { display: none; }
   .recipe-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
@@ -1150,13 +1171,15 @@ footer .footer-logo span { color: var(--gold); }
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="nav-logo" onclick="goHome()">XTRO<span>TIO</span></div>
   <div class="nav-search">
     <input type="text" placeholder="Search recipes, cuisines…" id="navSearch" oninput="handleSearch(this.value)" onkeydown="if(event.key==='Enter')handleSearch(this.value)">
   </div>
   <div class="nav-right">
+    <button class="nav-btn btn-fav" onclick="goToFavs()">
+      <span>❤️</span> <span class="fav-count" id="navFavCount">0</span>
+    </button>
     <button class="nav-btn btn-ghost" onclick="showLogin()" id="loginBtn">Sign In</button>
     <div class="user-bar" id="userBar" onclick="goToAdd()">
       <span class="user-avatar" id="userAvatar">👨‍🍳</span>
@@ -1170,19 +1193,17 @@ footer .footer-logo span { color: var(--gold); }
   </div>
 </nav>
 
-<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <div style="position:relative">
     <input type="text" class="form-input" placeholder="Search recipes…" style="border-radius:100px;padding-left:40px" oninput="handleSearch(this.value)">
     <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%)">🔍</span>
   </div>
+  <button class="nav-btn btn-fav" style="border-radius:12px; justify-content:center" onclick="goToFavs();toggleMenu()">❤️ Saved Favorites</button>
   <button class="nav-btn btn-ghost" style="border-radius:12px" onclick="showLogin();toggleMenu()">Sign In</button>
   <button class="nav-btn btn-chef" style="border-radius:12px;justify-content:center" onclick="chefAction();toggleMenu()">👨‍🍳 I'm a Chef</button>
 </div>
 
-<!-- PAGE: HOME -->
 <div id="page-home" class="page active">
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-emoji-row">🍝 🍜 🥘 🍛 🥗 🍲</div>
     <h1>Cook with <em>Passion</em>,<br>Share your Recipe</h1>
@@ -1215,7 +1236,6 @@ footer .footer-logo span { color: var(--gold); }
     </div>
   </section>
 
-  <!-- CATEGORY PILLS -->
   <div class="cat-strip" id="catStrip">
     <button class="cat-pill active" onclick="filterCat('all',this)">🍽️ All</button>
     <button class="cat-pill" onclick="filterCat('breakfast',this)">🥞 Breakfast</button>
@@ -1229,9 +1249,7 @@ footer .footer-logo span { color: var(--gold); }
     <button class="cat-pill" onclick="filterCat('drinks',this)">🍹 Drinks</button>
   </div>
 
-  <!-- MAIN -->
   <div class="main-wrap">
-    <!-- FEATURED -->
     <div class="featured-card" onclick="openRecipe(0)">
       <div>
         <div class="feat-label">⭐ Recipe of the Day</div>
@@ -1247,7 +1265,6 @@ footer .footer-logo span { color: var(--gold); }
       <div class="feat-emoji">🍝</div>
     </div>
 
-    <!-- RECIPE GRID -->
     <div class="section-head">
       <h2 class="section-title" id="gridTitle">Popular Recipes</h2>
       <button class="see-all" onclick="filterCat('all', null)">See all →</button>
@@ -1256,12 +1273,20 @@ footer .footer-logo span { color: var(--gold); }
   </div>
 </div>
 
-<!-- PAGE: RECIPE DETAIL -->
 <div id="page-recipe" class="page" style="display:none">
   <div id="recipeDetailContent"></div>
 </div>
 
-<!-- PAGE: LOGIN -->
+<div id="page-fav" class="page" style="display:none">
+  <div class="main-wrap">
+    <button class="back-btn" onclick="goHome()">← Back to Home</button>
+    <div class="section-head" style="margin-top:10px">
+      <h2 class="section-title">Your Saved Recipes ❤️</h2>
+    </div>
+    <div class="recipe-grid" id="favRecipeGrid"></div>
+  </div>
+</div>
+
 <div id="page-login" class="page">
   <div class="login-card">
     <div class="login-logo">XTRO<span>TIO</span></div>
@@ -1272,7 +1297,6 @@ footer .footer-logo span { color: var(--gold); }
       <button class="login-tab" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
     </div>
 
-    <!-- SIGN IN FORM -->
     <div id="form-signin">
       <div class="form-group">
         <label class="form-label">Email Address</label>
@@ -1287,7 +1311,6 @@ footer .footer-logo span { color: var(--gold); }
       <button class="social-btn" onclick="doSocialLogin('Google')">🌐 Continue with Google</button>
     </div>
 
-    <!-- SIGN UP FORM -->
     <div id="form-signup" style="display:none">
       <div class="form-group">
         <label class="form-label">Full Name</label>
@@ -1325,14 +1348,12 @@ footer .footer-logo span { color: var(--gold); }
   </div>
 </div>
 
-<!-- PAGE: ADD RECIPE -->
 <div id="page-add" class="page">
   <div class="add-header">
     <h2>Share Your Recipe</h2>
     <p>Your delicious creation deserves to be tasted by thousands 🍴</p>
   </div>
 
-  <!-- Basic Info -->
   <div class="add-card">
     <h3>🍽️ Basic Info</h3>
     <div class="form-group">
@@ -1385,7 +1406,6 @@ footer .footer-logo span { color: var(--gold); }
     </div>
   </div>
 
-  <!-- Time & Difficulty -->
   <div class="add-card">
     <h3>⏱️ Time & Difficulty</h3>
     <div class="form-row-2">
@@ -1418,7 +1438,6 @@ footer .footer-logo span { color: var(--gold); }
     </div>
   </div>
 
-  <!-- Ingredients -->
   <div class="add-card">
     <h3>🧂 Ingredients</h3>
     <div id="ingredientList">
@@ -1434,7 +1453,6 @@ footer .footer-logo span { color: var(--gold); }
     <button class="add-more-btn" onclick="addIngredient()">+ Add Ingredient</button>
   </div>
 
-  <!-- Steps -->
   <div class="add-card">
     <h3>👨‍🍳 Cooking Steps</h3>
     <div id="stepList">
@@ -1450,20 +1468,17 @@ footer .footer-logo span { color: var(--gold); }
     <button class="add-more-btn" onclick="addStep()">+ Add Step</button>
   </div>
 
-  <!-- Publish -->
   <button class="publish-btn" onclick="publishRecipe()">
     🚀 Publish Recipe to XTROTIO
   </button>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-logo">XTRO<span>TIO</span></div>
   <p>Sharing love, one recipe at a time 🍴</p>
   <p style="margin-top:10px; font-size:12px">© 2025 XTROTIO. Made with ❤️ for food lovers everywhere.</p>
 </footer>
 
-<!-- TOAST -->
 <div class="toast" id="toast">
   <span id="toastIcon">✅</span> <span id="toastMsg">Done!</span>
 </div>
@@ -1471,43 +1486,43 @@ footer .footer-logo span { color: var(--gold); }
 <script>
 // ─── DATA ───────────────────────────────────────────────────────
 const recipes = [
-  { id:0, name:"Creamy Tuscan Pasta", cuisine:"Italian", cat:"dinner", desc:"Sun-dried tomatoes, spinach, and cream in a dreamy sauce over al dente pasta.", emoji:"🍝", bg:"thumb-bg-1", time:30, servings:4, calories:520, diff:"Easy", rating:4.9, chef:"Chef Marco", chefEmoji:"👨‍🍳",
+  { id:"0", name:"Creamy Tuscan Pasta", cuisine:"Italian", cat:"dinner", desc:"Sun-dried tomatoes, spinach, and cream in a dreamy sauce over al dente pasta.", emoji:"🍝", bg:"thumb-bg-1", time:30, servings:4, calories:520, diff:"Easy", rating:4.9, chef:"Chef Marco", chefEmoji:"👨‍🍳",
     ingredients:["400g spaghetti","1 cup sun-dried tomatoes","2 cups fresh spinach","1 cup heavy cream","4 cloves garlic","½ cup Parmesan cheese","Salt & pepper to taste","2 tbsp olive oil"],
     steps:["Boil pasta in salted water until al dente. Reserve ½ cup pasta water.","Sauté garlic in olive oil over medium heat for 2 minutes.","Add sun-dried tomatoes and cook for another 3 minutes.","Pour in heavy cream and simmer for 5 minutes until slightly thickened.","Add spinach and stir until wilted. Season with salt and pepper.","Toss pasta in the sauce, adding pasta water if needed. Top with Parmesan."]
   },
-  { id:1, name:"Butter Chicken", cuisine:"Indian", cat:"dinner", desc:"Tender chicken in a rich, aromatic tomato-butter sauce with warming spices.", emoji:"🍛", bg:"thumb-bg-3", time:45, servings:4, calories:480, diff:"Medium", rating:4.8, chef:"Chef Priya", chefEmoji:"👩‍🍳",
+  { id:"1", name:"Butter Chicken", cuisine:"Indian", cat:"dinner", desc:"Tender chicken in a rich, aromatic tomato-butter sauce with warming spices.", emoji:"🍛", bg:"thumb-bg-3", time:45, servings:4, calories:480, diff:"Medium", rating:4.8, chef:"Chef Priya", chefEmoji:"👩‍🍳",
     ingredients:["600g chicken breast","1 can crushed tomatoes","1 cup heavy cream","3 tbsp butter","2 tsp garam masala","1 tsp turmeric","2 tsp cumin","4 cloves garlic","1 tbsp ginger"],
     steps:["Marinate chicken in yogurt, cumin, and turmeric for 30 minutes.","Grill or pan-fry chicken until cooked. Set aside.","Sauté garlic and ginger in butter. Add tomatoes and spices.","Simmer sauce for 15 minutes then blend until smooth.","Add cream and chicken. Cook for 10 more minutes.","Garnish with cream swirl and fresh coriander."]
   },
-  { id:2, name:"Avocado Toast", cuisine:"American", cat:"breakfast", desc:"Creamy avocado on sourdough with chili flakes, lemon, and poached eggs.", emoji:"🥗", bg:"thumb-bg-2", time:15, servings:2, calories:320, diff:"Easy", rating:4.6, chef:"Chef Sara", chefEmoji:"👩‍🍳",
+  { id:"2", name:"Avocado Toast", cuisine:"American", cat:"breakfast", desc:"Creamy avocado on sourdough with chili flakes, lemon, and poached eggs.", emoji:"🥗", bg:"thumb-bg-2", time:15, servings:2, calories:320, diff:"Easy", rating:4.6, chef:"Chef Sara", chefEmoji:"👩‍🍳",
     ingredients:["2 slices sourdough","2 ripe avocados","2 eggs","Lemon juice","Chili flakes","Salt & pepper","Olive oil drizzle","Microgreens (optional)"],
     steps:["Toast bread until golden and crispy.","Mash avocados with lemon, salt, and pepper.","Poach eggs in simmering water for 3 minutes.","Spread avocado on toast.","Top with egg, chili flakes, and a drizzle of olive oil."]
   },
-  { id:3, name:"Miso Ramen", cuisine:"Japanese", cat:"soup", desc:"Deep umami broth with silky noodles, soft egg, nori, and bamboo shoots.", emoji:"🍜", bg:"thumb-bg-5", time:60, servings:2, calories:440, diff:"Medium", rating:4.9, chef:"Chef Hiro", chefEmoji:"👨‍🍳",
+  { id:"3", name:"Miso Ramen", cuisine:"Japanese", cat:"soup", desc:"Deep umami broth with silky noodles, soft egg, nori, and bamboo shoots.", emoji:"🍜", bg:"thumb-bg-5", time:60, servings:2, calories:440, diff:"Medium", rating:4.9, chef:"Chef Hiro", chefEmoji:"👨‍🍳",
     ingredients:["200g ramen noodles","4 cups dashi stock","3 tbsp white miso","Soy sauce to taste","Soft-boiled eggs","Nori sheets","Bamboo shoots","Spring onions","Sesame seeds","Chilli oil"],
     steps:["Prepare dashi stock and bring to a simmer.","Whisk miso paste into the broth. Season with soy sauce.","Cook noodles according to package, rinse and divide into bowls.","Ladle hot broth over noodles.","Top with halved egg, nori, bamboo shoots, and spring onions.","Drizzle chilli oil and scatter sesame seeds."]
   },
-  { id:4, name:"Chocolate Lava Cake", cuisine:"French", cat:"dessert", desc:"Warm chocolate cake with a molten centre — the ultimate indulgence.", emoji:"🍰", bg:"thumb-bg-6", time:25, servings:4, calories:380, diff:"Medium", rating:5.0, chef:"Chef Pierre", chefEmoji:"👨‍🍳",
+  { id:"4", name:"Chocolate Lava Cake", cuisine:"French", cat:"dessert", desc:"Warm chocolate cake with a molten centre — the ultimate indulgence.", emoji:"🍰", bg:"thumb-bg-6", time:25, servings:4, calories:380, diff:"Medium", rating:5.0, chef:"Chef Pierre", chefEmoji:"👨‍🍳",
     ingredients:["200g dark chocolate","100g butter","4 eggs","4 egg yolks","100g sugar","50g flour","Pinch of salt","Cocoa powder for dusting"],
     steps:["Preheat oven to 200°C. Grease ramekins and dust with cocoa.","Melt chocolate and butter together over a double boiler.","Whisk eggs, yolks, and sugar until pale and fluffy.","Fold chocolate mix into eggs. Sift in flour and fold gently.","Pour batter into ramekins and refrigerate 30 min.","Bake for 12 minutes. Rest 1 minute, then unmould and serve."]
   },
-  { id:5, name:"Fish Tacos", cuisine:"Mexican", cat:"seafood", desc:"Crispy beer-battered fish with slaw, avocado crema, and lime in warm tortillas.", emoji:"🌮", bg:"thumb-bg-4", time:35, servings:4, calories:410, diff:"Easy", rating:4.7, chef:"Chef Carlos", chefEmoji:"👨‍🍳",
+  { id:"5", name:"Fish Tacos", cuisine:"Mexican", cat:"seafood", desc:"Crispy beer-battered fish with slaw, avocado crema, and lime in warm tortillas.", emoji:"🌮", bg:"thumb-bg-4", time:35, servings:4, calories:410, diff:"Easy", rating:4.7, chef:"Chef Carlos", chefEmoji:"👨‍🍳",
     ingredients:["500g white fish fillets","8 corn tortillas","1 cup flour","1 cup beer","1 tsp paprika","Cabbage slaw","1 avocado","Sour cream","Lime","Cilantro","Hot sauce"],
     steps:["Make beer batter: whisk flour, beer, paprika, salt until smooth.","Pat fish dry, cut into strips, coat in batter.","Fry at 180°C for 3–4 min until golden and crispy.","Blend avocado, sour cream, and lime for crema.","Warm tortillas on a dry pan.","Build tacos: slaw, fish, crema, cilantro, hot sauce."]
   },
-  { id:6, name:"Classic Pancakes", cuisine:"American", cat:"breakfast", desc:"Fluffy, golden-edge pancakes with maple syrup — weekend morning perfection.", emoji:"🥞", bg:"thumb-bg-5", time:20, servings:4, calories:290, diff:"Easy", rating:4.8, chef:"Chef Amy", chefEmoji:"👩‍🍳",
+  { id:"6", name:"Classic Pancakes", cuisine:"American", cat:"breakfast", desc:"Fluffy, golden-edge pancakes with maple syrup — weekend morning perfection.", emoji:"🥞", bg:"thumb-bg-5", time:20, servings:4, calories:290, diff:"Easy", rating:4.8, chef:"Chef Amy", chefEmoji:"👩‍🍳",
     ingredients:["2 cups all-purpose flour","2 eggs","1½ cups milk","2 tbsp sugar","2 tsp baking powder","½ tsp salt","3 tbsp melted butter","Maple syrup to serve"],
     steps:["Whisk dry ingredients: flour, sugar, baking powder, salt.","Beat eggs with milk and melted butter.","Gently fold wet into dry — don't over-mix; lumps are fine.","Heat a buttered pan on medium. Pour ¼ cup batter per pancake.","Cook until bubbles form and edges set, about 2 min. Flip and cook 1 more min.","Serve stacked with butter and maple syrup."]
   },
-  { id:7, name:"Green Detox Smoothie", cuisine:"American", cat:"drinks", desc:"Spinach, banana, ginger, and mango blended into a refreshing healthy drink.", emoji:"🍹", bg:"thumb-bg-2", time:5, servings:2, calories:180, diff:"Easy", rating:4.5, chef:"Chef Lily", chefEmoji:"👩‍🍳",
+  { id:"7", name:"Green Detox Smoothie", cuisine:"American", cat:"drinks", desc:"Spinach, banana, ginger, and mango blended into a refreshing healthy drink.", emoji:"🍹", bg:"thumb-bg-2", time:5, servings:2, calories:180, diff:"Easy", rating:4.5, chef:"Chef Lily", chefEmoji:"👩‍🍳",
     ingredients:["2 cups fresh spinach","1 banana","1 cup frozen mango","1 tbsp fresh ginger","1 cup coconut water","Juice of 1 lime","Ice cubes"],
     steps:["Add all ingredients to a high-speed blender.","Blend on high for 60 seconds until completely smooth.","Taste and adjust — add more lime for tang or banana for sweetness.","Pour over ice and serve immediately."]
   },
-  { id:8, name:"Sourdough Bread", cuisine:"French", cat:"baking", desc:"Crusty, tangy homemade sourdough with a chewy interior — baked in a Dutch oven.", emoji:"🍞", bg:"thumb-bg-1", time:240, servings:8, calories:220, diff:"Hard", rating:4.9, chef:"Chef Elena", chefEmoji:"👩‍🍳",
+  { id:"8", name:"Sourdough Bread", cuisine:"French", cat:"baking", desc:"Crusty, tangy homemade sourdough with a chewy interior — baked in a Dutch oven.", emoji:"🍞", bg:"thumb-bg-1", time:240, servings:8, calories:220, diff:"Hard", rating:4.9, chef:"Chef Elena", chefEmoji:"👩‍🍳",
     ingredients:["500g bread flour","375g water","100g active sourdough starter","10g salt"],
     steps:["Mix flour and water, rest 30 min (autolyse).","Add starter and salt. Stretch and fold every 30 min for 2 hours.","Shape the dough and place in a proofing basket. Refrigerate overnight.","Preheat Dutch oven in oven at 250°C for 45 min.","Score the dough and bake covered for 20 min, then uncovered 25 min.","Cool on a wire rack for 1 hour before slicing."]
   },
-  { id:9, name:"Vegan Buddha Bowl", cuisine:"Mediterranean", cat:"vegan", desc:"Roasted chickpeas, grains, pickled veg, and tahini dressing in one colourful bowl.", emoji:"🥘", bg:"thumb-bg-2", time:40, servings:2, calories:490, diff:"Easy", rating:4.7, chef:"Chef Nora", chefEmoji:"👩‍🍳",
+  { id:"9", name:"Vegan Buddha Bowl", cuisine:"Mediterranean", cat:"vegan", desc:"Roasted chickpeas, grains, pickled veg, and tahini dressing in one colourful bowl.", emoji:"🥘", bg:"thumb-bg-2", time:40, servings:2, calories:490, diff:"Easy", rating:4.7, chef:"Chef Nora", chefEmoji:"👩‍🍳",
     ingredients:["1 can chickpeas","1 cup quinoa","2 cups mixed greens","1 avocado","Pickled red onion","Cherry tomatoes","Cucumber","3 tbsp tahini","Lemon juice","Garlic","Olive oil","Smoked paprika"],
     steps:["Cook quinoa and let it cool slightly.","Toss chickpeas with oil, paprika, and salt. Roast at 200°C for 25 min.","Make dressing: blend tahini, lemon, garlic, and water.","Arrange greens and quinoa in bowls.","Top with chickpeas, sliced avocado, tomatoes, and pickled onion.","Drizzle generously with tahini dressing."]
   },
@@ -1519,10 +1534,42 @@ let selectedDiff = 'Easy';
 let isLoggedIn = false;
 let currentUser = null;
 
-// Custom recipes added by users
+// Track custom user recipes and saved favorites IDs
 let customRecipes = [];
+let favoritesList = [];
 
-// ─── RENDER GRID ─────────────────────────────────────────────────
+// ─── GENERATE GRID CARD HTML ─────────────────────────────────────
+function buildCardHTML(r, i) {
+  const isLoved = favoritesList.includes(r.id.toString());
+  return `
+    <div class="recipe-card" onclick="openRecipe('${r.id}')" style="animation-delay:${i*0.06}s">
+      <div class="recipe-thumb ${r.bg}">
+        <span style="font-size:60px">${r.emoji}</span>
+        <span class="recipe-badge">⭐ ${r.rating}</span>
+        <button class="recipe-fav ${isLoved ? 'loved' : ''}" onclick="toggleFav(event, this, '${r.id}')">
+          ${isLoved ? '❤️' : '🤍'}
+        </button>
+      </div>
+      <div class="recipe-body">
+        <div class="recipe-cuisine">${r.cuisine}</div>
+        <div class="recipe-name">${r.name}</div>
+        <div class="recipe-desc">${r.desc}</div>
+        <div class="recipe-meta">
+          <div class="meta-item">🕐 ${r.time >= 60 ? Math.floor(r.time/60)+'h '+(r.time%60||'') : r.time} min</div>
+          <div class="meta-item">👥 ${r.servings}</div>
+          <div class="meta-item">🔥 ${r.calories} cal</div>
+          <div class="meta-item" ${r.diff==='Easy'?'style="color:#4a7c59"':r.diff==='Hard'?'style="color:#e85d26"':''}>${r.diff==='Easy'?'🟢':r.diff==='Medium'?'🟡':'🔴'} ${r.diff}</div>
+        </div>
+        <div class="chef-info">
+          <div class="chef-avatar">${r.chefEmoji}</div>
+          <span class="chef-name">${r.chef}</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ─── RENDER MAIN GRID ─────────────────────────────────────────────
 function renderGrid(data) {
   const grid = document.getElementById('recipeGrid');
   if (!data.length) {
@@ -1533,30 +1580,23 @@ function renderGrid(data) {
     </div>`;
     return;
   }
-  grid.innerHTML = data.map((r, i) => `
-    <div class="recipe-card" onclick="openRecipe(${r.id !== undefined ? r.id : 'c'+r.cid})" style="animation-delay:${i*0.06}s">
-      <div class="recipe-thumb ${r.bg}">
-        <span style="font-size:60px">${r.emoji}</span>
-        <span class="recipe-badge">⭐ ${r.rating}</span>
-        <button class="recipe-fav" onclick="toggleFav(event,this)">🤍</button>
-      </div>
-      <div class="recipe-body">
-        <div class="recipe-cuisine">${r.cuisine}</div>
-        <div class="recipe-name">${r.name}</div>
-        <div class="recipe-desc">${r.desc}</div>
-        <div class="recipe-meta">
-          <div class="meta-item">🕐 ${r.time >= 60 ? Math.floor(r.time/60)+'h '+(r.time%60||'') : r.time} min</div>
-          <div class="meta-item">👥 ${r.servings}</div>
-          <div class="meta-item">🔥 ${r.calories} cal</div>
-          <div class="meta-item ${r.diff==='Easy'?'style="color:#4a7c59"':r.diff==='Hard'?'style="color:#e85d26"':''}">${r.diff==='Easy'?'🟢':r.diff==='Medium'?'🟡':'🔴'} ${r.diff}</div>
-        </div>
-        <div class="chef-info">
-          <div class="chef-avatar">${r.chefEmoji}</div>
-          <span class="chef-name">${r.chef}</span>
-        </div>
-      </div>
-    </div>
-  `).join('');
+  grid.innerHTML = data.map((r, i) => buildCardHTML(r, i)).join('');
+}
+
+// ─── RENDER FAVORITES GRID ────────────────────────────────────────
+function renderFavsGrid() {
+  const grid = document.getElementById('favRecipeGrid');
+  const favedRecipes = allRecipes().filter(r => favoritesList.includes(r.id.toString()));
+  
+  if (!favedRecipes.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+      <span class="empty-state-icon">❤️</span>
+      <h3>Your favorites folder is empty</h3>
+      <p>Tap the heart icon on any recipe card to save it here!</p>
+    </div>`;
+    return;
+  }
+  grid.innerHTML = favedRecipes.map((r, i) => buildCardHTML(r, i)).join('');
 }
 
 function allRecipes() { return [...recipes, ...customRecipes]; }
@@ -1591,14 +1631,9 @@ function handleSearch(q) {
   goHome(false);
 }
 
-// ─── OPEN RECIPE ─────────────────────────────────────────────────
+// ─── OPEN RECIPE DETAIL ───────────────────────────────────────────
 function openRecipe(id) {
-  let recipe;
-  if (typeof id === 'string' && id.startsWith('c')) {
-    recipe = customRecipes[parseInt(id.slice(1))];
-  } else {
-    recipe = allRecipes().find(r => r.id === id) || recipes[id] || recipes[0];
-  }
+  const recipe = allRecipes().find(r => r.id.toString() === id.toString());
   if (!recipe) return;
 
   document.getElementById('recipeDetailContent').innerHTML = `
@@ -1648,7 +1683,7 @@ function openRecipe(id) {
   window.scrollTo(0,0);
 }
 
-// ─── NAVIGATION ──────────────────────────────────────────────────
+// ─── NAVIGATION VIEW MANAGER ─────────────────────────────────────
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => {
     p.classList.remove('active');
@@ -1662,6 +1697,12 @@ function showPage(id) {
 function goHome(scroll=true) {
   showPage('page-home');
   if (scroll) window.scrollTo(0,0);
+}
+
+function goToFavs() {
+  renderFavsGrid();
+  showPage('page-fav');
+  window.scrollTo(0,0);
 }
 
 // ─── LOGIN / SIGNUP ───────────────────────────────────────────────
@@ -1788,7 +1829,7 @@ function publishRecipe() {
   const bgs = ['thumb-bg-1','thumb-bg-2','thumb-bg-3','thumb-bg-4','thumb-bg-5','thumb-bg-6'];
 
   const newRecipe = {
-    cid: customRecipes.length,
+    id: 'c' + customRecipes.length,
     name, desc, cuisine, cat,
     emoji: selectedEmoji,
     bg: bgs[Math.floor(Math.random()*bgs.length)],
@@ -1811,13 +1852,40 @@ function publishRecipe() {
   }, 800);
 }
 
-// ─── MISC ─────────────────────────────────────────────────────────
-function toggleFav(e, btn) {
-  e.stopPropagation();
-  const loved = !btn.classList.contains('loved');
-  btn.classList.toggle('loved', loved);
-  btn.textContent = loved ? '❤️' : '🤍';
-  showToast(loved ? '❤️' : '🤍', loved ? 'Added to favourites!' : 'Removed from favourites');
+// ─── FAVORITES MANAGEMENT ENGINE ──────────────────────────────────
+function toggleFav(e, btn, id) {
+  e.stopPropagation(); // Prevents clicking the heart from opening the recipe card view details
+  
+  const targetId = id.toString();
+  const index = favoritesList.indexOf(targetId);
+  let loved = false;
+
+  if (index === -1) {
+    favoritesList.push(targetId);
+    loved = true;
+    btn.classList.add('loved');
+    btn.textContent = '❤️';
+    showToast('❤️', 'Added to favorites!');
+  } else {
+    favoritesList.splice(index, 1);
+    loved = false;
+    btn.classList.remove('loved');
+    btn.textContent = '🤍';
+    showToast('🤍', 'Removed from favorites');
+  }
+
+  // Update Nav Badge Counters
+  document.getElementById('navFavCount').textContent = favoritesList.length;
+
+  // Live refresh whatever active views are running underneath
+  const activePage = document.querySelector('.page.active').id;
+  if (activePage === 'page-fav') {
+    renderFavsGrid();
+  } else if (activePage === 'page-home') {
+    // Sync home grid cards live if favorited status changed
+    const currentCatBtn = document.querySelector('.cat-pill.active');
+    filterCat(currentFilter, currentCatBtn);
+  }
 }
 
 function toggleMenu() {
@@ -1833,7 +1901,7 @@ document.getElementById('role-chef').addEventListener('click', () => {
   document.getElementById('role-foodie').classList.remove('selected');
 });
 
-// close mobile menu on outside click
+// Close mobile menu on outside click
 document.addEventListener('click', e => {
   const menu = document.getElementById('mobileMenu');
   const ham = document.querySelector('.hamburger');
