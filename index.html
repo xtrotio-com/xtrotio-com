@@ -298,16 +298,29 @@ nav {
 .hero-stat-num { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; display: block; }
 .hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.55); letter-spacing: 1px; text-transform: uppercase; }
 
-/* ─── CATEGORY PILLS ─── */
-.cat-strip {
+/* ─── SCROLLING STRIPS ─── */
+.filter-strip-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 16px 20px 4px;
+}
+
+.strip-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--brown-light);
+  margin-bottom: 8px;
+}
+
+.cat-strip {
   overflow-x: auto;
   display: flex;
   gap: 10px;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  padding-bottom: 12px;
 }
 .cat-strip::-webkit-scrollbar { display: none; }
 
@@ -337,11 +350,17 @@ nav {
   box-shadow: 0 6px 16px rgba(232,93,38,0.3);
 }
 
+.cat-pill.region-pill.active {
+  background: var(--green);
+  border-color: var(--green);
+  box-shadow: 0 6px 16px rgba(74,124,89,0.3);
+}
+
 /* ─── MAIN LAYOUT ─── */
 .main-wrap {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 32px 20px 60px;
+  padding: 24px 20px 60px;
 }
 
 .section-head {
@@ -460,7 +479,7 @@ nav {
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: var(--orange);
+  color: var(--green);
   margin-bottom: 6px;
 }
 
@@ -1164,7 +1183,7 @@ footer .footer-logo span { color: var(--gold); }
 <nav>
   <div class="nav-logo" onclick="goHome()">XTRO<span>TIO</span></div>
   <div class="nav-search">
-    <input type="text" placeholder="Search recipes, cuisines…" id="navSearch" oninput="handleSearch(this.value)" onkeydown="if(event.key==='Enter')handleSearch(this.value)">
+    <input type="text" placeholder="Search recipes, regions…" id="navSearch" oninput="handleSearch(this.value)" onkeydown="if(event.key==='Enter')handleSearch(this.value)">
   </div>
   <div class="nav-right">
     <button class="nav-btn btn-fav" onclick="goToFavs()">
@@ -1202,7 +1221,7 @@ footer .footer-logo span { color: var(--gold); }
     <h1>Cook with <em>Passion</em>,<br>Share your Recipe</h1>
     <p class="hero-sub">Discover thousands of recipes crafted by real chefs. From quick weeknight meals to weekend feasts — XTROTIO has it all.</p>
     <div class="hero-actions">
-      <button class="hero-btn-primary" onclick="document.querySelector('.main-wrap').scrollIntoView({behavior:'smooth'})">
+      <button class="hero-btn-primary" onclick="document.querySelector('.filter-strip-container').scrollIntoView({behavior:'smooth'})">
         🍽️ Explore Recipes
       </button>
       <button class="hero-btn-secondary" onclick="chefAction()">
@@ -1229,18 +1248,35 @@ footer .footer-logo span { color: var(--gold); }
     </div>
   </section>
 
-  <!-- CATEGORY PILLS -->
-  <div class="cat-strip" id="catStrip">
-    <button class="cat-pill active" onclick="filterCat('all',this)">🍽️ All</button>
-    <button class="cat-pill" onclick="filterCat('breakfast',this)">🥞 Breakfast</button>
-    <button class="cat-pill" onclick="filterCat('lunch',this)">🥗 Lunch</button>
-    <button class="cat-pill" onclick="filterCat('dinner',this)">🍝 Dinner</button>
-    <button class="cat-pill" onclick="filterCat('dessert',this)">🍰 Desserts</button>
-    <button class="cat-pill" onclick="filterCat('soup',this)">🍜 Soups</button>
-    <button class="cat-pill" onclick="filterCat('vegan',this)">🥦 Vegan</button>
-    <button class="cat-pill" onclick="filterCat('seafood',this)">🦐 Seafood</button>
-    <button class="cat-pill" onclick="filterCat('baking',this)">🍞 Baking</button>
-    <button class="cat-pill" onclick="filterCat('drinks',this)">🍹 Drinks</button>
+  <!-- STRIPS FILTERS HUB -->
+  <div class="filter-strip-container">
+    <!-- CATEGORIES -->
+    <div class="strip-label">Categories</div>
+    <div class="cat-strip" id="catStrip">
+      <button class="cat-pill active" onclick="filterCat('all',this)">🍽️ All Courses</button>
+      <button class="cat-pill" onclick="filterCat('breakfast',this)">🥞 Breakfast</button>
+      <button class="cat-pill" onclick="filterCat('lunch',this)">🥗 Lunch</button>
+      <button class="cat-pill" onclick="filterCat('dinner',this)">🍝 Dinner</button>
+      <button class="cat-pill" onclick="filterCat('dessert',this)">🍰 Desserts</button>
+      <button class="cat-pill" onclick="filterCat('soup',this)">🍜 Soups</button>
+      <button class="cat-pill" onclick="filterCat('vegan',this)">🥦 Vegan</button>
+      <button class="cat-pill" onclick="filterCat('seafood',this)">🦐 Seafood</button>
+      <button class="cat-pill" onclick="filterCat('baking',this)">🍞 Baking</button>
+      <button class="cat-pill" onclick="filterCat('drinks',this)">🍹 Drinks</button>
+    </div>
+
+    <!-- REGIONS/CUISINES -->
+    <div class="strip-label" style="margin-top:6px">Global Regions</div>
+    <div class="cat-strip" id="regionStrip">
+      <button class="cat-pill region-pill active" onclick="filterRegion('all',this)">🌍 All Regions</button>
+      <button class="cat-pill region-pill" onclick="filterRegion('Italian',this)">🇮🇹 Italian</button>
+      <button class="cat-pill region-pill" onclick="filterRegion('Indian',this)">🇮🇳 Indian</button>
+      <button class="cat-pill region-pill" onclick="filterRegion('Japanese',this)">🇯🇵 Japanese</button>
+      <button class="cat-pill region-pill" onclick="filterRegion('Mexican',this)">🇲🇽 Mexican</button>
+      <button class="cat-pill region-pill" onclick="filterRegion('French',this)">🇫🇷 French</button>
+      <button class="cat-pill region-pill" onclick="filterRegion('American',this)">🇺🇸 American</button>
+      <button class="cat-pill region-pill" onclick="filterRegion('Mediterranean',this)">🇬🇷 Mediterranean</button>
+    </div>
   </div>
 
   <!-- MAIN -->
@@ -1259,14 +1295,14 @@ footer .footer-logo span { color: var(--gold); }
         </div>
       </div>
       <div class="feat-img-container">
-        <img src="https://images.unsplash.com/photo-1621996346565-e3bb64e0be5e?auto=format&fit=crop&w=300&q=80" alt="Tscan Pasta">
+        <img src="https://images.unsplash.com/photo-1621996346565-e3bb64e0be5e?auto=format&fit=crop&w=300&q=80" alt="Tuscan Pasta">
       </div>
     </div>
 
     <!-- RECIPE GRID -->
     <div class="section-head">
       <h2 class="section-title" id="gridTitle">Popular Recipes</h2>
-      <button class="see-all" onclick="filterCat('all', null)">See all →</button>
+      <button class="see-all" onclick="resetFilters()">Clear Filters ×</button>
     </div>
     <div class="recipe-grid" id="recipeGrid"></div>
   </div>
@@ -1372,7 +1408,7 @@ footer .footer-logo span { color: var(--gold); }
     </div>
     <div class="form-row-2">
       <div class="form-group">
-        <label class="form-label">Cuisine Type</label>
+        <label class="form-label">Cuisine Type (Region)</label>
         <select class="form-input" id="r-cuisine">
           <option value="">— Select —</option>
           <option>Indian</option><option>Italian</option><option>Mexican</option>
@@ -1495,7 +1531,7 @@ const recipes = [
   },
   { id:"2", name:"Avocado Toast", cuisine:"American", cat:"breakfast", desc:"Creamy avocado on sourdough with chili flakes, lemon, and poached eggs.", image:"https://images.unsplash.com/photo-1541532713592-79a0317b6b77?auto=format&fit=crop&w=600&q=80", time:15, servings:2, calories:320, diff:"Easy", rating:4.6, chef:"Chef Sara", chefEmoji:"👩‍🍳",
     ingredients:["2 slices sourdough","2 ripe avocados","2 eggs","Lemon juice","Chili flakes","Salt & pepper","Olive oil drizzle","Microgreens (optional)"],
-    steps:["Toast bread until golden and crispy.","Mash avocados with lemon, salt, and pepper.","Poach eggs in simmering water for 3 minutes.","Spread avocado on toast.","Top with egg, chili flakes, and a drizzle of olive oil."]
+    steps:["Toast bread until golden and crispy.","Mash avocados with lemon, salt, and pepper.","Poach eggs in simmering water for 3 minutes.","Spread avocado on toast. top with egg, chili flakes, and a drizzle of olive oil."]
   },
   { id:"3", name:"Miso Ramen", cuisine:"Japanese", cat:"soup", desc:"Deep umami broth with silky noodles, soft egg, nori, and bamboo shoots.", image:"https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80", time:60, servings:2, calories:440, diff:"Medium", rating:4.9, chef:"Chef Hiro", chefEmoji:"👨‍🍳",
     ingredients:["200g ramen noodles","4 cups dashi stock","3 tbsp white miso","Soy sauce to taste","Soft-boiled eggs","Nori sheets","Bamboo shoots","Spring onions","Sesame seeds","Chilli oil"],
@@ -1528,6 +1564,8 @@ const recipes = [
 ];
 
 let currentFilter = 'all';
+let currentRegion = 'all';
+let searchQuery = '';
 let selectedDiff = 'Easy';
 let isLoggedIn = false;
 let currentUser = null;
@@ -1566,6 +1604,43 @@ function buildCardHTML(r, i) {
   `;
 }
 
+// ─── CORE FILTER ENGINE ──────────────────────────────────────────
+function applyAllFilters() {
+  let filtered = allRecipes();
+
+  // 1. Course Category Filter
+  if (currentFilter !== 'all') {
+    filtered = filtered.filter(r => r.cat === currentFilter);
+  }
+
+  // 2. Regional Cuisine Filter
+  if (currentRegion !== 'all') {
+    filtered = filtered.filter(r => r.cuisine.toLowerCase() === currentRegion.toLowerCase());
+  }
+
+  // 3. Search Query Filter
+  if (searchQuery) {
+    filtered = filtered.filter(r =>
+      r.name.toLowerCase().includes(searchQuery) ||
+      r.cuisine.toLowerCase().includes(searchQuery) ||
+      r.desc.toLowerCase().includes(searchQuery) ||
+      r.cat.toLowerCase().includes(searchQuery)
+    );
+  }
+
+  // Update Section Title Label
+  const titleEl = document.getElementById('gridTitle');
+  if (searchQuery) {
+    titleEl.textContent = `Results for "${searchQuery}"`;
+  } else {
+    const catLabel = currentFilter === 'all' ? 'Popular' : currentFilter.charAt(0).toUpperCase() + currentFilter.slice(1);
+    const regionLabel = currentRegion === 'all' ? 'Global' : currentRegion;
+    titleEl.textContent = `${regionLabel} ${catLabel} Recipes`;
+  }
+
+  renderGrid(filtered);
+}
+
 // ─── RENDER MAIN GRID ─────────────────────────────────────────────
 function renderGrid(data) {
   const grid = document.getElementById('recipeGrid');
@@ -1573,7 +1648,7 @@ function renderGrid(data) {
     grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
       <span class="empty-state-icon">🍽️</span>
       <h3>No recipes found</h3>
-      <p>Try a different search or category</p>
+      <p>Try changing your category or region settings.</p>
     </div>`;
     return;
   }
@@ -1600,31 +1675,43 @@ function allRecipes() { return [...recipes, ...customRecipes]; }
 
 renderGrid(recipes);
 
-// ─── FILTER ──────────────────────────────────────────────────────
+// ─── TRIGGER FILTERS VIA UI ──────────────────────────────────────
 function filterCat(cat, btn) {
   currentFilter = cat;
   if (btn) {
-    document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('#catStrip .cat-pill').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
   }
-  const all = allRecipes();
-  const filtered = cat === 'all' ? all : all.filter(r => r.cat === cat);
-  document.getElementById('gridTitle').textContent = cat === 'all' ? 'Popular Recipes' : cat.charAt(0).toUpperCase()+cat.slice(1)+' Recipes';
-  renderGrid(filtered);
+  applyAllFilters();
+}
+
+function filterRegion(region, btn) {
+  currentRegion = region;
+  if (btn) {
+    document.querySelectorAll('#regionStrip .region-pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  applyAllFilters();
+}
+
+function resetFilters() {
+  currentFilter = 'all';
+  currentRegion = 'all';
+  searchQuery = '';
+  document.getElementById('navSearch').value = '';
+  
+  document.querySelectorAll('#catStrip .cat-pill').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('#regionStrip .region-pill').forEach(p => p.classList.remove('active'));
+  document.querySelector('#catStrip .cat-pill').classList.add('active');
+  document.querySelector('#regionStrip .region-pill').classList.add('active');
+  
+  applyAllFilters();
 }
 
 // ─── SEARCH ──────────────────────────────────────────────────────
 function handleSearch(q) {
-  q = q.toLowerCase().trim();
-  const all = allRecipes();
-  const filtered = q ? all.filter(r =>
-    r.name.toLowerCase().includes(q) ||
-    r.cuisine.toLowerCase().includes(q) ||
-    r.desc.toLowerCase().includes(q) ||
-    r.cat.toLowerCase().includes(q)
-  ) : all;
-  renderGrid(filtered);
-  document.getElementById('gridTitle').textContent = q ? `Results for "${q}"` : 'Popular Recipes';
+  searchQuery = q.toLowerCase().trim();
+  applyAllFilters();
   goHome(false);
 }
 
@@ -1822,7 +1909,6 @@ function publishRecipe() {
   const serv = parseInt(document.getElementById('r-serv').value)||4;
   const cal = parseInt(document.getElementById('r-cal').value)||400;
 
-  // Fallback to high-quality general food photo if author provides no custom image URL link
   if(!imgUrl) {
     imgUrl = "https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=600&q=80";
   }
@@ -1846,7 +1932,7 @@ function publishRecipe() {
   showToast('🎉', 'Recipe published successfully!');
   setTimeout(() => {
     goHome();
-    filterCat('all', document.querySelector('.cat-pill'));
+    resetFilters();
   }, 800);
 }
 
@@ -1856,17 +1942,14 @@ function toggleFav(e, btn, id) {
   
   const targetId = id.toString();
   const index = favoritesList.indexOf(targetId);
-  let loved = false;
 
   if (index === -1) {
     favoritesList.push(targetId);
-    loved = true;
     btn.classList.add('loved');
     btn.textContent = '❤️';
     showToast('❤️', 'Added to favorites!');
   } else {
     favoritesList.splice(index, 1);
-    loved = false;
     btn.classList.remove('loved');
     btn.textContent = '🤍';
     showToast('🤍', 'Removed from favorites');
@@ -1878,8 +1961,7 @@ function toggleFav(e, btn, id) {
   if (activePage === 'page-fav') {
     renderFavsGrid();
   } else if (activePage === 'page-home') {
-    const currentCatBtn = document.querySelector('.cat-pill.active');
-    filterCat(currentFilter, currentCatBtn);
+    applyAllFilters();
   }
 }
 
@@ -1896,7 +1978,6 @@ document.getElementById('role-chef').addEventListener('click', () => {
   document.getElementById('role-foodie').classList.remove('selected');
 });
 
-// Close mobile menu on outside click
 document.addEventListener('click', e => {
   const menu = document.getElementById('mobileMenu');
   const ham = document.querySelector('.hamburger');
