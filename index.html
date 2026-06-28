@@ -1,1084 +1,371 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>XTROTIO — Recipes by Real Chefs & Global Culinary Marketplace</title>
-<meta name="description" content="Discover thousands of easy, professional-grade recipes across global cuisines. From quick weeknight dinner options to authentic baking methods, master the art of cooking with XTROTIO.">
-<meta name="keywords" content="easy dinner recipes, chef recipes online, authentic regional food, home cooking tutorials, quick baking methods, healthy meal preparation recipes">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@300;400;500;600;700&family=Libre+Baskerville:ital@1&display=swap" rel="stylesheet">
-<style>
-:root {
-  --cream: #fdf8f0;
-  --warm: #f5ede0;
-  --paper: #fffcf7;
-  --orange: #e85d26;
-  --orange-light: #ff7a44;
-  --orange-deep: #c44a18;
-  --brown: #3d2b1f;
-  --brown-light: #7a5444;
-  --brown-mid: #5a3d2e;
-  --green: #4a7c59;
-  --green-light: #6aab7a;
-  --gold: #d4a843;
-  --text: #2c1f14;
-  --muted: #9a7b6a;
-  --border: #e8d5c4;
-  --shadow: rgba(61,43,31,0.12);
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--cream);
-  color: var(--text);
-  font-family: 'Nunito', sans-serif;
-  font-size: 15px;
-  overflow-x: hidden;
-  min-height: 100vh;
-}
-
-/* ─── UTILITY ─── */
-.hidden { display: none !important; }
-.page { display: none; }
-.page.active { display: block; }
-
-/* ─── NAV ─── */
-nav {
-  position: sticky;
-  top: 0;
-  z-index: 200;
-  background: rgba(253,248,240,0.95);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 20px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.nav-logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 26px;
-  font-weight: 900;
-  color: var(--orange);
-  letter-spacing: -0.5px;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.nav-logo span { color: var(--brown); }
-
-.nav-search {
-  flex: 1;
-  max-width: 340px;
-  position: relative;
-}
-
-.nav-search input {
-  width: 100%;
-  background: var(--warm);
-  border: 1.5px solid var(--border);
-  border-radius: 100px;
-  padding: 8px 16px 8px 40px;
-  font-family: 'Nunito', sans-serif;
-  font-size: 14px;
-  color: var(--text);
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.nav-search input:focus { border-color: var(--orange); }
-
-.nav-search::before {
-  content: '🔍';
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 14px;
-  pointer-events: none;
-}
-
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.nav-btn {
-  padding: 8px 16px;
-  border-radius: 100px;
-  font-family: 'Nunito', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  border: none;
-  transition: all 0.2s;
-  white-space: nowrap;
-}
-
-.btn-ghost {
-  background: transparent;
-  color: var(--brown-mid);
-  border: 1.5px solid var(--border);
-}
-
-.btn-ghost:hover { border-color: var(--orange); color: var(--orange); }
-
-.btn-fav {
-  background: transparent;
-  color: #e85d26;
-  border: 1.5px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.btn-fav:hover { background: rgba(232,93,38,0.05); border-color: var(--orange); }
-.fav-count {
-  background: var(--orange);
-  color: white;
-  font-size: 11px;
-  padding: 1px 6px;
-  border-radius: 100px;
-  font-weight: 700;
-}
-
-.btn-chef {
-  background: var(--orange);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.btn-chef:hover { background: var(--orange-deep); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(232,93,38,0.35); }
-
-.btn-chef-icon { font-size: 16px; }
-
-.hamburger {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 22px;
-  cursor: pointer;
-  color: var(--brown);
-  padding: 4px;
-}
-
-/* ─── MOBILE MENU ─── */
-.mobile-menu {
-  display: none;
-  position: fixed;
-  top: 64px; left: 0; right: 0;
-  background: var(--paper);
-  border-bottom: 1px solid var(--border);
-  padding: 20px;
-  z-index: 199;
-  flex-direction: column;
-  gap: 12px;
-  box-shadow: 0 10px 40px var(--shadow);
-}
-
-.mobile-menu.open { display: flex; }
-
-.mobile-menu .nav-btn { width: 100%; justify-content: center; padding: 12px; border-radius: 12px; }
-
-/* ─── HERO ─── */
-.hero {
-  background: linear-gradient(135deg, #3d2b1f 0%, #5a3d2e 50%, #7a5444 100%);
-  padding: 60px 20px 80px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(38px, 8vw, 80px);
-  font-weight: 900;
-  color: #fff;
-  line-height: 1.05;
-  margin-bottom: 16px;
-  animation: fadeUp 0.8s ease both;
-}
-
-.hero h1 em {
-  color: var(--gold);
-  font-style: italic;
-}
-
-.hero-sub {
-  font-size: clamp(15px, 2.5vw, 18px);
-  color: rgba(255,255,255,0.72);
-  max-width: 520px;
-  margin: 0 auto 36px;
-  line-height: 1.7;
-  font-weight: 300;
-  animation: fadeUp 0.8s ease 0.1s both;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-  animation: fadeUp 0.8s ease 0.2s both;
-}
-
-.hero-btn-primary {
-  background: var(--orange);
-  color: #fff;
-  padding: 14px 28px;
-  border-radius: 100px;
-  border: none;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.hero-btn-primary:hover { background: var(--orange-light); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(232,93,38,0.45); }
-
-/* ─── SCROLLING STRIPS ─── */
-.filter-strip-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 16px 20px 4px;
-}
-
-.strip-label {
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--brown-light);
-  margin-bottom: 8px;
-}
-
-.cat-strip {
-  overflow-x: auto;
-  display: flex;
-  gap: 10px;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  padding-bottom: 12px;
-}
-.cat-strip::-webkit-scrollbar { display: none; }
-
-.cat-pill {
-  flex-shrink: 0;
-  padding: 8px 18px;
-  border-radius: 100px;
-  border: 1.5px solid var(--border);
-  background: var(--paper);
-  font-family: 'Nunito', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--brown-mid);
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-}
-
-.cat-pill:hover, .cat-pill.active {
-  background: var(--orange);
-  color: #fff;
-  border-color: var(--orange);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(232,93,38,0.3);
-}
-
-.cat-pill.region-pill.active {
-  background: var(--green);
-  border-color: var(--green);
-  box-shadow: 0 6px 16px rgba(74,124,89,0.3);
-}
-
-/* ─── MAIN LAYOUT ─── */
-.main-wrap {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px 20px 60px;
-}
-
-.section-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 24px;
-  gap: 12px;
-}
-
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(22px, 4vw, 32px);
-  font-weight: 700;
-  color: var(--brown);
-}
-
-.see-all {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--orange);
-  cursor: pointer;
-  white-space: nowrap;
-  background: none;
-  border: none;
-  font-family: 'Nunito', sans-serif;
-  padding: 0;
-}
-
-.see-all:hover { text-decoration: underline; }
-
-/* ─── RECIPE GRID ─── */
-.recipe-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
-}
-
-.recipe-card {
-  background: var(--paper);
-  border: 1.5px solid var(--border);
-  border-radius: 20px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 0.3s;
-  position: relative;
-  animation: fadeUp 0.5s ease both;
-}
-
-.recipe-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 48px var(--shadow);
-  border-color: var(--orange);
-}
-
-.recipe-thumb {
-  width: 100%;
-  height: 200px;
-  position: relative;
-  overflow: hidden;
-  background: var(--warm);
-}
-
-.recipe-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.recipe-card:hover .recipe-thumb img {
-  transform: scale(1.06);
-}
-
-.recipe-badge {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(8px);
-  border-radius: 100px;
-  padding: 4px 10px;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--orange);
-  letter-spacing: 0.5px;
-  z-index: 2;
-}
-
-.recipe-fav {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  width: 32px;
-  height: 32px;
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(8px);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.2s;
-  z-index: 10;
-}
-
-.recipe-fav:hover { transform: scale(1.15); }
-.recipe-fav.loved { color: var(--orange); }
-
-.recipe-body { padding: 16px; }
-
-.recipe-cuisine {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--green);
-  margin-bottom: 6px;
-}
-
-.recipe-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--brown);
-  margin-bottom: 8px;
-  line-height: 1.25;
-}
-
-.recipe-desc {
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.55;
-  margin-bottom: 14px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.recipe-meta {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  border-top: 1px solid var(--border);
-  padding-top: 12px;
-}
-
-.meta-item {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12px;
-  color: var(--muted);
-  font-weight: 600;
-}
-
-.chef-info {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 10px;
-}
-
-.chef-avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  flex-shrink: 0;
-}
-
-.chef-name { font-size: 12px; font-weight: 600; color: var(--brown-light); }
-
-/* ─── FEATURED CARD ─── */
-.featured-card {
-  background: linear-gradient(135deg, rgba(61, 43, 31, 0.9) 0%, rgba(90, 61, 46, 0.95) 100%), url('https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=1200&q=80');
-  background-size: cover;
-  background-position: center;
-  border-radius: 24px;
-  padding: 40px;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 24px;
-  align-items: center;
-  margin-bottom: 36px;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.3s;
-}
-
-.featured-card:hover { transform: translateY(-4px); }
-
-.feat-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.featured-card h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(24px, 4vw, 40px);
-  color: #fff;
-  line-height: 1.1;
-  margin-bottom: 10px;
-}
-
-.featured-card p {
-  font-size: 15px;
-  color: rgba(255,255,255,0.8);
-  line-height: 1.6;
-  margin-bottom: 24px;
-  max-width: 460px;
-}
-
-.feat-tags { display: flex; gap: 8px; flex-wrap: wrap; }
-
-.feat-tag {
-  background: rgba(255,255,255,0.15);
-  color: rgba(255,255,255,0.95);
-  padding: 6px 14px;
-  border-radius: 100px;
-  font-size: 12px;
-  font-weight: 600;
-  backdrop-filter: blur(4px);
-}
-
-.feat-img-container {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  border: 4px solid rgba(255,255,255,0.2);
-  overflow: hidden;
-  box-shadow: 0 12px 32px rgba(0,0,0,0.25);
-}
-
-.feat-img-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* ─── RECIPE DETAIL PAGE ─── */
-#page-recipe {
-  max-width: 840px;
-  margin: 0 auto;
-  padding: 24px 20px 60px;
-}
-
-.recipe-detail-banner {
-  width: 100%;
-  height: 340px;
-  border-radius: 24px;
-  overflow: hidden;
-  margin-bottom: 24px;
-  box-shadow: 0 10px 30px var(--shadow);
-}
-
-.recipe-detail-banner img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.recipe-detail-header-card {
-  background: linear-gradient(135deg, var(--brown-mid), var(--brown));
-  border-radius: 24px;
-  padding: 36px;
-  text-align: center;
-  margin-bottom: 32px;
-}
-
-.recipe-detail-header-card h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(26px, 5vw, 42px);
-  color: #fff;
-  margin-bottom: 12px;
-}
-
-.recipe-detail-header-card p { font-size: 15px; color: rgba(255,255,255,0.7); max-width: 520px; margin: 0 auto 24px; line-height: 1.6; }
-
-.detail-meta-row {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-
-.detail-meta-item {
-  text-align: center;
-  background: rgba(255,255,255,0.1);
-  padding: 10px 18px;
-  border-radius: 12px;
-  min-width: 100px;
-}
-
-.detail-meta-num { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--gold); display: block; }
-.detail-meta-label { font-size: 11px; color: rgba(255,255,255,0.55); letter-spacing: 1px; text-transform: uppercase; }
-
-.detail-section {
-  background: var(--paper);
-  border: 1.5px solid var(--border);
-  border-radius: 20px;
-  padding: 28px;
-  margin-bottom: 20px;
-}
-
-.detail-section h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 22px;
-  color: var(--brown);
-  margin-bottom: 18px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.ingredient-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-
-.ingredient-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
-  background: var(--warm);
-  border-radius: 10px;
-  font-size: 14px;
-}
-
-.ingredient-check {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 2px solid var(--orange);
-  flex-shrink: 0;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-}
-
-.ingredient-check.checked { background: var(--orange); color: #fff; }
-
-.step-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
-
-.step-item {
-  display: flex;
-  gap: 16px;
-  padding: 16px;
-  background: var(--warm);
-  border-radius: 14px;
-}
-
-.step-num {
-  width: 36px;
-  height: 36px;
-  background: var(--orange);
-  color: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 15px;
-  flex-shrink: 0;
-}
-
-.step-text { font-size: 14px; line-height: 1.6; color: var(--brown-mid); padding-top: 6px; }
-
-.back-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: none;
-  border: none;
-  font-family: 'Nunito', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--orange);
-  cursor: pointer;
-  padding: 0 0 20px;
-}
-
-.back-btn:hover { text-decoration: underline; }
-
-/* ─── TOAST / FLOATING ELEMENTS ─── */
-.toast {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%) translateY(100px);
-  background: var(--brown);
-  color: #fff;
-  padding: 14px 24px;
-  border-radius: 100px;
-  font-size: 14px;
-  font-weight: 600;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
-  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
-  white-space: nowrap;
-}
-
-.toast.show { transform: translateX(-50%) translateY(0); }
-
-.empty-state { text-align: center; padding: 60px 20px; color: var(--muted); }
-.empty-state-icon { font-size: 56px; display: block; margin-bottom: 16px; }
-
-footer { background: var(--brown); color: rgba(255,255,255,0.7); text-align: center; padding: 32px 20px; font-size: 13px; }
-footer .footer-logo { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; color: #fff; margin-bottom: 10px; }
-footer .footer-logo span { color: var(--gold); }
-
-@media (max-width: 700px) {
-  .nav-search { display: none; }
-  .hamburger { display: flex; }
-  .featured-card { grid-template-columns: 1fr; }
-  .feat-img-container { display: none; }
-  .recipe-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
-  .recipe-thumb { height: 140px; }
-  .recipe-detail-banner { height: 220px; }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XTROTIO — Create. Inspire. Innovate.</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              fontFamily: {
+                sans: ['system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+              }
+            }
+          }
+        }
+    </script>
+
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        body { background-color: #050816; margin: 0; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        /* Ultra-premium smooth scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050816; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 99px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00E5FF; }
+    </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo" onclick="goHome()">XTRO<span>TIO</span></div>
-  <div class="nav-search">
-    <input type="text" placeholder="Search recipes, ingredients, keyword formulas…" id="navSearch" oninput="handleSearch(this.value)">
-  </div>
-  <div class="nav-right">
-    <button class="nav-btn btn-fav" onclick="goToFavs()">
-      <span>❤️</span> <span class="fav-count" id="navFavCount">0</span>
-    </button>
-    <button class="hamburger" onclick="toggleMenu()">☰</button>
-  </div>
-</nav>
+    <div id="root"></div>
 
-<!-- MAIN APP CANVAS CONTAINER -->
-<div id="page-home" class="page active">
-  <section class="hero">
-    <h1>Cook with <em>Passion</em>,<br>Discover Global Cuisines</h1>
-    <p class="hero-sub">Ranked authority cooking blueprints developed to automate workspace side-monetization execution patterns.</p>
-  </section>
+    <script type="text/javascript">
+        // Bind required hooks out of UMD globals
+        const { useState, useEffect, useRef } = React;
+        const { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring } = FramerMotion;
 
-  <!-- FILTERS SYSTEM MODULE HUB -->
-  <div class="filter-strip-container">
-    <div class="strip-label">Filter By Course Category</div>
-    <div class="cat-strip" id="catStrip">
-      <button class="cat-pill active" onclick="filterCat('all',this)">🍽️ All Courses</button>
-      <button class="cat-pill" onclick="filterCat('breakfast',this)">🥞 Breakfast</button>
-      <button class="cat-pill" onclick="filterCat('lunch',this)">🥗 Lunch</button>
-      <button class="cat-pill" onclick="filterCat('dinner',this)">🍝 Dinner</button>
-      <button class="cat-pill" onclick="filterCat('dessert',this)">🍰 Desserts</button>
-      <button class="cat-pill" onclick="filterCat('soup',this)">🍜 Soups</button>
-      <button class="cat-pill" onclick="filterCat('vegan',this)">🥦 Vegan</button>
-      <button class="cat-pill" onclick="filterCat('seafood',this)">🦐 Seafood</button>
-      <button class="cat-pill" onclick="filterCat('baking',this)">🍞 Baking</button>
-      <button class="cat-pill" onclick="filterCat('drinks',this)">🍹 Drinks</button>
-    </div>
+        // --- GLOBAL DESIGN CONSTANTS ---
+        const NAV_LINKS = ['Home', 'Features', 'Showcase', 'Stats', 'Pricing', 'FAQ', 'Contact'];
 
-    <div class="strip-label" style="margin-top:6px">Filter By Global Regional Heritage</div>
-    <div class="cat-strip" id="regionStrip">
-      <button class="cat-pill region-pill active" onclick="filterRegion('all',this)">🌍 Global All</button>
-      <button class="cat-pill region-pill" onclick="filterRegion('Italian',this)">🇮🇹 Italian</button>
-      <button class="cat-pill region-pill" onclick="filterRegion('Indian',this)">🇮🇳 Indian</button>
-      <button class="cat-pill region-pill" onclick="filterRegion('Japanese',this)">🇯🇵 Japanese</button>
-      <button class="cat-pill region-pill" onclick="filterRegion('Mexican',this)">🇲🇽 Mexican</button>
-      <button class="cat-pill region-pill" onclick="filterRegion('French',this)">🇫🇷 French</button>
-      <button class="cat-pill region-pill" onclick="filterRegion('American',this)">🇺🇸 American</button>
-      <button class="cat-pill region-pill" onclick="filterRegion('Mediterranean',this)">🇬🇷 Mediterranean</button>
-      <button class="cat-pill region-pill" onclick="filterRegion('Chinese',this)">🇨🇳 Chinese</button>
-      <button class="cat-pill region-pill" onclick="filterRegion('Middle Eastern',this)">🕌 Middle Eastern</button>
-      <button class="cat-pill region-pill" onclick="filterRegion('Thai',this)">🇹🇭 Thai</button>
-    </div>
-  </div>
+        const FEATURES = [
+          { icon: "Cpu", title: "Next-Gen Engine", desc: "Powered by a proprietary neural core architecture engineered for sub-millisecond data synchronization across global edge clusters." },
+          { icon: "Shield", title: "Quantum Security", desc: "End-to-end cryptographic infrastructure implementing post-quantum encryption models with zero-trust validation layers." },
+          { icon: "Zap", title: "Hyper Performance", desc: "Optimized runtime compiling pipeline delivering smooth 120Hz interface renders and GPU-accelerated computing matrices." },
+          { icon: "Layers", title: "Fluid Architecture", desc: "Modular, highly flexible layer composition models supporting nested component injection and seamless state propagation." },
+          { icon: "Globe", title: "Global Mesh Network", desc: "Distributed content mapping edge framework bypassing standard web routing choke points for unparalleled speeds." },
+          { icon: "BarChart3", title: "Predictive Analytics", desc: "Integrated behavioral modeling engines providing live operational data visualizers with deep contextual metrics." }
+        ];
 
-  <div class="main-wrap">
-    <!-- HERO STRATEGIC VALUE METRICS ROW ENTRY CARD -->
-    <div class="featured-card" onclick="openRecipe('0')">
-      <div>
-        <div class="feat-label">⭐ High Intent Blueprint Alternative</div>
-        <h2>Creamy Tuscan Pasta</h2>
-        <p>A classic quick Italian weeknight meal setup designed to scale platform engagement velocity instantly.</p>
-        <div class="feat-tags">
-          <span class="feat-tag">🕐 30 min</span>
-          <span class="feat-tag">🔥 520 cal</span>
-          <span class="feat-tag">Italian</span>
-        </div>
-      </div>
-      <div class="feat-img-container">
-        <img src="https://images.unsplash.com/photo-1621996346565-e3bb64e0be5e?auto=format&fit=crop&w=300&q=80" alt="Tuscan Pasta Entry">
-      </div>
-    </div>
+        const STATS = [
+          { value: "100K+", label: "Active Nodes" },
+          { value: "10M+", label: "Daily Operations" },
+          { value: "50+", label: "Global Clusters" },
+          { value: "99.99%", label: "System Uptime" }
+        ];
 
-    <div class="section-head">
-      <h2 class="section-title" id="gridTitle">Popular Recipes Database</h2>
-      <button class="see-all" onclick="resetFilters()">Clear Filters ×</button>
-    </div>
-    <div class="recipe-grid" id="recipeGrid"></div>
-  </div>
-</div>
+        const TESTIMONIALS = [
+          { name: "Elena Rostova", role: "Principal Architect, Nexus Labs", review: "The paradigm shift XTROTIO engineered is stunning. The fluidity, speed, and absolute robustness of their glassmorphic pipeline changed our entire workflow model overnight.", rating: 5 },
+          { name: "Marcus Vance", role: "VP of Product, Aether Corp", review: "Design meets absolute power here. The ambient interaction physics and performance metrics aren't just aesthetic tricks; they feel organically alive.", rating: 5 },
+          { name: "Sora Takahashi", role: "Lead Dev, Synthetix Global", review: "We benchmarked XTROTIO against three legacy enterprise frameworks. XTROTIO didn't just win; it redefined what we thought 60 FPS interfaces could handle.", rating: 5 }
+        ];
 
-<div id="page-recipe" class="page" style="display:none">
-  <div id="recipeDetailContent"></div>
-</div>
+        const FAQS = [
+          { q: "How does the ambient illumination layer handle performance scaling?", a: "XTROTIO compiles all glassmorphic blur matrices and dynamic radial glows directly into custom GPU shaders, utilizing hardware-accelerated CSS composite layers to guarantee constant 60+ FPS playback even on mobile devices." },
+          { q: "Can we bridge our existing React infrastructure into XTROTIO?", a: "Absolutely. XTROTIO is designed with complete backward compatibility for standard modern ECMAScript specifications without structural mutations." },
+          { q: "What security measures dictate the quantum layer protocols?", a: "Our architecture employs dynamic lattice-based cryptography operating alongside a zero-knowledge proof framework, validating data payloads safely without exposing private key infrastructure." }
+        ];
 
-<div id="page-fav" class="page" style="display:none">
-  <div class="main-wrap">
-    <button class="back-btn" onclick="goHome()">← Back to Home Dashboard</button>
-    <div class="section-head"><h2 class="section-title">Your Saved Blueprints Folder ❤️</h2></div>
-    <div class="recipe-grid" id="favRecipeGrid"></div>
-  </div>
-</div>
+        // --- HELPER COMPONENT FOR DYNAMIC CDN ICONS ---
+        function DynamicIcon({ name, size = 20, className = "" }) {
+            const elRef = useRef(null);
+            useEffect(() => {
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            }, [name]);
+            return React.createElement('i', {
+                'data-lucide': name.toLowerCase(),
+                style: { width: size, height: size },
+                className: `inline-block ${className}`
+            });
+        }
 
-<footer>
-  <div class="footer-logo">XTRO<span>TIO</span></div>
-  <p>© 2026 XTROTIO Marketplace Engine. Engineered for Organic Growth Processing Frameworks.</p>
-</footer>
+        // --- SUB-COMPONENT: FAQ ACCORDION ITEM ---
+        function FaqAccordionItem({ q, a }) {
+          const [isOpen, setIsOpen] = useState(false);
+          return React.createElement("div", { className: "rounded-2xl border border-white/10 bg-white/[0.01] backdrop-blur-md overflow-hidden transition-all duration-200 hover:border-white/20" },
+            React.createElement("button", { onClick: () => setIsOpen(!isOpen), className: "w-full p-6 text-left flex items-center justify-between font-semibold text-white text-sm md:text-base focus:outline-none" },
+              React.createElement("span", null, q),
+              React.createElement(motion.div, { animate: { rotate: isOpen ? 180 : 0 }, transition: { type: "spring", damping: 15 } },
+                React.createElement(DynamicIcon, { name: "ChevronDown", size: 16, className: "text-slate-500" })
+              )
+            ),
+            React.createElement(AnimatePresence, { initial: false },
+              isOpen && React.createElement(motion.div, {
+                initial: { height: 0, opacity: 0 },
+                animate: { height: "auto", opacity: 1 },
+                exit: { height: 0, opacity: 0 },
+                transition: { duration: 0.25, ease: "easeInOut" }
+              },
+                React.createElement("div", { className: "px-6 pb-6 text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-4" }, a)
+              )
+            )
+          );
+        }
 
-<div class="toast" id="toast">
-  <span id="toastIcon">✅</span> <span id="toastMsg">Action Verified</span>
-</div>
+        // --- SUB-COMPONENT: ENCRYPTED SECURE FORM ---
+        function ContactPayloadForm() {
+          const [form, setForm] = useState({ name: '', email: '', message: '' });
+          const [sent, setSent] = useState(false);
+          const [loading, setLoading] = useState(false);
 
-<script>
-// ─── MASSIVE CORE DATABASE ARRAY MATRICES (30 ENTRIES STRATEGICALLY SCALED) ───
-const recipes = [
-  // ITALIAN
-  { id:"0", name:"Creamy Tuscan Pasta", cuisine:"Italian", cat:"dinner", desc:"Velvety garlic heavy cream sauce paired with sun-dried tomatoes and fresh spinach leaves over al dente noodles.", image:"https://images.unsplash.com/photo-1621996346565-e3bb64e0be5e?auto=format&fit=crop&w=600&q=80", time:30, servings:4, calories:520, diff:"Easy", rating:4.9, chef:"Chef Marco", chefEmoji:"👨‍🍳", ingredients:["400g spaghetti","1 cup sun-dried tomatoes","2 cups spinach","1 cup heavy cream","4 garlic cloves"], steps:["Boil pasta until al dente.","Sauté garlic and tomatoes in olive oil.","Pour cream, bring to a simmer. Fold spinach until wilted.","Toss pasta in completed cream base."] },
-  { id:"1", name:"Authentic Neapolitan Margherita Pizza", cuisine:"Italian", cat:"baking", desc:"Crusty hand-stretched pizza dough baseline topped with San Marzano tomato paste, fresh mozzarella, and aromatic basil lines.", image:"https://images.unsplash.com/photo-1604382355076-af4b0eb60143?auto=format&fit=crop&w=600&q=80", time:20, servings:2, calories:680, diff:"Medium", rating:4.8, chef:"Chef Luigi", chefEmoji:"👨‍🍳", ingredients:["250g pizza dough","1/2 cup San Marzano sauce","100g fresh mozzarella","Fresh basil leaves"], steps:["Preheat oven matrix to maximum thermal setting.","Roll out structural base matrix into thin disc layer.","Distribute tomato base evenly across center space canvas. Layer mozzarella sheets across face layer surface.","Bake item layer runtime for 8 minutes total space execution window."] },
-  { id:"2", name:"Classic Vanilla Bean Panna Cotta", cuisine:"Italian", cat:"dessert", desc:"Silky smooth chilled Italian cream mold set gelatin layer finished clean with fresh raspberry coulis layers.", image:"https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=600&q=80", time:15, servings:4, calories:310, diff:"Easy", rating:4.7, chef:"Chef Sophia", chefEmoji:"👩‍🍳", ingredients:["2 cups heavy cream","1/4 cup sugar","1 vanilla bean split open","2.5 tsp gelatin powder"], steps:["Warm cream, sugar, and vanilla profiles together slowly over low thermal lines.","Whisk gelatin elements into structural compound fluid base smoothly.","Pour distribution output items across clean service glass molds. Cool in refrigeration context for 4 hours minimum."] },
+          const executeSubmit = (e) => {
+            e.preventDefault();
+            if (!form.name || !form.email || !form.message) return;
+            setLoading(true);
+            setTimeout(() => {
+              setLoading(false);
+              setSent(true);
+              setForm({ name: '', email: '', message: '' });
+            }, 1000);
+          };
 
-  // INDIAN
-  { id:"3", name:"Premium Butter Chicken", cuisine:"Indian", cat:"dinner", desc:"Tender oven-broiled chicken chunks folded seamlessly into an aromatic spiced velvety rich cashew butter gravy sauce.", image:"https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=600&q=80", time:45, servings:4, calories:480, diff:"Medium", rating:4.8, chef:"Chef Priya", chefEmoji:"👩‍🍳", ingredients:["600g chicken breasts","1 cup heavy cream","3 tbsp unsalted butter","2 tsp garam masala matrix","1 can tomato puree"], steps:["Marinate chicken cuts in yogurt mix matrix block for 30 minutes.","Pan-sear chicken chunks cleanly until surface edges brown.","Build sauce base using pureed tomatoes, garlic elements, and cream base lines.","Simmer components together cleanly for 15 minutes processing window runtime."] },
-  { id:"4", name:"Crispy Spiced Potato Samosas", cuisine:"Indian", cat:"breakfast", desc:"Golden crispy pastry triangles loaded fully with spiced green peas and mashed potato fillings.", image:"https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&w=600&q=80", time:40, servings:6, calories:240, diff:"Hard", rating:4.6, chef:"Chef Rahul", chefEmoji:"👨‍🍳", ingredients:["2 cups flour wrapper","3 large potatoes boiled","1/2 cup green peas","1 tsp cumin seed element"], steps:["Mash potato ingredients while adding local seasonal aromatic spice lines.","Wrap individual serving items carefully inside pastry triangle pockets.","Deep fry elements cleanly in hot cooking oil lines until crust turns fully golden brown."] },
-  { id:"5", name:"Aromatic Cardamom Masala Chai", cuisine:"Indian", cat:"drinks", desc:"Robust local black tea leaves brewed alongside crushed fresh ginger lines and sweet green cardamom pods.", image:"https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80", time:10, servings:2, calories:90, diff:"Easy", rating:4.9, chef:"Chef Amit", chefEmoji:"👨‍🍳", ingredients:["2 tbsp black tea leaves","1 cup whole milk","1 cup water","3 cardamom pods crushed","1 inch fresh ginger"], steps:["Boil water along with crushed ginger and cardamom lines cleanly.","Introduce black tea leaf materials. Steep content layer runtime for 3 minutes total processing space window.","Pour milk volume cleanly into array pool. Bring layer context to rolling surface boil state. strain into mug container."] },
+          if (sent) {
+            return React.createElement(motion.div, { initial: { opacity: 0, scale: 0.98 }, animate: { opacity: 1, scale: 1 }, className: "text-center py-8 space-y-4" },
+              React.createElement("div", { className: "w-12 h-12 bg-[#00FFA3]/10 border border-[#00FFA3]/30 rounded-full flex items-center justify-center mx-auto text-[#00FFA3]" },
+                React.createElement(DynamicIcon, { name: "Send", size: 20 })
+              ),
+              React.createElement("h4", { className: "text-lg font-bold" }, "Transmission Successfully Handshaked"),
+              React.createElement("p", { className: "text-xs text-slate-400 max-w-xs mx-auto" }, "Your variables have been encrypted and streamed into our master control database frame pipeline."),
+              React.createElement("button", { onClick: () => setSent(false), className: "mt-2 text-xs bg-white/5 px-4 py-2 border border-white/10 text-slate-300 rounded-lg hover:text-white" }, "Transmit New Array")
+            );
+          }
 
-  // JAPANESE
-  { id:"6", name:"Classic Miso Ramen", cuisine:"Japanese", cat:"soup", desc:"Deep umami-rich white fermentation miso broth layered over ramen noodles, soft egg layers, and spring onions.", image:"https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80", time:60, servings:2, calories:440, diff:"Medium", rating:4.9, chef:"Chef Hiro", chefEmoji:"👨‍🍳", ingredients:["200g ramen noodles","4 cups dashi stock broth","3 tbsp white miso paste","Soft-boiled egg arrays","Spring onion strips"], steps:["Bring dashi elements base to slow rolling boil environment profile.","Whisk miso paste matrix elements completely into broth baseline context safely.","Assemble bowl lines cleanly: insert noodles first, map broth coverage evenly over surface. Top with halved egg profiles."] },
-  { id:"7", name:"Premium Avocado Salmon Sushi Roll", cuisine:"Japanese", cat:"lunch", desc:"Fresh sushi-grade Atlantic salmon ribbons paired with ripe avocado slices rolled tightly inside seasoned vinegar rice sheets.", image:"https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=600&q=80", time:35, servings:2, calories:380, diff:"Hard", rating:4.7, chef:"Chef Kenji", chefEmoji:"👨‍🍳", ingredients:["1 cup sushi rice","2 nori sheets","150g fresh salmon strips","1 avocado sliced clean"], steps:["Spread seasoned sushi rice across flat nori sheet layer face cleanly.","Position raw salmon elements and avocado lines across internal lane matrix paths directly.","Roll component matrix system tightly using clean bamboo mat items. Cut cleanly into individual circular items block arrays."] },
-  { id:"8", name:"Authentic Matcha Green Tea Ice Cream", cuisine:"Japanese", cat:"dessert", desc:"Premium ceremonial-grade Japanese green tea powder whipped down cleanly into a sweet frozen custard base setup.", image:"https://images.unsplash.com/photo-1534706936960-85aa4ec3e27a?auto=format&fit=crop&w=600&q=80", time:20, servings:4, calories:260, diff:"Easy", rating:4.8, chef:"Chef Yuka", chefEmoji:"👩‍🍳", ingredients:["2 cups heavy cream","1 cup whole milk","2 tbsp ceremonial matcha powder","1/2 cup sugar"], steps:["Whisk matcha elements smoothly into milk pool until all lumps are completely dissolved.","Incorporate heavy cream items and sugar crystals cleanly into fluid mixing matrix.","Process content matrix output stream using ice cream churn gear setup until dense state locks."] },
+          return React.createElement("form", { onSubmit: executeSubmit, className: "space-y-5" },
+            React.createElement("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-5" },
+              React.createElement("div", { className: "space-y-1.5" },
+                React.createElement("label", { className: "text-[10px] font-mono tracking-widest text-slate-500 uppercase" }, "Identity Struct Name"),
+                React.createElement("div", { className: "relative" },
+                  React.createElement(DynamicIcon, { name: "User", size: 14, className: "absolute left-4 top-1/2 -translate-y-1/2 text-slate-600" }),
+                  React.createElement("input", { required: true, type: "text", placeholder: "e.g. Sterling", value: form.name, onChange: (e) => setForm({ ...form, name: e.target.value }), className: "w-full pl-10 pr-4 py-3 bg-white/5 rounded-xl border border-white/10 focus:border-[#00E5FF] focus:bg-white/[0.08] text-xs text-white placeholder-slate-600 outline-none transition-all" })
+                )
+              ),
+              React.createElement("div", { className: "space-y-1.5" },
+                React.createElement("label", { className: "text-[10px] font-mono tracking-widest text-slate-500 uppercase" }, "Routing Cluster Email"),
+                React.createElement("div", { className: "relative" },
+                  React.createElement(DynamicIcon, { name: "Mail", size: 14, className: "absolute left-4 top-1/2 -translate-y-1/2 text-slate-600" }),
+                  React.createElement("input", { required: true, type: "email", placeholder: "operator@domain.xyz", value: form.email, onChange: (e) => setForm({ ...form, email: e.target.value }), className: "w-full pl-10 pr-4 py-3 bg-white/5 rounded-xl border border-white/10 focus:border-[#00E5FF] focus:bg-white/[0.08] text-xs text-white placeholder-slate-600 outline-none transition-all" })
+                )
+              )
+            ),
+            React.createElement("div", { className: "space-y-1.5" },
+              React.createElement("label", { className: "text-[10px] font-mono tracking-widest text-slate-500 uppercase" }, "Data Payload Specification"),
+              React.createElement("div", { className: "relative" },
+                React.createElement(DynamicIcon, { name: "MessageSquare", size: 14, className: "absolute left-4 top-3.5 text-slate-600" }),
+                React.createElement("textarea", { required: true, rows: 4, placeholder: "Type your design layout instructions...", value: form.message, onChange: (e) => setForm({ ...form, message: e.target.value }), className: "w-full pl-10 pr-4 py-3 bg-white/5 rounded-xl border border-white/10 focus:border-[#00E5FF] focus:bg-white/[0.08] text-xs text-white placeholder-slate-600 outline-none transition-all resize-none" })
+              )
+            ),
+            React.createElement("button", { type: "submit", disabled: loading, className: "w-full py-3.5 rounded-xl bg-white font-bold text-black text-xs transition-all duration-300 hover:bg-gradient-to-r hover:from-[#00E5FF] hover:to-[#00FFA3] flex items-center justify-center gap-2" },
+              loading ? React.createElement("div", { className: "w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" }) : React.createElement(React.Fragment, null, React.createElement("span", null, "Dispatch Secure Vector Package"), React.createElement(DynamicIcon, { name: "ArrowRight", size: 14 }))
+            )
+          );
+        }
 
-  // MEXICAN
-  { id:"9", name:"Crispy Beer-Battered Fish Tacos", cuisine:"Mexican", cat:"seafood", desc:"Crispy white fish filets paired with shredded cabbage slaw and homemade lime crema sauces across corn tortillas.", image:// CONTINUED DATA STREAM APPLIED STRATEGICALLY FOR SEO MAXIMIZATION
-  "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=600&q=80", time:35, servings:4, calories:410, diff:"Easy", rating:4.7, chef:"Chef Carlos", chefEmoji:"👨‍🍳", ingredients:["500g white fish fillets","8 corn tortillas","1 cup beer","Cabbage slaw mix"], steps:["Whisk flour and beer until clean smooth coating batter solidifies.","Dip fish cuts inside batter. Fry chunks inside 180°C oil for 4 minutes flat runtime.","Assemble tacos: lay cabbage first, position crispy fish block, apply lime crema."] },
-  { id:"10", name:"Sizzling Skillet Chicken Fajitas", cuisine:"Mexican", cat:"dinner", desc:"Marinated chicken breast strips flash-seared alongside vibrant bell pepper arrays and sweet white onions.", image:"https://images.unsplash.com/photo-1534939561126-855b8675edd7?auto=format&fit=crop&w=600&q=80", time:25, servings:3, calories:460, diff:"Easy", rating:4.8, chef:"Chef Maria", chefEmoji:"👩‍🍳", ingredients:["500g chicken breasts strip slices","3 bell peppers colored","1 onion","2 tbsp lime juice"], steps:["Slice chicken and vegetable array components down into uniform narrow lane segments.","Flash fry items inside heavy cast iron pan over maximized thermal settings.","Finish structure using fresh squeezed citrus lime juice layers directly."] },
-  { id:"11", name:"Chilled Mango Lime Aqua Fresca", cuisine:"Mexican", cat:"drinks", desc:"Sweet dynamic blended tropical mango pulp mixed down with chilled purified water elements and fresh lime lines.", image:"https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=600&q=80", time:10, servings:4, calories:120, diff:"Easy", rating:4.5, chef:"Chef Juan", chefEmoji:"👨‍🍳", ingredients:["2 ripe mangoes cubed","4 cups water","3 tbsp lime juice","Mint leaves array"], steps:["Blend mango cubes along with clear water pools into a uniform smooth fluid body state.","Pass fluid mixture outputs across fine wire mesh sieve to clear dense pulp artifacts.","Chill output beverage mix thoroughly before servicing over square ice cube arrays."] },
+        // --- MAIN APPLICATION BUILD MATRIX ---
+        function XTROTIOApp() {
+          const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+          const { scrollY } = useScroll();
+          
+          const navBackground = useTransform(scrollY, [0, 100], ["rgba(5, 8, 22, 0.4)", "rgba(5, 8, 22, 0.8)"]);
+          const navBlur = useTransform(scrollY, [0, 100], ["blur(12px)", "blur(24px)"]);
+          const navBorder = useTransform(scrollY, [0, 100], ["rgba(255, 255, 255, 0.05)", "rgba(255, 255, 255, 0.15)"]);
 
-  // FRENCH
-  { id:"12", name:"Decadent French Chocolate Lava Cake", cuisine:"French", cat:"dessert", desc:"Warm individual chocolate soufflé cakes structured cleanly with a rich molten lava core center.", image:"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80", time:25, servings:4, calories:380, diff:"Medium", rating:5.0, chef:"Chef Pierre", chefEmoji:"👨‍🍳", ingredients:["200g dark chocolate","100g butter","50g flour","4 eggs","100g sugar"], steps:["Melt dark chocolate blocks alongside sweet cream butter over indirect double boiler heat structures.","Whisk whole egg matrices and white sugar into a pale aerated foam profile.","Fold raw structural flour elements inside mix base cleanly. Bake inside individual cups for 12 minutes at 200°C."] },
-  { id:"13", name:"Classic Bakery Croissants", cuisine:"French", cat:"baking", desc:"Buttery, light flaky golden-laminated puff pastry crescents developed over traditional fold structures.", image:"https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80", time:180, servings:8, calories:410, diff:"Hard", rating:4.9, chef:"Chef Jean", chefEmoji:"👨‍🍳", ingredients:["500g bread flour","250g premium chilled butter","10g yeast","1/4 cup sugar"], steps:["Form uniform structural yeast dough block layer matrix.","Laminate sheet layers using cold flat square butter blocks inside roll folds sequentially.","Shape final cut segments down into crescent formats. Bake at 190°C processing window until golden."] },
-  { id:"14", name:"Provencal Vegetable Ratatouille Stew", cuisine:"French", cat:"vegan", desc:"A slow-simmered regional French vegetable array featuring eggplant discs, zucchini rows, and tomato layers.", image:"https://images.unsplash.com/photo-1572453860999-1adfd1723945?auto=format&fit=crop&w=600&q=80", time:50, servings:4, calories:190, diff:"Medium", rating:4.6, chef:"Chef Chloe", chefEmoji:"👩‍🍳", ingredients:["1 large eggplant","2 zucchini lines","2 bell peppers","1 can crushed tomatoes","Olive oil baseline"], steps:["Slice entire raw vegetable inventory list down into thin circular profile segments cleanly.","Layer vegetable components sequentially inside baking array over seasoned crushed tomato layers.","Slow bake framework assembly covered for 40 minutes continuous processing time window."] },
+          const cursorX = useMotionValue(-100);
+          const cursorY = useMotionValue(-100);
+          const cursorXSpring = useSpring(cursorX, { damping: 40, stiffness: 300, mass: 0.6 });
+          const cursorYSpring = useSpring(cursorY, { damping: 40, stiffness: 300, mass: 0.6 });
 
-  // AMERICAN
-  { id:"15", name:"Fluffy Buttermilk Breakfast Pancakes", cuisine:"American", cat:"breakfast", desc:"Golden-edge thick skillet pancakes built using local buttermilk recipes finished with pure maple syrup grids.", image:"https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=600&q=80", time:20, servings:4, calories:290, diff:"Easy", rating:4.8, chef:"Chef Amy", chefEmoji:"👩‍🍳", ingredients:["2 cups flour","1.5 cups buttermilk","2 eggs","3 tbsp melted butter"], steps:["Whisk dry compound elements cleanly within primary mixing station pool.","Blend wet egg assets and buttermilk layers inside, mixing gently to retain air gaps.","Ladle portion elements across seasoned cast iron griddle lines over medium thermal indexes."] },
-  { id:"16", name:"Crispy Atlantic Lobster Rolls", cuisine:"American", cat:"seafood", desc:"Fresh tender wild-caught chilled lobster meat chunks tossed inside light herb mayonnaise across toasted buns.", image:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=600&q=80", time:20, servings:2, calories:450, diff:"Easy", rating:4.7, chef:"Chef Brad", chefEmoji:"👨‍🍳", ingredients:["300g cooked lobster meat","2 tbsp mayonnaise","1 tbsp chives chopped","2 brioche split buns"], steps:["Chop fresh lobster tail and claw components down into generous bite profiles cleanly.","Toss protein segments safely within herb mayonnaise arrays until light trace masks coat elements.","Stuff mixture payload volumes inside golden butter-toasted split brioche bread lanes cleanly."] },
-  { id:"17", name:"Smoked Bourbon Backyard Barbecue Burgers", cuisine:"American", cat:"lunch", desc:"Thick flame-broiled Angus beef patties coated inside a dark sticky caramelized homemade bourbon reduction glaze.", image:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80", time:25, servings:4, calories:710, diff:"Easy", rating:4.9, chef:"Chef Hank", chefEmoji:"👨‍🍳", ingredients:["800g ground Angus beef","1/2 cup bourbon glaze sauce","4 brioche buns","Cheddar cheese sheets"], steps:["Shape ground beef materials down into thick circular baseline patties profiles.","Flame grill patties cleanly over open charcoal systems, flipping once midway.","Baste elements using bourbon glaze tools during terminal 2 minutes processing sequence."] },
+          useEffect(() => {
+            const moveCursor = (e) => {
+              cursorX.set(e.clientX - 150);
+              cursorY.set(e.clientY - 150);
+            };
+            window.addEventListener('mousemove', moveCursor);
+            return () => window.removeEventListener('mousemove', moveCursor);
+          }, []);
 
-  // MEDITERRANEAN
-  { id:"18", name:"Greek Artisan Garlicky Cucumber Tzatziki", cuisine:"Mediterranean", cat:"lunch", desc:"Thick strained authentic Greek yogurt mixed cleanly with grated English cucumbers, garlic, and fresh dill leaves.", image:"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80", time:15, servings:4, calories:140, diff:"Easy", rating:4.7, chef:"Chef Helena", chefEmoji:"👩‍🍳", ingredients:["2 cups Greek yogurt","1 large cucumber grated","3 garlic cloves crushed","2 tbsp olive oil"], steps:["Press grated cucumber assets inside cheesecloth wrappers to strip deep water layers.","Stir dry cucumber shreds inside cold yogurt reservoir pool cleanly.","Introduce crushed garlic elements and high-grade cold pressed olive oil streams directly."] },
-  { id:"19", name:"Charred Mediterranean Chickpea Buddha Bowl", cuisine:"Mediterranean", cat:"vegan", desc:"Oven-roasted spiced garbanzo beans mapped alongside fluffy quinoa bases and rich nutty tahini sauce lines.", image:"https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80", time:40, servings:2, calories:490, diff:"Easy", rating:4.7, chef:"Chef Nora", chefEmoji:"👩‍🍳", ingredients:["1 can chickpeas","1 cup quinoa","1 avocado","3 tbsp tahini paste element"], steps:["Bake seasoned chickpea modules across flat sheet platforms for 25 minutes at 200°C.","Assemble serving grids safely: create distinct base nests of quinoa and fresh greens side-by-side.","Drizzle rich blended lemon tahini emulsion layers across the array payload surfaces cleanly."] },
-  { id:"20", name:"Seared Garlic Lemon Butter Sea Bass", cuisine:"Mediterranean", cat:"seafood", desc:"Wild sea bass pan-seared skin-down in foaming garlic herb butter reductions.", image:"https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=600&q=80", time:20, servings:2, calories:390, diff:"Medium", rating:4.8, chef:"Chef Nico", chefEmoji:"👨‍🍳", ingredients:["2 sea bass fillets","3 tbsp butter","2 garlic cloves","Juice of 1 lemon"], steps:["Score outer skin lanes of fish profiles cleanly using blade tools to avert curling under heat.","Sear fish segments skin-down inside heavy steel pans until crisp shells establish.","Flip elements carefully while spooning browning lemon garlic butter streams across top faces."] },
+          return React.createElement("div", { className: "relative min-h-screen text-white selection:bg-[#00E5FF]/30 selection:text-white antialiased" },
+            
+            // 1. MOUSE ORB
+            React.createElement(motion.div, { className: "hidden lg:block pointer-events-none fixed top-0 left-0 w-[300px] h-[300px] rounded-full mix-blend-screen filter blur-[90px] opacity-40 z-40 bg-gradient-to-r from-[#00E5FF] via-[#7B61FF] to-[#00FFA3]", style: { x: cursorXSpring, y: cursorYSpring } }),
 
-  // CHINESE
-  { id:"21", name:"Wok-Fired Sichuan Kung Pao Chicken", cuisine:"Chinese", cat:"dinner", desc:"Crispy chicken thigh cubes flash-fried in fiery peppercorn oils with toasted peanuts.", image:"https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=600&q=80", time:25, servings:3, calories:510, diff:"Medium", rating:4.9, chef:"Chef Wei", chefEmoji:"👨‍🍳", ingredients:["500g chicken thighs cubed","1/2 cup roasted peanuts","10 dried red chilies","Sichuan peppercorn oil"], steps:["Marinate protein blocks inside light soy liquids and cornstarch slurry paths.","Crank wok iron heat structures to high processing thresholds. Fried dried chili lines until dark mask sets.","Toss chicken elements inside fast, anchoring peanuts into array system at close runtime."] },
-  { id:"22", name:"Steamed Pork Ginger Dumplings", cuisine:"Chinese", cat:"lunch", desc:"Delicate handmade dough wrappers pleated tightly over ginger ground pork payloads.", image:"https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=600&q=80", time:50, servings:4, calories:320, diff:"Hard", rating:4.8, chef:"Chef Lin", chefEmoji:"👩‍🍳", ingredients:["30 dumpling wrappers","400g ground pork","2 tbsp minced ginger","3 chive stalks chopped"], steps:["Knead savory pork paste payload materials together with fresh ginger oils cleanly.","Center paste quantities inside individual wrapper dough layers. Pleat edges closed manually.","Steam assemblies over bamboo lattice gear arrays for 10 minutes continuous processing time."] },
-  { id:"23", name:"Traditional Steamed Jasmine Rice Bowl", cuisine:"Chinese", cat:"vegan", desc:"Fluffy, fragrant long-grain white rice steamed under traditional water balance strategies.", image:"https://images.unsplash.com/photo-1536304997881-a372c179924b?auto=format&fit=crop&w=600&q=80", time:25, servings:4, calories:210, diff:"Easy", rating:4.6, chef:"Chef Chang", chefEmoji:"👨‍🍳", ingredients:["2 cups jasmine rice","2.5 cups purified water"], steps:["Wash rice grains down through mesh columns until runoff water flows clear.","Map rice and water inside heavy bottomed baseline pot systems.","Simmer covered tightly under low fires until all internal moisture channels vanish."] },
+            // 2. CINEMATIC MESH GRADIENT BG
+            React.createElement("div", { className: "absolute inset-0 z-0 overflow-hidden pointer-events-none" },
+              React.createElement("div", { className: "absolute top-[-10%] left-[-20%] w-[80vw] h-[80vw] rounded-full bg-[#7B61FF]/10 blur-[140px] animate-pulse", style: { animationDuration: '14s' } }),
+              React.createElement("div", { className: "absolute bottom-[20%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-[#00E5FF]/10 blur-[160px] animate-pulse", style: { animationDuration: '20s' } }),
+              React.createElement("div", { className: "absolute top-[45%] left-[25%] w-[500px] h-[500px] rounded-full bg-[#00FFA3]/5 blur-[120px]" }),
+              React.createElement("div", { className: "absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:40px_40px]" })
+            ),
 
-  // MIDDLE EASTERN
-  { id:"24", name:"Creamy Chickpea Hummus Dip", cuisine:"Middle Eastern", cat:"lunch", desc:"Silky smooth chickpea puree whipped with premium sesame tahini and garlic.", image:"https://images.unsplash.com/photo-1577906896481-3014a3d67453?auto=format&fit=crop&w=600&q=80", time:15, servings:6, calories:180, diff:"Easy", rating:4.9, chef:"Chef Ali", chefEmoji:"👨‍🍳", ingredients:["1 can chickpeas drained","1/2 cup tahini paste","2 garlic cloves","3 tbsp fresh lemon juice"], steps:["Process skinned chickpeas and garlic inside food processing blenders.","Pour tahini paste and lemon juice inside mixing chamber lines cleanly.","Stream cold water columns slowly inside matrix until emulsified silk finishes build."] },
-  { id:"25", name:"Spiced Fire-Grilled Lamb Kabobs", cuisine:"Middle Eastern", cat:"dinner", desc:"Ground leg of lamb blended with minced parsley, onions, and complex cumin spices.", image:"https://images.unsplash.com/photo-1603360946369-dc9bb6258143?auto=format&fit=crop&w=600&q=80", time:30, servings:4, calories:540, diff:"Medium", rating:4.8, chef:"Chef Youssef", chefEmoji:"👨‍🍳", ingredients:["700g ground lamb","1 small onion minced","1/2 cup flat parsley","1 tsp ground cumin array"], steps:["Knead ground lamb alongside minced herb assets until paste bonds fully.","Mold meat batches down onto flat metal skewer arrays tightly.","Broil configurations over high heat charcoal grids for 4 minutes per face block path."] },
-  { id:"26", name:"Crispy Herb-Packed Chickpea Falafel", cuisine:"Middle Eastern", cat:"vegan", desc:"Crispy herby dynamic spheres built out of soaked ground garbanzo beans and parsley arrays.", image:"https://images.unsplash.com/photo-1547058886-af77992d478c?auto=format&fit=crop&w=600&q=80", time:40, servings:4, calories:290, diff:"Medium", rating:4.7, chef:"Chef Zayd", chefEmoji:"👨‍🍳", ingredients:["2 cups dried chickpeas soaked","1 cup fresh parsley","4 garlic cloves","1 tbsp coriander spice"], steps:["Pulse raw soaked chickpea grains and fresh herbs inside cutting matrix blades.","Shape aggregate structural material down into uniform small sphere profiles manually.","Submerge balls inside deep 180°C frying reservoirs until hard dark shell armor forms."] },
+            // 3. NAVBAR
+            React.createElement("header", { className: "fixed top-0 inset-x-0 z-50 px-4 md:px-8 max-w-7xl mx-auto pt-4" },
+              React.createElement(motion.nav, { className: "flex items-center justify-between px-6 py-4 rounded-full border transition-all duration-300", style: { backgroundColor: navBackground, backdropFilter: navBlur, borderColor: navBorder } },
+                React.createElement("div", { className: "flex items-center gap-3 cursor-pointer group" },
+                  React.createElement("div", { className: "relative w-8 h-8 rounded-lg bg-gradient-to-tr from-[#00E5FF] to-[#7B61FF] flex items-center justify-center shadow-[0_0_20px_rgba(0,229,255,0.4)]" },
+                    React.createElement("span", { className: "font-black text-black text-xs" }, "X")
+                  ),
+                  React.createElement("span", { className: "text-xl font-bold tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400" }, "XTROTIO")
+                ),
+                React.createElement("div", { className: "hidden lg:flex items-center gap-8" },
+                  NAV_LINKS.map(link => React.createElement("a", { key: link, href: `#${link.toLowerCase()}`, className: "text-xs font-medium uppercase tracking-wider text-slate-400 hover:text-white transition-colors relative group" }, link))
+                ),
+                React.createElement("div", { className: "hidden sm:flex items-center gap-4" },
+                  React.createElement("button", { className: "px-5 py-2 text-sm font-medium text-slate-300 hover:text-white" }, "Log In"),
+                  React.createElement("button", { className: "px-5 py-2 text-sm font-semibold text-black bg-white rounded-full transition-all hover:scale-105" }, "Sign Up")
+                ),
+                React.createElement("button", { onClick: () => setIsMobileMenuOpen(!isMobileMenuOpen), className: "lg:hidden p-2 text-slate-400 hover:text-white" },
+                  React.createElement(DynamicIcon, { name: isMobileMenuOpen ? "X" : "Menu", size: 22 })
+                )
+              )
+            ),
 
-  // THAI
-  { id:"27", name:"Wok-Fried Rice Noodles Pad Thai", cuisine:"Thai", cat:"seafood", desc:"Traditional flat rice noodles flash-fried in tart tamarind reduction sauces with fresh prawns.", image:"https://images.unsplash.com/photo-1559314809-0d155014e29e?auto=format&fit=crop&w=600&q=80", time:30, servings:2, calories:580, diff:"Medium", rating:4.9, chef:"Chef Lek", chefEmoji:"👩‍🍳", ingredients:["150g flat rice noodles","10 large prawns","3 tbsp tamarind paste","2 tbsp fish sauce","1 egg"], steps:["Soak dry noodle lanes inside warm water channels until pliable bodies relax.","Scramble egg items inside hot oil wok fields, launching prawns inside lanes directly.","Incorporate noodle payload and pour tamarind base fluids. Flash toss globally until dry."] },
-  { id:"28", name:"Fiery Lemongrass Tom Yum Soup", cuisine:"Thai", cat:"soup", desc:"Hot and sour clear broth infused aggressively with crushed lemongrass stems, galangal, and fresh shrimp.", image:"https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80", time:25, servings:3, calories:210, diff:"Easy", rating:4.8, chef:"Chef Kanya", chefEmoji:"👩‍🍳", ingredients:["4 cups chicken stock","200g shrimp peeled","3 stalks lemongrass","1 inch galangal root"], steps:["Bruise lemongrass stems using mallet tools to launch internal oil lines. Boil in stock.","Introduce galangal root segments and fiery local chili paste units safely.","Drop fresh shrimp into boiling core. Cut thermal switch immediately when pink masks lock."] },
-  { id:"29", name:"Sweet Coconut Mango Sticky Rice", cuisine:"Thai", cat:"dessert", desc:"Sweet glutinous rice cooked in rich salted coconut milk creams served next to ripe honey mangoes.", image:"https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=600&q=80", time:40, servings:4, calories:420, diff:"Easy", rating:4.9, chef:"Chef Anong", chefEmoji:"👩‍🍳", ingredients:["1 cup glutinous sticky rice","1 cup coconut milk","3 tbsp sugar","2 ripe honey mangoes"], steps:["Steam pre-soaked glutinous rice modules inside mesh basket gear frameworks completely.","Stir warm coconut milk creams and sugar crystals together into a smooth liquid layer.","Pour coconut fluid solutions over cooked rice beds. Serve alongside peeled fresh mango lanes."] }
-];
+            // 4. HERO SECTION
+            React.createElement("section", { id: "home", className: "relative pt-44 pb-20 md:pt-52 md:pb-32 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center" },
+              React.createElement("div", { className: "lg:col-span-7 flex flex-col justify-center space-y-8 z-10" },
+                React.createElement("div", { className: "inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md w-fit" },
+                  React.createElement("span", { className: "w-2 h-2 rounded-full bg-[#00FFA3] animate-pulse" }),
+                  React.createElement("span", { className: "text-[10px] font-bold tracking-widest uppercase text-slate-300" }, "v2.0 Deploy Mastered")
+                ),
+                React.createElement("h1", { className: "text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05] text-white" }, "Create. Inspire.", React.createElement("br"), React.createElement("span", { className: "bg-clip-text text-transparent bg-gradient-to-r from-[#00E5FF] via-[#7B61FF] to-[#00FFA3]" }, "Innovate.")),
+                React.createElement("p", { className: "text-base md:text-lg text-slate-400 max-w-xl font-normal leading-relaxed" }, "XTROTIO brings premium digital infrastructure together with elegant typography guidelines, advanced interaction shaders, and glass composition models."),
+                React.createElement("div", { className: "flex flex-wrap items-center gap-5 pt-2" },
+                  React.createElement("button", { className: "px-8 py-4 rounded-2xl bg-gradient-to-r from-[#00E5FF] to-[#7B61FF] text-black font-bold flex items-center gap-3 shadow-[0_0_30px_rgba(0,229,255,0.3)] transition-transform hover:scale-102" }, "Get Started Engine", React.createElement(DynamicIcon, { name: "ArrowRight", size: 16 })),
+                  React.createElement("button", { className: "px-8 py-4 rounded-2xl border border-white/15 bg-white/5 backdrop-blur-md text-white text-sm font-medium hover:bg-white/10" }, "Explore Architecture Matrix")
+                )
+              ),
+              React.createElement("div", { className: "lg:col-span-5 relative w-full h-[350px] flex items-center justify-center z-10" },
+                React.createElement(motion.div, { animate: { rotate: 360 }, transition: { duration: 30, repeat: Infinity, ease: "linear" }, className: "absolute w-[300px] h-[300px] rounded-full border border-[#00E5FF]/10 border-dashed" }),
+                React.createElement(motion.div, { animate: { y: [0, -12, 0] }, transition: { duration: 5, repeat: Infinity, ease: "easeInOut" }, className: "relative w-56 h-72 rounded-[32px] p-6 bg-white/[0.05] border border-white/20 backdrop-blur-2xl shadow-2xl flex flex-col justify-between overflow-hidden" },
+                  React.createElement("div", { className: "flex items-center justify-between" },
+                    React.createElement("div", { className: "w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center border border-white/10" }, React.createElement(DynamicIcon, { name: "Layers", size: 18, className: "text-[#00E5FF]" })),
+                    React.createElement("span", { className: "text-[9px] tracking-widest text-slate-400 font-mono uppercase bg-white/5 px-2.5 py-1 rounded-full" }, "Active")
+                  ),
+                  React.createElement("div", { className: "space-y-2" },
+                    React.createElement("p", { className: "text-[10px] text-[#00FFA3] font-mono" }, "X-CORE MATRIX"),
+                    React.createElement("h3", { className: "text-lg font-bold" }, "Quantum Cluster Node")
+                  )
+                )
+              )
+            ),
 
-let currentFilter = 'all';
-let currentRegion = 'all';
-let searchQuery = '';
+            // 5. FEATURES SECTION
+            React.createElement("section", { id: "features", className: "py-24 px-6 max-w-7xl mx-auto text-center scroll-mt-20" },
+              React.createElement("div", { className: "max-w-3xl mx-auto mb-16 space-y-4" },
+                React.createElement("h2", { className: "text-xs font-bold tracking-widest text-[#00E5FF] uppercase" }, "Engineered Architecture"),
+                React.createElement("p", { className: "text-3xl md:text-5xl font-extrabold tracking-tight" }, "Advanced Platform Parameters"),
+                React.createElement("p", { className: "text-slate-400 text-xs md:text-sm" }, "Every component is compiled dynamically into hardware layers safely without latency.")
+              ),
+              React.createElement("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" },
+                FEATURES.map((feat, idx) => React.createElement(motion.div, {
+                  key: idx,
+                  whileHover: { y: -6, borderColor: "rgba(255, 255, 255, 0.25)" },
+                  className: "p-8 rounded-[28px] bg-white/[0.02] border border-white/10 backdrop-blur-xl text-left transition-all duration-300 flex flex-col justify-between group cursor-pointer"
+                },
+                  React.createElement("div", null,
+                    React.createElement("div", { className: "w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 text-white group-hover:text-[#00E5FF] transition-colors" }, React.createElement(DynamicIcon, { name: feat.icon, size: 20 })),
+                    React.createElement("h3", { className: "text-lg font-bold mb-3 text-white" }, feat.title),
+                    React.createElement("p", { className: "text-xs leading-relaxed text-slate-400" }, feat.desc)
+                  ),
+                  React.createElement("div", { className: "mt-6 pt-4 border-t border-white/5 flex items-center gap-2 text-[11px] font-semibold text-slate-400 group-hover:text-[#00FFA3]" }, "Read Specifications Vector", React.createElement(DynamicIcon, { name: "ArrowRight", size: 12 }))
+                ))
+              )
+            ),
 
-let customRecipes = [];
-let favoritesList = [];
+            // 6. SHOWCASE
+            React.createElement("section", { id: "showcase", className: "py-24 px-6 max-w-7xl mx-auto scroll-mt-20" },
+              React.createElement("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-12 items-center" },
+                React.createElement("div", { className: "lg:col-span-5 space-y-6" },
+                  React.createElement("h2", { className: "text-xs font-bold tracking-widest text-[#7B61FF] uppercase" }, "Live Sandbox Framework"),
+                  React.createElement("p", { className: "text-3xl md:text-5xl font-extrabold tracking-tight" }, "Immersive Sandbox Telemetry"),
+                  React.createElement("p", { className: "text-xs text-slate-400 leading-relaxed" }, "Interact directly with design variables. Our hardware-accelerated layouts render layout rules cleanly.")
+                ),
+                React.createElement("div", { className: "lg:col-span-7 relative h-[300px] flex items-center justify-center" },
+                  React.createElement("div", { className: "w-full max-w-[450px] p-5 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-2xl shadow-2xl font-mono text-xs space-y-3" },
+                    React.createElement("p", { className: "text-[#00FFA3]" }, "> xtrotio compile --target=cluster"),
+                    React.createElement("p", { className: "text-slate-500" }, "Processing glass opacity rendering algorithms..."),
+                    React.createElement("p", { className: "text-[#00E5FF]" }, "✔ Hardware composite matrices safely validated and running.")
+                  )
+                )
+              )
+            ),
 
-function buildCardHTML(r, i) {
-  const isLoved = favoritesList.includes(r.id.toString());
-  return `
-    <div class="recipe-card" onclick="openRecipe('${r.id}')" style="animation-delay:${i*0.04}s">
-      <div class="recipe-thumb">
-        <img src="${r.image}" alt="${r.name} Recipe Blueprint — XTROTIO" loading="lazy">
-        <span class="recipe-badge">⭐ ${r.rating}</span>
-        <button class="recipe-fav ${isLoved ? 'loved' : ''}" onclick="toggleFav(event, this, '${r.id}')">
-          ${isLoved ? '❤️' : '🤍'}
-        </button>
-      </div>
-      <div class="recipe-body">
-        <div class="recipe-cuisine">${r.cuisine}</div>
-        <div class="recipe-name">${r.name}</div>
-        <div class="recipe-desc">${r.desc}</div>
-        <div class="recipe-meta">
-          <div class="meta-item">🕐 ${r.time} min</div>
-          <div class="meta-item">👥 ${r.servings}</div>
-          <div class="meta-item">🔥 ${r.calories} cal</div>
-          <div class="meta-item" style="color:#4a7c59">🟢 ${r.diff}</div>
-        </div>
-        <div class="chef-info">
-          <div class="chef-avatar">${r.chefEmoji}</div>
-          <span class="chef-name">${r.chef}</span>
-        </div>
-      </div>
-    </div>
-  `;
-}
+            // 7. STATS
+            React.createElement("section", { id: "stats", className: "py-20 px-6 max-w-7xl mx-auto border-y border-white/5 bg-white/[0.01] text-center scroll-mt-20" },
+              React.createElement("div", { className: "grid grid-cols-2 lg:grid-cols-4 gap-8" },
+                STATS.map((stat, i) => React.createElement("div", { key: i },
+                  React.createElement("p", { className: "text-4xl md:text-5xl font-black bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-400" }, stat.value),
+                  React.createElement("p", { className: "text-[10px] font-bold uppercase tracking-widest text-[#00E5FF]" }, stat.label)
+                ))
+              )
+            ),
 
-function applyAllFilters() {
-  let filtered = [...recipes, ...customRecipes];
+            // 8. TESTIMONIALS
+            React.createElement("section", { id: "pricing", className: "py-24 px-6 max-w-7xl mx-auto scroll-mt-20" },
+              React.createElement("div", { className: "text-center max-w-2xl mx-auto mb-16" },
+                React.createElement("p", { className: "text-xs font-bold tracking-widest text-[#00FFA3] uppercase" }, "Ecosystem Feedback"),
+                React.createElement("h2", { className: "text-3xl md:text-5xl font-extrabold tracking-tight" }, "Verified Technical Reviews")
+              ),
+              React.createElement("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-6" },
+                TESTIMONIALS.map((t, idx) => React.createElement("div", { key: idx, className: "p-8 rounded-3xl bg-white/[0.02] border border-white/10 backdrop-blur-xl flex flex-col justify-between space-y-6" },
+                  React.createElement("p", { className: "text-slate-300 text-xs leading-relaxed italic" }, `"${t.review}"`),
+                  React.createElement("div", { className: "flex items-center gap-3 pt-4 border-t border-white/5" },
+                    React.createElement("div", { className: "w-8 h-8 rounded-full bg-gradient-to-tr from-[#7B61FF] to-[#00E5FF] flex items-center justify-center text-xs font-bold text-black" }, t.name[0]),
+                    React.createElement("div", null,
+                      React.createElement("h4", { className: "text-xs font-bold text-white" }, t.name),
+                      React.createElement("p", { className: "text-[10px] text-slate-500 font-mono" }, t.role)
+                    )
+                  )
+                ))
+              )
+            ),
 
-  if (currentFilter !== 'all') {
-    filtered = filtered.filter(r => r.cat === currentFilter);
-  }
-  if (currentRegion !== 'all') {
-    filtered = filtered.filter(r => r.cuisine.toLowerCase() === currentRegion.toLowerCase());
-  }
-  if (searchQuery) {
-    filtered = filtered.filter(r =>
-      r.name.toLowerCase().includes(searchQuery) ||
-      r.cuisine.toLowerCase().includes(searchQuery) ||
-      r.desc.toLowerCase().includes(searchQuery)
-    );
-  }
+            // 9. FAQ
+            React.createElement("section", { id: "faq", className: "py-24 px-6 max-w-3xl mx-auto scroll-mt-20" },
+              React.createElement("div", { className: "text-center mb-14" },
+                React.createElement("p", { className: "text-xs font-bold tracking-widest text-[#00E5FF] uppercase" }, "Operation Guidelines"),
+                React.createElement("h2", { className: "text-3xl md:text-4xl font-extrabold tracking-tight" }, "Frequently Asked Queries")
+              ),
+              React.createElement("div", { className: "space-y-4" },
+                FAQS.map((faq, index) => React.createElement(FaqAccordionItem, { key: index, q: \`\${faq.q}\`, a: \`\${faq.a}\` }))
+              )
+            ),
 
-  const titleEl = document.getElementById('gridTitle');
-  titleEl.textContent = `${currentRegion === 'all' ? 'Global' : currentRegion} ${currentFilter === 'all' ? 'Popular' : currentFilter} Cooking Guides`;
+            // 10. CONTACT FORM
+            React.createElement("section", { id: "contact", className: "py-24 px-6 max-w-3xl mx-auto scroll-mt-20" },
+              React.createElement("div", { className: "p-8 md:p-12 rounded-[36px] bg-white/[0.02] border border-white/10 backdrop-blur-2xl relative overflow-hidden shadow-2xl" },
+                React.createElement("div", { className: "text-center max-w-xl mx-auto mb-10" },
+                  React.createElement("h3", { className: "text-2xl md:text-3xl font-extrabold tracking-tight" }, "Initiate Secure Link"),
+                  React.createElement("p", { className: "text-xs text-slate-400 mt-2" }, "Our processing engines handle inbound configuration vectors continuously.")
+                ),
+                React.createElement(ContactPayloadForm, null)
+              )
+            ),
 
-  renderGrid(filtered);
-}
+            // 11. FOOTER
+            React.createElement("footer", { className: "py-12 px-6 border-t border-white/10 bg-[#050816]/90 backdrop-blur-md relative z-10" },
+              React.createElement("div", { className: "max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-500" },
+                React.createElement("div", { className: "flex items-center gap-2" },
+                  React.createElement("div", { className: "w-4 h-4 rounded bg-gradient-to-tr from-[#00E5FF] to-[#7B61FF]" }),
+                  React.createElement("span", { className: "font-bold text-white tracking-wider" }, "XTROTIO")
+                ),
+                React.createElement("p", null, "© 2026 XTROTIO Infrastructure Labs. All Channels Secure.")
+              )
+            )
 
-function renderGrid(data) {
-  const grid = document.getElementById('recipeGrid');
-  if (!data.length) {
-    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><span class="empty-state-icon">🍽️</span><h3>No matching culinary guides established.</h3></div>`;
-    return;
-  }
-  grid.innerHTML = data.map((r, i) => buildCardHTML(r, i)).join('');
-}
+          );
+        }
 
-function renderFavsGrid() {
-  const grid = document.getElementById('favRecipeGrid');
-  const faved = [...recipes, ...customRecipes].filter(r => favoritesList.includes(r.id.toString()));
-  if (!faved.length) {
-    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><h3>Your saved folder is currently empty.</h3></div>`;
-    return;
-  }
-  grid.innerHTML = faved.map((r, i) => buildCardHTML(r, i)).join('');
-}
-
-function filterCat(cat, btn) {
-  currentFilter = cat;
-  if (btn) {
-    document.querySelectorAll('#catStrip .cat-pill').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-  }
-  applyAllFilters();
-}
-
-function filterRegion(region, btn) {
-  currentRegion = region;
-  if (btn) {
-    document.querySelectorAll('#regionStrip .region-pill').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-  }
-  applyAllFilters();
-}
-
-function resetFilters() {
-  currentFilter = 'all'; currentRegion = 'all'; searchQuery = '';
-  document.getElementById('navSearch').value = '';
-  document.querySelectorAll('.cat-pill, .region-pill').forEach(p => p.classList.remove('active'));
-  document.querySelector('#catStrip .cat-pill').classList.add('active');
-  document.querySelector('#regionStrip .region-pill').classList.add('active');
-  applyAllFilters();
-}
-
-function handleSearch(q) {
-  searchQuery = q.toLowerCase().trim();
-  applyAllFilters();
-}
-
-function openRecipe(id) {
-  const recipe = [...recipes, ...customRecipes].find(r => r.id.toString() === id.toString());
-  if (!recipe) return;
-
-  document.getElementById('recipeDetailContent').innerHTML = `
-    <button class="back-btn" onclick="goHome()">← Back to Base Dashboard</button>
-    <div class="recipe-detail-banner"><img src="${recipe.image}" alt="${recipe.name}"></div>
-    <div class="recipe-detail-header-card">
-      <h1>${recipe.name}</h1>
-      <p>${recipe.desc}</p>
-    </div>
-    <div class="detail-section">
-      <h3>🧂 Structured Material Components List</h3>
-      <ul class="ingredient-list">${recipe.ingredients.map(ing => `<li class="ingredient-item">${ing}</li>`).join('')}</ul>
-    </div>
-    <div class="detail-section">
-      <h3>👨‍🍳 Execution Directives Queue</h3>
-      <ol class="step-list">${recipe.steps.map((s,i) => `<li class="step-item"><div class="step-num">${i+1}</div><div class="step-text">${s}</div></li>`).join('')}</ol>
-    </div>
-  `;
-  showPage('page-recipe');
-  window.scrollTo(0,0);
-}
-
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => { p.classList.remove('active'); p.style.display = 'none'; });
-  document.getElementById(id).style.display = 'block';
-  document.getElementById(id).classList.add('active');
-}
-
-function goHome() { showPage('page-home'); window.scrollTo(0,0); }
-function goToFavs() { renderFavsGrid(); showPage('page-fav'); window.scrollTo(0,0); }
-
-function toggleFav(e, btn, id) {
-  e.stopPropagation();
-  const targetId = id.toString();
-  const idx = favoritesList.indexOf(targetId);
-  if (idx === -1) {
-    favoritesList.push(targetId);
-    btn.classList.add('loved'); btn.textContent = '❤️';
-    showToast('❤️', 'Saved successfully.');
-  } else {
-    favoritesList.splice(idx, 1);
-    btn.classList.remove('loved'); btn.textContent = '🤍';
-    showToast('🤍', 'Removed folder link.');
-  }
-  document.getElementById('navFavCount').textContent = favoritesList.length;
-}
-
-let toastTimer;
-function showToast(icon, msg) {
-  document.getElementById('toastIcon').textContent = icon;
-  document.getElementById('toastMsg').textContent = msg;
-  const t = document.getElementById('toast');
-  t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
-}
-
-// Boot Entry Execution
-renderGrid(recipes);
-</script>
+        // Render Application Framework to browser view
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(React.createElement(XTROTIOApp));
+    </script>
 </body>
 </html>
