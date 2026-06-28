@@ -6,366 +6,249 @@
     <title>XTROTIO — Create. Inspire. Innovate.</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-          theme: {
-            extend: {
-              fontFamily: {
-                sans: ['system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
-              }
-            }
-          }
-        }
-    </script>
-
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
     <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js"></script>
 
     <style>
         html { scroll-behavior: smooth; }
-        body { background-color: #050816; margin: 0; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-        /* Ultra-premium smooth scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #050816; }
-        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 99px; }
-        ::-webkit-scrollbar-thumb:hover { background: #00E5FF; }
+        body { 
+            background-color: #050816; 
+            margin: 0; 
+            overflow-x: hidden; 
+            font-family: system-ui, -apple-system, sans-serif;
+            -webkit-font-smoothing: antialiased; 
+        }
+        /* Ultra-Premium Glassmorphism Style Utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .glass-nav {
+            background: rgba(5, 8, 22, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        /* Smooth Animation Pipelines */
+        @keyframes slow-pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.08); }
+        }
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+        }
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-aurora-1 { animation: slow-pulse 12s infinite ease-in-out; }
+        .animate-aurora-2 { animation: slow-pulse 18s infinite ease-in-out; }
+        .animate-float { animation: float-slow 6s infinite ease-in-out; }
+        .animate-spin-ring { animation: spin-slow 25s infinite linear; }
     </style>
 </head>
-<body>
+<body class="text-white">
 
-    <div id="root"></div>
+    <div id="cursor-glow" class="hidden lg:block pointer-events-none fixed top-0 left-0 w-[300px] h-[300px] rounded-full mix-blend-screen filter blur-[90px] opacity-30 z-40 bg-gradient-to-r from-[#00E5FF] via-[#7B61FF] to-[#00FFA3] transition-transform duration-300 ease-out"></div>
 
-    <script type="text/javascript">
-        // Bind required hooks out of UMD globals
-        const { useState, useEffect, useRef } = React;
-        const { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring } = FramerMotion;
+    <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-[-10%] left-[-20%] w-[80vw] h-[80vw] rounded-full bg-[#7B61FF]/10 blur-[140px] animate-aurora-1"></div>
+        <div class="absolute bottom-[20%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-[#00E5FF]/10 blur-[160px] animate-aurora-2"></div>
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+    </div>
 
-        // --- GLOBAL DESIGN CONSTANTS ---
-        const NAV_LINKS = ['Home', 'Features', 'Showcase', 'Stats', 'Pricing', 'FAQ', 'Contact'];
+    <header class="fixed top-0 inset-x-0 z-50 px-4 md:px-8 max-w-7xl mx-auto pt-4">
+        <nav class="glass-nav flex items-center justify-between px-6 py-4 rounded-full transition-all duration-300">
+            <div class="flex items-center gap-3 cursor-pointer group">
+                <div class="relative w-8 h-8 rounded-lg bg-gradient-to-tr from-[#00E5FF] to-[#7B61FF] flex items-center justify-center shadow-[0_0_20px_rgba(0,229,255,0.4)]">
+                    <span class="font-black text-black text-xs">X</span>
+                </div>
+                <span class="text-xl font-bold tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">XTROTIO</span>
+            </div>
 
-        const FEATURES = [
-          { icon: "Cpu", title: "Next-Gen Engine", desc: "Powered by a proprietary neural core architecture engineered for sub-millisecond data synchronization across global edge clusters." },
-          { icon: "Shield", title: "Quantum Security", desc: "End-to-end cryptographic infrastructure implementing post-quantum encryption models with zero-trust validation layers." },
-          { icon: "Zap", title: "Hyper Performance", desc: "Optimized runtime compiling pipeline delivering smooth 120Hz interface renders and GPU-accelerated computing matrices." },
-          { icon: "Layers", title: "Fluid Architecture", desc: "Modular, highly flexible layer composition models supporting nested component injection and seamless state propagation." },
-          { icon: "Globe", title: "Global Mesh Network", desc: "Distributed content mapping edge framework bypassing standard web routing choke points for unparalleled speeds." },
-          { icon: "BarChart3", title: "Predictive Analytics", desc: "Integrated behavioral modeling engines providing live operational data visualizers with deep contextual metrics." }
-        ];
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="#home" class="text-xs font-medium uppercase tracking-wider text-slate-400 hover:text-white transition-colors">Home</a>
+                <a href="#features" class="text-xs font-medium uppercase tracking-wider text-slate-400 hover:text-white transition-colors">Features</a>
+                <a href="#showcase" class="text-xs font-medium uppercase tracking-wider text-slate-400 hover:text-white transition-colors">Showcase</a>
+                <a href="#stats" class="text-xs font-medium uppercase tracking-wider text-slate-400 hover:text-white transition-colors">Stats</a>
+                <a href="#faq" class="text-xs font-medium uppercase tracking-wider text-slate-400 hover:text-white transition-colors">FAQ</a>
+                <a href="#contact" class="text-xs font-medium uppercase tracking-wider text-slate-400 hover:text-white transition-colors">Contact</a>
+            </div>
 
-        const STATS = [
-          { value: "100K+", label: "Active Nodes" },
-          { value: "10M+", label: "Daily Operations" },
-          { value: "50+", label: "Global Clusters" },
-          { value: "99.99%", label: "System Uptime" }
-        ];
+            <div class="hidden sm:flex items-center gap-4">
+                <button class="px-5 py-2 text-sm font-medium text-slate-300 hover:text-white">Log In</button>
+                <button class="px-5 py-2 text-sm font-semibold text-black bg-white rounded-full transition-transform hover:scale-105 shadow-[0_4px_20px_rgba(255,255,255,0.2)]">Sign Up</button>
+            </div>
+        </nav>
+    </header>
 
-        const TESTIMONIALS = [
-          { name: "Elena Rostova", role: "Principal Architect, Nexus Labs", review: "The paradigm shift XTROTIO engineered is stunning. The fluidity, speed, and absolute robustness of their glassmorphic pipeline changed our entire workflow model overnight.", rating: 5 },
-          { name: "Marcus Vance", role: "VP of Product, Aether Corp", review: "Design meets absolute power here. The ambient interaction physics and performance metrics aren't just aesthetic tricks; they feel organically alive.", rating: 5 },
-          { name: "Sora Takahashi", role: "Lead Dev, Synthetix Global", review: "We benchmarked XTROTIO against three legacy enterprise frameworks. XTROTIO didn't just win; it redefined what we thought 60 FPS interfaces could handle.", rating: 5 }
-        ];
+    <section id="home" class="relative pt-44 pb-20 md:pt-56 md:pb-32 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7 flex flex-col justify-center space-y-8 z-10">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md w-fit">
+            <span class="w-2 h-2 rounded-full bg-[#00FFA3] animate-pulse"></span>
+            <span class="text-[10px] font-bold tracking-widest uppercase text-slate-300">v2.0 Deployment Stable</span>
+          </div>
+          <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05] text-white">
+            Create. Inspire.<br><span class="bg-clip-text text-transparent bg-gradient-to-r from-[#00E5FF] via-[#7B61FF] to-[#00FFA3]">Innovate.</span>
+          </h1>
+          <p class="text-base md:text-lg text-slate-400 max-w-xl font-normal leading-relaxed">
+            XTROTIO brings modern digital infrastructure structures together with elegant typography guidelines, advanced interaction models, and liquid glass aesthetics.
+          </p>
+          <div class="flex flex-wrap items-center gap-5 pt-2">
+            <button class="px-8 py-4 rounded-2xl bg-gradient-to-r from-[#00E5FF] to-[#7B61FF] text-black font-bold flex items-center gap-3 shadow-[0_0_30px_rgba(0,229,255,0.3)] transition-transform hover:scale-102">
+              <span>Get Started Engine</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+            <button class="px-8 py-4 rounded-2xl border border-white/15 bg-white/5 backdrop-blur-md text-white text-sm font-medium hover:bg-white/10 transition-colors">
+              Explore Network Matrix
+            </button>
+          </div>
+        </div>
 
-        const FAQS = [
-          { q: "How does the ambient illumination layer handle performance scaling?", a: "XTROTIO compiles all glassmorphic blur matrices and dynamic radial glows directly into custom GPU shaders, utilizing hardware-accelerated CSS composite layers to guarantee constant 60+ FPS playback even on mobile devices." },
-          { q: "Can we bridge our existing React infrastructure into XTROTIO?", a: "Absolutely. XTROTIO is designed with complete backward compatibility for standard modern ECMAScript specifications without structural mutations." },
-          { q: "What security measures dictate the quantum layer protocols?", a: "Our architecture employs dynamic lattice-based cryptography operating alongside a zero-knowledge proof framework, validating data payloads safely without exposing private key infrastructure." }
-        ];
+        <div class="lg:col-span-5 relative w-full h-[350px] flex items-center justify-center z-10">
+          <div class="absolute w-[300px] h-[300px] md:w-[360px] md:h-[360px] rounded-full border border-[#00E5FF]/10 border-dashed animate-spin-ring"></div>
+          <div class="glass-panel animate-float relative w-56 h-72 md:w-64 md:h-80 rounded-[32px] p-6 shadow-2xl flex flex-col justify-between overflow-hidden">
+            <div class="flex items-center justify-between">
+              <div class="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center border border-white/10">
+                <i data-lucide="layers" class="text-[#00E5FF] w-5 h-5"></i>
+              </div>
+              <span class="text-[9px] tracking-widest text-slate-400 font-mono uppercase bg-white/5 px-2.5 py-1 rounded-full">Core Active</span>
+            </div>
+            <div class="space-y-2">
+              <p class="text-[10px] text-[#00FFA3] font-mono">X-CORE MATRIX</p>
+              <h3 class="text-lg font-bold">Quantum Cluster Node</h3>
+            </div>
+          </div>
+        </div>
+    </section>
 
-        // --- HELPER COMPONENT FOR DYNAMIC CDN ICONS ---
-        function DynamicIcon({ name, size = 20, className = "" }) {
-            const elRef = useRef(null);
-            useEffect(() => {
-                if (window.lucide) {
-                    window.lucide.createIcons();
-                }
-            }, [name]);
-            return React.createElement('i', {
-                'data-lucide': name.toLowerCase(),
-                style: { width: size, height: size },
-                className: `inline-block ${className}`
-            });
-        }
+    <section id="features" class="py-24 px-6 max-w-7xl mx-auto text-center scroll-mt-20">
+        <div class="max-w-3xl mx-auto mb-16 space-y-4">
+          <h2 class="text-xs font-bold tracking-widest text-[#00E5FF] uppercase">Engineered Architecture</h2>
+          <p class="text-3xl md:text-5xl font-extrabold tracking-tight">Advanced Platform Parameters</p>
+        </div>
 
-        // --- SUB-COMPONENT: FAQ ACCORDION ITEM ---
-        function FaqAccordionItem({ q, a }) {
-          const [isOpen, setIsOpen] = useState(false);
-          return React.createElement("div", { className: "rounded-2xl border border-white/10 bg-white/[0.01] backdrop-blur-md overflow-hidden transition-all duration-200 hover:border-white/20" },
-            React.createElement("button", { onClick: () => setIsOpen(!isOpen), className: "w-full p-6 text-left flex items-center justify-between font-semibold text-white text-sm md:text-base focus:outline-none" },
-              React.createElement("span", null, q),
-              React.createElement(motion.div, { animate: { rotate: isOpen ? 180 : 0 }, transition: { type: "spring", damping: 15 } },
-                React.createElement(DynamicIcon, { name: "ChevronDown", size: 16, className: "text-slate-500" })
-              )
-            ),
-            React.createElement(AnimatePresence, { initial: false },
-              isOpen && React.createElement(motion.div, {
-                initial: { height: 0, opacity: 0 },
-                animate: { height: "auto", opacity: 1 },
-                exit: { height: 0, opacity: 0 },
-                transition: { duration: 0.25, ease: "easeInOut" }
-              },
-                React.createElement("div", { className: "px-6 pb-6 text-xs text-slate-400 leading-relaxed border-t border-white/5 pt-4" }, a)
-              )
-            )
-          );
-        }
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="glass-panel p-8 rounded-[28px] text-left transition-all duration-300 hover:-translate-y-2 hover:border-white/30 cursor-pointer group">
+            <div class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 text-white group-hover:text-[#00E5FF] transition-colors">
+              <i data-lucide="cpu"></i>
+            </div>
+            <h3 class="text-lg font-bold mb-3">Next-Gen Engine</h3>
+            <p class="text-xs leading-relaxed text-slate-400">Powered by a proprietary neural core architecture engineered for sub-millisecond data synchronization.</p>
+          </div>
+          <div class="glass-panel p-8 rounded-[28px] text-left transition-all duration-300 hover:-translate-y-2 hover:border-white/30 cursor-pointer group">
+            <div class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 text-white group-hover:text-[#00E5FF] transition-colors">
+              <i data-lucide="shield"></i>
+            </div>
+            <h3 class="text-lg font-bold mb-3">Quantum Security</h3>
+            <p class="text-xs leading-relaxed text-slate-400">End-to-end cryptographic infrastructure implementing post-quantum encryption models.</p>
+          </div>
+          <div class="glass-panel p-8 rounded-[28px] text-left transition-all duration-300 hover:-translate-y-2 hover:border-white/30 cursor-pointer group">
+            <div class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 text-white group-hover:text-[#00E5FF] transition-colors">
+              <i data-lucide="zap"></i>
+            </div>
+            <h3 class="text-lg font-bold mb-3">Hyper Performance</h3>
+            <p class="text-xs leading-relaxed text-slate-400">Optimized runtime compiling pipeline delivering smooth 120Hz interface renders perfectly.</p>
+          </div>
+        </div>
+    </section>
 
-        // --- SUB-COMPONENT: ENCRYPTED SECURE FORM ---
-        function ContactPayloadForm() {
-          const [form, setForm] = useState({ name: '', email: '', message: '' });
-          const [sent, setSent] = useState(false);
-          const [loading, setLoading] = useState(false);
+    <section id="showcase" class="py-24 px-6 max-w-7xl mx-auto scroll-mt-20">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-5 space-y-6">
+          <h2 class="text-xs font-bold tracking-widest text-[#7B61FF] uppercase">Live Framework Canvas</h2>
+          <p class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">Immersive Sandbox Telemetry</p>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Interact directly with design variables. Our hardware-accelerated layouts render layout rules cleanly via static execution branches.
+          </p>
+        </div>
+        <div class="lg:col-span-7 flex justify-center">
+          <div class="glass-panel w-full max-w-[450px] p-5 rounded-2xl shadow-2xl font-mono text-xs space-y-3">
+            <p class="text-[#00FFA3]">&gt; xtrotio compile --target=cluster</p>
+            <p class="text-slate-500">Processing glass opacity rendering algorithms...</p>
+            <p class="text-[#00E5FF]">✔ Hardware composite matrices safely validated and running layout metrics.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-          const executeSubmit = (e) => {
-            e.preventDefault();
-            if (!form.name || !form.email || !form.message) return;
-            setLoading(true);
-            setTimeout(() => {
-              setLoading(false);
-              setSent(true);
-              setForm({ name: '', email: '', message: '' });
-            }, 1000);
-          };
+    <section id="stats" class="py-16 px-6 max-w-7xl mx-auto border-y border-white/5 bg-white/[0.01] text-center">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        <div>
+          <p class="text-4xl md:text-5xl font-black bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-500">100K+</p>
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#00E5FF] mt-1">Active Nodes</p>
+        </div>
+        <div>
+          <p class="text-4xl md:text-5xl font-black bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-500">10M+</p>
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#00E5FF] mt-1">Daily Operations</p>
+        </div>
+        <div>
+          <p class="text-4xl md:text-5xl font-black bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-500">50+</p>
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#00E5FF] mt-1">Global Clusters</p>
+        </div>
+        <div>
+          <p class="text-4xl md:text-5xl font-black bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-500">99.99%</p>
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[#00E5FF] mt-1">System Uptime</p>
+        </div>
+      </div>
+    </section>
 
-          if (sent) {
-            return React.createElement(motion.div, { initial: { opacity: 0, scale: 0.98 }, animate: { opacity: 1, scale: 1 }, className: "text-center py-8 space-y-4" },
-              React.createElement("div", { className: "w-12 h-12 bg-[#00FFA3]/10 border border-[#00FFA3]/30 rounded-full flex items-center justify-center mx-auto text-[#00FFA3]" },
-                React.createElement(DynamicIcon, { name: "Send", size: 20 })
-              ),
-              React.createElement("h4", { className: "text-lg font-bold" }, "Transmission Successfully Handshaked"),
-              React.createElement("p", { className: "text-xs text-slate-400 max-w-xs mx-auto" }, "Your variables have been encrypted and streamed into our master control database frame pipeline."),
-              React.createElement("button", { onClick: () => setSent(false), className: "mt-2 text-xs bg-white/5 px-4 py-2 border border-white/10 text-slate-300 rounded-lg hover:text-white" }, "Transmit New Array")
-            );
-          }
+    <section id="faq" class="py-24 px-6 max-w-3xl mx-auto scroll-mt-20">
+        <div class="text-center mb-14">
+          <p class="text-xs font-bold tracking-widest text-[#00E5FF] uppercase">Operation Guidelines</p>
+          <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mt-1">Frequently Asked Queries</h2>
+        </div>
+        <div class="space-y-4">
+          <div class="glass-panel rounded-2xl overflow-hidden p-6 cursor-pointer" onclick="this.querySelector('.faq-answer').classList.toggle('hidden')">
+            <div class="flex justify-between items-center font-semibold text-sm md:text-base">
+              <span>How does the ambient illumination layer handle performance scaling?</span>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400"></i>
+            </div>
+            <p class="faq-answer hidden text-xs text-slate-400 mt-4 pt-4 border-t border-white/5 leading-relaxed">
+              XTROTIO compiles all glassmorphic blur matrices and dynamic radial glows directly into custom composite shaders to optimize runtime loops.
+            </p>
+          </div>
+        </div>
+    </section>
 
-          return React.createElement("form", { onSubmit: executeSubmit, className: "space-y-5" },
-            React.createElement("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-5" },
-              React.createElement("div", { className: "space-y-1.5" },
-                React.createElement("label", { className: "text-[10px] font-mono tracking-widest text-slate-500 uppercase" }, "Identity Struct Name"),
-                React.createElement("div", { className: "relative" },
-                  React.createElement(DynamicIcon, { name: "User", size: 14, className: "absolute left-4 top-1/2 -translate-y-1/2 text-slate-600" }),
-                  React.createElement("input", { required: true, type: "text", placeholder: "e.g. Sterling", value: form.name, onChange: (e) => setForm({ ...form, name: e.target.value }), className: "w-full pl-10 pr-4 py-3 bg-white/5 rounded-xl border border-white/10 focus:border-[#00E5FF] focus:bg-white/[0.08] text-xs text-white placeholder-slate-600 outline-none transition-all" })
-                )
-              ),
-              React.createElement("div", { className: "space-y-1.5" },
-                React.createElement("label", { className: "text-[10px] font-mono tracking-widest text-slate-500 uppercase" }, "Routing Cluster Email"),
-                React.createElement("div", { className: "relative" },
-                  React.createElement(DynamicIcon, { name: "Mail", size: 14, className: "absolute left-4 top-1/2 -translate-y-1/2 text-slate-600" }),
-                  React.createElement("input", { required: true, type: "email", placeholder: "operator@domain.xyz", value: form.email, onChange: (e) => setForm({ ...form, email: e.target.value }), className: "w-full pl-10 pr-4 py-3 bg-white/5 rounded-xl border border-white/10 focus:border-[#00E5FF] focus:bg-white/[0.08] text-xs text-white placeholder-slate-600 outline-none transition-all" })
-                )
-              )
-            ),
-            React.createElement("div", { className: "space-y-1.5" },
-              React.createElement("label", { className: "text-[10px] font-mono tracking-widest text-slate-500 uppercase" }, "Data Payload Specification"),
-              React.createElement("div", { className: "relative" },
-                React.createElement(DynamicIcon, { name: "MessageSquare", size: 14, className: "absolute left-4 top-3.5 text-slate-600" }),
-                React.createElement("textarea", { required: true, rows: 4, placeholder: "Type your design layout instructions...", value: form.message, onChange: (e) => setForm({ ...form, message: e.target.value }), className: "w-full pl-10 pr-4 py-3 bg-white/5 rounded-xl border border-white/10 focus:border-[#00E5FF] focus:bg-white/[0.08] text-xs text-white placeholder-slate-600 outline-none transition-all resize-none" })
-              )
-            ),
-            React.createElement("button", { type: "submit", disabled: loading, className: "w-full py-3.5 rounded-xl bg-white font-bold text-black text-xs transition-all duration-300 hover:bg-gradient-to-r hover:from-[#00E5FF] hover:to-[#00FFA3] flex items-center justify-center gap-2" },
-              loading ? React.createElement("div", { className: "w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" }) : React.createElement(React.Fragment, null, React.createElement("span", null, "Dispatch Secure Vector Package"), React.createElement(DynamicIcon, { name: "ArrowRight", size: 14 }))
-            )
-          );
-        }
+    <section id="contact" class="py-24 px-6 max-w-3xl mx-auto scroll-mt-20">
+      <div class="glass-panel p-8 md:p-12 rounded-[36px] shadow-2xl">
+        <div class="text-center max-w-xl mx-auto mb-10">
+          <h3 class="text-2xl md:text-3xl font-extrabold tracking-tight">Initiate Secure Link</h3>
+          <p class="text-xs text-slate-400 mt-2">Our processing engines handle inbound configuration vectors continuously.</p>
+        </div>
+        <form class="space-y-5" onsubmit="event.preventDefault(); alert('Transmission Securely Synced!');">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <input type="text" required placeholder="Your Identity Struct Name" class="w-full px-4 py-3 bg-white/5 rounded-xl border border-white/10 text-xs outline-none focus:border-[#00E5FF]">
+            <input type="email" required placeholder="Routing Cluster Email" class="w-full px-4 py-3 bg-white/5 rounded-xl border border-white/10 text-xs outline-none focus:border-[#00E5FF]">
+          </div>
+          <textarea rows="4" required placeholder="Data Payload Specification details..." class="w-full px-4 py-3 bg-white/5 rounded-xl border border-white/10 text-xs outline-none focus:border-[#00E5FF] resize-none"></textarea>
+          <button type="submit" class="w-full py-3.5 rounded-xl bg-white font-bold text-black text-xs transition-transform hover:scale-[1.01]">Dispatch Secure Vector Package</button>
+        </form>
+      </div>
+    </section>
 
-        // --- MAIN APPLICATION BUILD MATRIX ---
-        function XTROTIOApp() {
-          const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-          const { scrollY } = useScroll();
-          
-          const navBackground = useTransform(scrollY, [0, 100], ["rgba(5, 8, 22, 0.4)", "rgba(5, 8, 22, 0.8)"]);
-          const navBlur = useTransform(scrollY, [0, 100], ["blur(12px)", "blur(24px)"]);
-          const navBorder = useTransform(scrollY, [0, 100], ["rgba(255, 255, 255, 0.05)", "rgba(255, 255, 255, 0.15)"]);
+    <footer class="py-12 px-6 border-t border-white/10 bg-[#050816]/90 backdrop-blur-md text-xs text-slate-500">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-2">
+          <div class="w-4 h-4 rounded bg-gradient-to-tr from-[#00E5FF] to-[#7B61FF]"></div>
+          <span class="font-bold text-white tracking-wider">XTROTIO</span>
+        </div>
+        <p>© 2026 XTROTIO Infrastructure Labs. All Channels Secure.</p>
+      </div>
+    </footer>
 
-          const cursorX = useMotionValue(-100);
-          const cursorY = useMotionValue(-100);
-          const cursorXSpring = useSpring(cursorX, { damping: 40, stiffness: 300, mass: 0.6 });
-          const cursorYSpring = useSpring(cursorY, { damping: 40, stiffness: 300, mass: 0.6 });
+    <script>
+        // Start Lucide Icons rendering pipeline
+        lucide.createIcons();
 
-          useEffect(() => {
-            const moveCursor = (e) => {
-              cursorX.set(e.clientX - 150);
-              cursorY.set(e.clientY - 150);
-            };
-            window.addEventListener('mousemove', moveCursor);
-            return () => window.removeEventListener('mousemove', moveCursor);
-          }, []);
-
-          return React.createElement("div", { className: "relative min-h-screen text-white selection:bg-[#00E5FF]/30 selection:text-white antialiased" },
-            
-            // 1. MOUSE ORB
-            React.createElement(motion.div, { className: "hidden lg:block pointer-events-none fixed top-0 left-0 w-[300px] h-[300px] rounded-full mix-blend-screen filter blur-[90px] opacity-40 z-40 bg-gradient-to-r from-[#00E5FF] via-[#7B61FF] to-[#00FFA3]", style: { x: cursorXSpring, y: cursorYSpring } }),
-
-            // 2. CINEMATIC MESH GRADIENT BG
-            React.createElement("div", { className: "absolute inset-0 z-0 overflow-hidden pointer-events-none" },
-              React.createElement("div", { className: "absolute top-[-10%] left-[-20%] w-[80vw] h-[80vw] rounded-full bg-[#7B61FF]/10 blur-[140px] animate-pulse", style: { animationDuration: '14s' } }),
-              React.createElement("div", { className: "absolute bottom-[20%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-[#00E5FF]/10 blur-[160px] animate-pulse", style: { animationDuration: '20s' } }),
-              React.createElement("div", { className: "absolute top-[45%] left-[25%] w-[500px] h-[500px] rounded-full bg-[#00FFA3]/5 blur-[120px]" }),
-              React.createElement("div", { className: "absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:40px_40px]" })
-            ),
-
-            // 3. NAVBAR
-            React.createElement("header", { className: "fixed top-0 inset-x-0 z-50 px-4 md:px-8 max-w-7xl mx-auto pt-4" },
-              React.createElement(motion.nav, { className: "flex items-center justify-between px-6 py-4 rounded-full border transition-all duration-300", style: { backgroundColor: navBackground, backdropFilter: navBlur, borderColor: navBorder } },
-                React.createElement("div", { className: "flex items-center gap-3 cursor-pointer group" },
-                  React.createElement("div", { className: "relative w-8 h-8 rounded-lg bg-gradient-to-tr from-[#00E5FF] to-[#7B61FF] flex items-center justify-center shadow-[0_0_20px_rgba(0,229,255,0.4)]" },
-                    React.createElement("span", { className: "font-black text-black text-xs" }, "X")
-                  ),
-                  React.createElement("span", { className: "text-xl font-bold tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400" }, "XTROTIO")
-                ),
-                React.createElement("div", { className: "hidden lg:flex items-center gap-8" },
-                  NAV_LINKS.map(link => React.createElement("a", { key: link, href: `#${link.toLowerCase()}`, className: "text-xs font-medium uppercase tracking-wider text-slate-400 hover:text-white transition-colors relative group" }, link))
-                ),
-                React.createElement("div", { className: "hidden sm:flex items-center gap-4" },
-                  React.createElement("button", { className: "px-5 py-2 text-sm font-medium text-slate-300 hover:text-white" }, "Log In"),
-                  React.createElement("button", { className: "px-5 py-2 text-sm font-semibold text-black bg-white rounded-full transition-all hover:scale-105" }, "Sign Up")
-                ),
-                React.createElement("button", { onClick: () => setIsMobileMenuOpen(!isMobileMenuOpen), className: "lg:hidden p-2 text-slate-400 hover:text-white" },
-                  React.createElement(DynamicIcon, { name: isMobileMenuOpen ? "X" : "Menu", size: 22 })
-                )
-              )
-            ),
-
-            // 4. HERO SECTION
-            React.createElement("section", { id: "home", className: "relative pt-44 pb-20 md:pt-52 md:pb-32 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center" },
-              React.createElement("div", { className: "lg:col-span-7 flex flex-col justify-center space-y-8 z-10" },
-                React.createElement("div", { className: "inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md w-fit" },
-                  React.createElement("span", { className: "w-2 h-2 rounded-full bg-[#00FFA3] animate-pulse" }),
-                  React.createElement("span", { className: "text-[10px] font-bold tracking-widest uppercase text-slate-300" }, "v2.0 Deploy Mastered")
-                ),
-                React.createElement("h1", { className: "text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05] text-white" }, "Create. Inspire.", React.createElement("br"), React.createElement("span", { className: "bg-clip-text text-transparent bg-gradient-to-r from-[#00E5FF] via-[#7B61FF] to-[#00FFA3]" }, "Innovate.")),
-                React.createElement("p", { className: "text-base md:text-lg text-slate-400 max-w-xl font-normal leading-relaxed" }, "XTROTIO brings premium digital infrastructure together with elegant typography guidelines, advanced interaction shaders, and glass composition models."),
-                React.createElement("div", { className: "flex flex-wrap items-center gap-5 pt-2" },
-                  React.createElement("button", { className: "px-8 py-4 rounded-2xl bg-gradient-to-r from-[#00E5FF] to-[#7B61FF] text-black font-bold flex items-center gap-3 shadow-[0_0_30px_rgba(0,229,255,0.3)] transition-transform hover:scale-102" }, "Get Started Engine", React.createElement(DynamicIcon, { name: "ArrowRight", size: 16 })),
-                  React.createElement("button", { className: "px-8 py-4 rounded-2xl border border-white/15 bg-white/5 backdrop-blur-md text-white text-sm font-medium hover:bg-white/10" }, "Explore Architecture Matrix")
-                )
-              ),
-              React.createElement("div", { className: "lg:col-span-5 relative w-full h-[350px] flex items-center justify-center z-10" },
-                React.createElement(motion.div, { animate: { rotate: 360 }, transition: { duration: 30, repeat: Infinity, ease: "linear" }, className: "absolute w-[300px] h-[300px] rounded-full border border-[#00E5FF]/10 border-dashed" }),
-                React.createElement(motion.div, { animate: { y: [0, -12, 0] }, transition: { duration: 5, repeat: Infinity, ease: "easeInOut" }, className: "relative w-56 h-72 rounded-[32px] p-6 bg-white/[0.05] border border-white/20 backdrop-blur-2xl shadow-2xl flex flex-col justify-between overflow-hidden" },
-                  React.createElement("div", { className: "flex items-center justify-between" },
-                    React.createElement("div", { className: "w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center border border-white/10" }, React.createElement(DynamicIcon, { name: "Layers", size: 18, className: "text-[#00E5FF]" })),
-                    React.createElement("span", { className: "text-[9px] tracking-widest text-slate-400 font-mono uppercase bg-white/5 px-2.5 py-1 rounded-full" }, "Active")
-                  ),
-                  React.createElement("div", { className: "space-y-2" },
-                    React.createElement("p", { className: "text-[10px] text-[#00FFA3] font-mono" }, "X-CORE MATRIX"),
-                    React.createElement("h3", { className: "text-lg font-bold" }, "Quantum Cluster Node")
-                  )
-                )
-              )
-            ),
-
-            // 5. FEATURES SECTION
-            React.createElement("section", { id: "features", className: "py-24 px-6 max-w-7xl mx-auto text-center scroll-mt-20" },
-              React.createElement("div", { className: "max-w-3xl mx-auto mb-16 space-y-4" },
-                React.createElement("h2", { className: "text-xs font-bold tracking-widest text-[#00E5FF] uppercase" }, "Engineered Architecture"),
-                React.createElement("p", { className: "text-3xl md:text-5xl font-extrabold tracking-tight" }, "Advanced Platform Parameters"),
-                React.createElement("p", { className: "text-slate-400 text-xs md:text-sm" }, "Every component is compiled dynamically into hardware layers safely without latency.")
-              ),
-              React.createElement("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" },
-                FEATURES.map((feat, idx) => React.createElement(motion.div, {
-                  key: idx,
-                  whileHover: { y: -6, borderColor: "rgba(255, 255, 255, 0.25)" },
-                  className: "p-8 rounded-[28px] bg-white/[0.02] border border-white/10 backdrop-blur-xl text-left transition-all duration-300 flex flex-col justify-between group cursor-pointer"
-                },
-                  React.createElement("div", null,
-                    React.createElement("div", { className: "w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 text-white group-hover:text-[#00E5FF] transition-colors" }, React.createElement(DynamicIcon, { name: feat.icon, size: 20 })),
-                    React.createElement("h3", { className: "text-lg font-bold mb-3 text-white" }, feat.title),
-                    React.createElement("p", { className: "text-xs leading-relaxed text-slate-400" }, feat.desc)
-                  ),
-                  React.createElement("div", { className: "mt-6 pt-4 border-t border-white/5 flex items-center gap-2 text-[11px] font-semibold text-slate-400 group-hover:text-[#00FFA3]" }, "Read Specifications Vector", React.createElement(DynamicIcon, { name: "ArrowRight", size: 12 }))
-                ))
-              )
-            ),
-
-            // 6. SHOWCASE
-            React.createElement("section", { id: "showcase", className: "py-24 px-6 max-w-7xl mx-auto scroll-mt-20" },
-              React.createElement("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-12 items-center" },
-                React.createElement("div", { className: "lg:col-span-5 space-y-6" },
-                  React.createElement("h2", { className: "text-xs font-bold tracking-widest text-[#7B61FF] uppercase" }, "Live Sandbox Framework"),
-                  React.createElement("p", { className: "text-3xl md:text-5xl font-extrabold tracking-tight" }, "Immersive Sandbox Telemetry"),
-                  React.createElement("p", { className: "text-xs text-slate-400 leading-relaxed" }, "Interact directly with design variables. Our hardware-accelerated layouts render layout rules cleanly.")
-                ),
-                React.createElement("div", { className: "lg:col-span-7 relative h-[300px] flex items-center justify-center" },
-                  React.createElement("div", { className: "w-full max-w-[450px] p-5 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-2xl shadow-2xl font-mono text-xs space-y-3" },
-                    React.createElement("p", { className: "text-[#00FFA3]" }, "> xtrotio compile --target=cluster"),
-                    React.createElement("p", { className: "text-slate-500" }, "Processing glass opacity rendering algorithms..."),
-                    React.createElement("p", { className: "text-[#00E5FF]" }, "✔ Hardware composite matrices safely validated and running.")
-                  )
-                )
-              )
-            ),
-
-            // 7. STATS
-            React.createElement("section", { id: "stats", className: "py-20 px-6 max-w-7xl mx-auto border-y border-white/5 bg-white/[0.01] text-center scroll-mt-20" },
-              React.createElement("div", { className: "grid grid-cols-2 lg:grid-cols-4 gap-8" },
-                STATS.map((stat, i) => React.createElement("div", { key: i },
-                  React.createElement("p", { className: "text-4xl md:text-5xl font-black bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-400" }, stat.value),
-                  React.createElement("p", { className: "text-[10px] font-bold uppercase tracking-widest text-[#00E5FF]" }, stat.label)
-                ))
-              )
-            ),
-
-            // 8. TESTIMONIALS
-            React.createElement("section", { id: "pricing", className: "py-24 px-6 max-w-7xl mx-auto scroll-mt-20" },
-              React.createElement("div", { className: "text-center max-w-2xl mx-auto mb-16" },
-                React.createElement("p", { className: "text-xs font-bold tracking-widest text-[#00FFA3] uppercase" }, "Ecosystem Feedback"),
-                React.createElement("h2", { className: "text-3xl md:text-5xl font-extrabold tracking-tight" }, "Verified Technical Reviews")
-              ),
-              React.createElement("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-6" },
-                TESTIMONIALS.map((t, idx) => React.createElement("div", { key: idx, className: "p-8 rounded-3xl bg-white/[0.02] border border-white/10 backdrop-blur-xl flex flex-col justify-between space-y-6" },
-                  React.createElement("p", { className: "text-slate-300 text-xs leading-relaxed italic" }, `"${t.review}"`),
-                  React.createElement("div", { className: "flex items-center gap-3 pt-4 border-t border-white/5" },
-                    React.createElement("div", { className: "w-8 h-8 rounded-full bg-gradient-to-tr from-[#7B61FF] to-[#00E5FF] flex items-center justify-center text-xs font-bold text-black" }, t.name[0]),
-                    React.createElement("div", null,
-                      React.createElement("h4", { className: "text-xs font-bold text-white" }, t.name),
-                      React.createElement("p", { className: "text-[10px] text-slate-500 font-mono" }, t.role)
-                    )
-                  )
-                ))
-              )
-            ),
-
-            // 9. FAQ
-            React.createElement("section", { id: "faq", className: "py-24 px-6 max-w-3xl mx-auto scroll-mt-20" },
-              React.createElement("div", { className: "text-center mb-14" },
-                React.createElement("p", { className: "text-xs font-bold tracking-widest text-[#00E5FF] uppercase" }, "Operation Guidelines"),
-                React.createElement("h2", { className: "text-3xl md:text-4xl font-extrabold tracking-tight" }, "Frequently Asked Queries")
-              ),
-              React.createElement("div", { className: "space-y-4" },
-                FAQS.map((faq, index) => React.createElement(FaqAccordionItem, { key: index, q: \`\${faq.q}\`, a: \`\${faq.a}\` }))
-              )
-            ),
-
-            // 10. CONTACT FORM
-            React.createElement("section", { id: "contact", className: "py-24 px-6 max-w-3xl mx-auto scroll-mt-20" },
-              React.createElement("div", { className: "p-8 md:p-12 rounded-[36px] bg-white/[0.02] border border-white/10 backdrop-blur-2xl relative overflow-hidden shadow-2xl" },
-                React.createElement("div", { className: "text-center max-w-xl mx-auto mb-10" },
-                  React.createElement("h3", { className: "text-2xl md:text-3xl font-extrabold tracking-tight" }, "Initiate Secure Link"),
-                  React.createElement("p", { className: "text-xs text-slate-400 mt-2" }, "Our processing engines handle inbound configuration vectors continuously.")
-                ),
-                React.createElement(ContactPayloadForm, null)
-              )
-            ),
-
-            // 11. FOOTER
-            React.createElement("footer", { className: "py-12 px-6 border-t border-white/10 bg-[#050816]/90 backdrop-blur-md relative z-10" },
-              React.createElement("div", { className: "max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-500" },
-                React.createElement("div", { className: "flex items-center gap-2" },
-                  React.createElement("div", { className: "w-4 h-4 rounded bg-gradient-to-tr from-[#00E5FF] to-[#7B61FF]" }),
-                  React.createElement("span", { className: "font-bold text-white tracking-wider" }, "XTROTIO")
-                ),
-                React.createElement("p", null, "© 2026 XTROTIO Infrastructure Labs. All Channels Secure.")
-              )
-            )
-
-          );
-        }
-
-        // Render Application Framework to browser view
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(React.createElement(XTROTIOApp));
+        // High-performance hardware smooth mouse cursor interpolation logic
+        const glow = document.getElementById('cursor-glow');
+        window.addEventListener('mousemove', (e) => {
+            glow.style.transform = `translate3d(${e.clientX - 150}px, ${e.clientY - 150}px, 0)`;
+        });
     </script>
 </body>
 </html>
