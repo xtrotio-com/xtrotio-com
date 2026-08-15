@@ -140,7 +140,7 @@
     document.getElementById('closeDrawerBtn').addEventListener('click', () => { mobileDrawer.classList.remove('active'); drawerBackdrop.classList.remove('active'); });
     drawerBackdrop.addEventListener('click', () => { mobileDrawer.classList.remove('active'); drawerBackdrop.classList.remove('active'); });
 
-    // Three.js Animation Fix & Setup
+    // Three.js Animation with Ocean Waves + Particles
     const canvas = document.getElementById('webgl-canvas');
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x020611, 0.016);
@@ -171,6 +171,26 @@
     ocean.position.set(0, -2.4, -40);
     scene.add(ocean);
     const initialPos = seaGeo.attributes.position.array.slice();
+
+    // Bioluminescent Particles / Stardust
+    const particleCount = 400;
+    const particleGeo = new THREE.BufferGeometry();
+    const particlePos = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+      particlePos[i * 3] = (Math.random() - 0.5) * 45;
+      particlePos[i * 3 + 1] = Math.random() * 12 - 1;
+      particlePos[i * 3 + 2] = -Math.random() * 100;
+    }
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePos, 3));
+    const particleMat = new THREE.PointsMaterial({
+      size: 0.15,
+      color: 0x00f2fe,
+      transparent: true,
+      opacity: 0.8,
+      blending: THREE.AdditiveBlending
+    });
+    const particleSystem = new THREE.Points(particleGeo, particleMat);
+    scene.add(particleSystem);
 
     // Crow Model
     const crowGroup = new THREE.Group();
@@ -218,7 +238,7 @@
       requestAnimationFrame(animate);
       const time = clock.getElapsedTime();
 
-      // Animate Waves
+      // Animate Ocean Waves
       const p = seaGeo.attributes.position.array;
       for (let i = 0; i < p.length; i += 3) {
         const u = initialPos[i];
@@ -227,6 +247,14 @@
       }
       seaGeo.computeVertexNormals();
       seaGeo.attributes.position.needsUpdate = true;
+
+      // Animate Particles Floating
+      const pp = particleGeo.attributes.position.array;
+      for (let i = 0; i < particleCount; i++) {
+        pp[i * 3 + 2] += 0.05;
+        if (pp[i * 3 + 2] > 5) pp[i * 3 + 2] = -100;
+      }
+      particleGeo.attributes.position.needsUpdate = true;
 
       // Animate Wings Flapping
       const flap = Math.sin(time * 10) * 0.45;
