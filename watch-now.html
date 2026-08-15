@@ -27,10 +27,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { width: 100%; min-height: 100%; background: var(--bg-deep); color: var(--text-pure); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
     #webgl-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none; }
-    .ambient-spotlight { position: fixed; width: 600px; height: 600px; border-radius: 50%; filter: blur(140px); pointer-events: none; z-index: 0; opacity: 0.3; }
-    .cyan-spot { top: -10%; left: 15%; background: radial-gradient(circle, var(--cyan-neon), transparent 70%); }
-    .gold-spot { bottom: 10%; right: 10%; background: radial-gradient(circle, var(--gold-neon), transparent 70%); }
-
     .glass-card { background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: var(--glass-blur); border-radius: 1.25rem; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); }
 
     .glass-navbar { position: sticky; top: 0.75rem; margin: 0.75rem auto 0; width: calc(100% - 1.5rem); max-width: 1250px; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0.65rem 1.2rem; background: rgba(10, 15, 30, 0.82); border: 1px solid var(--glass-border); backdrop-filter: var(--glass-blur); border-radius: 9999px; gap: 0.75rem; }
@@ -57,7 +53,6 @@
 
     .page-stage { position: relative; z-index: 2; max-width: 1250px; margin: 0 auto; padding: 2.5rem 1.5rem 6rem; }
     .watch-header { text-align: center; margin-bottom: 2.5rem; }
-    .watch-badge-pill { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.45rem 1.1rem; background: rgba(0, 242, 254, 0.12); border: 1px solid rgba(0, 242, 254, 0.35); border-radius: 9999px; color: var(--cyan-neon); font-size: 0.85rem; font-weight: 700; margin-bottom: 0.75rem; }
     .watch-title { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 900; margin-bottom: 0.5rem; }
     .gradient-cyan { background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #7928ca 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
@@ -78,10 +73,7 @@
 </head>
 <body>
   <canvas id="webgl-canvas"></canvas>
-  <div class="ambient-spotlight cyan-spot"></div>
-  <div class="ambient-spotlight gold-spot"></div>
 
-  <!-- Navbar -->
   <header class="glass-navbar">
     <a href="index.html" class="nav-brand">
       <span class="brand-badge">XT</span>
@@ -94,8 +86,7 @@
       <a href="watch-now.html" class="nav-hub-btn active"><i data-lucide="play-square" style="color: #00f2fe; width: 15px; height: 15px;"></i><span>Watch Now</span><span class="hub-badge" style="color: #00f2fe;">LIVE</span></a>
       <a href="shop-now.html" class="nav-hub-btn"><i data-lucide="shopping-bag" style="color: #4facfe; width: 15px; height: 15px;"></i><span>Shop Now</span></a>
       <a href="shorts.html" class="nav-hub-btn"><i data-lucide="zap" style="color: #fbc531; width: 15px; height: 15px;"></i><span>Shorts</span></a>
-      <a href="movies.html" class="nav-hub-btn"><i data-lucide="film" style="color: #9b51e0; width: 15px; height: 15px;"></i><span>Movies</span></a>
-      <a href="series.html" class="nav-hub-btn"><i data-lucide="tv" style="color: #a29bfe; width: 15px; height: 15px;"></i><span>Series</span></a>
+      <a href="movies-series.html" class="nav-hub-btn"><i data-lucide="film" style="color: #9b51e0; width: 15px; height: 15px;"></i><span>Movies & Series</span></a>
       <a href="ongoing.html" class="nav-hub-btn"><i data-lucide="radio" style="color: #00e676; width: 15px; height: 15px;"></i><span>Ongoing</span></a>
       <a href="apps.html" class="nav-hub-btn"><i data-lucide="smartphone" style="color: #e056fd; width: 15px; height: 15px;"></i><span>Apps</span></a>
     </nav>
@@ -111,7 +102,6 @@
     </div>
   </header>
 
-  <!-- Mobile Drawer -->
   <div class="drawer-backdrop" id="drawerBackdrop"></div>
   <aside class="mobile-drawer" id="mobileDrawer">
     <div class="drawer-header">
@@ -124,31 +114,26 @@
       </button>
     </div>
     <div class="drawer-links">
-      <a href="index.html" class="drawer-link-item"><span style="display: flex; align-items: center; gap: 0.6rem;"><i data-lucide="home" style="color: #00f2fe; width: 18px; height: 18px;"></i>Home Hub</span></a>
-      <a href="today-special.html" class="drawer-link-item"><span style="display: flex; align-items: center; gap: 0.6rem;"><i data-lucide="flame" style="color: #ff4b4b; width: 18px; height: 18px;"></i>Today's Special</span></a>
-      <a href="watch-now.html" class="drawer-link-item"><span style="display: flex; align-items: center; gap: 0.6rem;"><i data-lucide="play-square" style="color: #00f2fe; width: 18px; height: 18px;"></i>Watch Now</span><span class="hub-badge" style="color: #00f2fe;">4K</span></a>
-      <a href="shop-now.html" class="drawer-link-item"><span style="display: flex; align-items: center; gap: 0.6rem;"><i data-lucide="shopping-bag" style="color: #4facfe; width: 18px; height: 18px;"></i>Shop Now</span></a>
-      <a href="shorts.html" class="drawer-link-item"><span style="display: flex; align-items: center; gap: 0.6rem;"><i data-lucide="zap" style="color: #fbc531; width: 18px; height: 18px;"></i>Shorts</span></a>
-      <a href="movies.html" class="drawer-link-item"><span style="display: flex; align-items: center; gap: 0.6rem;"><i data-lucide="film" style="color: #9b51e0; width: 18px; height: 18px;"></i>Movies</span></a>
-      <a href="series.html" class="drawer-link-item"><span style="display: flex; align-items: center; gap: 0.6rem;"><i data-lucide="tv" style="color: #a29bfe; width: 18px; height: 18px;"></i>Series</span></a>
-      <a href="ongoing.html" class="drawer-link-item"><span style="display: flex; align-items: center; gap: 0.6rem;"><i data-lucide="radio" style="color: #00e676; width: 18px; height: 18px;"></i>Ongoing</span></a>
-      <a href="apps.html" class="drawer-link-item"><span style="display: flex; align-items: center; gap: 0.6rem;"><i data-lucide="smartphone" style="color: #e056fd; width: 18px; height: 18px;"></i>Apps</span></a>
+      <a href="index.html" class="drawer-link-item"><span><i data-lucide="home" style="color: #00f2fe; width: 18px; height: 18px;"></i> Home Hub</span></a>
+      <a href="today-special.html" class="drawer-link-item"><span><i data-lucide="flame" style="color: #ff4b4b; width: 18px; height: 18px;"></i> Today's Special</span></a>
+      <a href="watch-now.html" class="drawer-link-item"><span><i data-lucide="play-square" style="color: #00f2fe; width: 18px; height: 18px;"></i> Watch Now</span><span class="hub-badge" style="color: #00f2fe;">4K</span></a>
+      <a href="shop-now.html" class="drawer-link-item"><span><i data-lucide="shopping-bag" style="color: #4facfe; width: 18px; height: 18px;"></i> Shop Now</span></a>
+      <a href="shorts.html" class="drawer-link-item"><span><i data-lucide="zap" style="color: #fbc531; width: 18px; height: 18px;"></i> Shorts</span></a>
+      <a href="movies-series.html" class="drawer-link-item"><span><i data-lucide="film" style="color: #9b51e0; width: 18px; height: 18px;"></i> Movies & Series</span></a>
+      <a href="ongoing.html" class="drawer-link-item"><span><i data-lucide="radio" style="color: #00e676; width: 18px; height: 18px;"></i> Ongoing</span></a>
+      <a href="apps.html" class="drawer-link-item"><span><i data-lucide="smartphone" style="color: #e056fd; width: 18px; height: 18px;"></i> Apps</span></a>
     </div>
   </aside>
 
   <main class="page-stage">
     <div class="watch-header">
-      <div class="watch-badge-pill">
-        <i data-lucide="play-square" style="width: 15px; height: 15px;"></i>
-        <span>PREMIER 4K STREAMING GATEWAY</span>
-      </div>
       <h1 class="watch-title">Stream <span class="gradient-cyan">Live Channels & Cinema</span></h1>
     </div>
 
     <div class="theatre-layout">
       <div class="glass-card" style="padding: 1.25rem;">
         <div class="video-viewport">
-          <div class="play-btn-pulse" onclick="alert('Buffering 4K ultra-low latency stream...')">
+          <div class="play-btn-pulse" onclick="alert('Buffering 4K stream...')">
             <i data-lucide="play" style="width: 28px; height: 28px; margin-left: 3px;"></i>
           </div>
         </div>
@@ -162,17 +147,12 @@
           <i data-lucide="film" style="color: var(--cyan-neon);"></i>
           <div><div style="font-weight: 700; font-size: 0.9rem;">Binary Gold Screening</div><div style="font-size: 0.75rem; color: var(--text-dim);">Live • 4K HDR</div></div>
         </div>
-        <div class="queue-item" onclick="switchStream('CineBite Cinema Cuts', 'Channel 02 • Global Shorts Marathon')">
-          <i data-lucide="zap" style="color: #fbc531;"></i>
-          <div><div style="font-weight: 700; font-size: 0.9rem;">CineBite Cinema Cuts</div><div style="font-size: 0.75rem; color: var(--text-dim);">Non-stop highlight cuts</div></div>
-        </div>
       </div>
     </div>
   </main>
 
   <script>
     lucide.createIcons();
-
     const mobileDrawer = document.getElementById('mobileDrawer');
     const drawerBackdrop = document.getElementById('drawerBackdrop');
     document.getElementById('openDrawerBtn').addEventListener('click', () => { mobileDrawer.classList.add('active'); drawerBackdrop.classList.add('active'); });
