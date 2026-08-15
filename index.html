@@ -1,313 +1,1671 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Premium SEO Optimization Suite -->
-    <title>XTROTIO Brand Asset Bundle For Sale — Domain, Code &amp; Socials (300 USDT)</title>
-    <meta name="description" content="Premium tech startup digital identity package for sale. Get immediate ownership of the XTROTIO domain, UI source code architecture, verified GitHub organization, and Instagram handle for exactly 300 USDT.">
-    <meta name="keywords" content="domain for sale, buy brand assets, cryptocurrency project starter, web design template, glassmorphic portfolio, xtrotio buy, tech startup name">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>xtrotio | Next-Gen Digital Ecosystem</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <style>
-        html { scroll-behavior: smooth; }
-        body { 
-            background-color: #050816; 
-            margin: 0; 
-            overflow-x: hidden; 
-            font-family: system-ui, -apple-system, sans-serif;
-            -webkit-font-smoothing: antialiased; 
-        }
-        /* Ultra-Premium Glassmorphism Style Utilities */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-        }
-        .glass-nav {
-            background: rgba(5, 8, 22, 0.5);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        /* Smooth Animation Pipelines */
-        @keyframes slow-pulse {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.08); }
-        }
-        @keyframes float-slow {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(3deg); }
-        }
-        @keyframes spin-slow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        .animate-aurora-1 { animation: slow-pulse 12s infinite ease-in-out; }
-        .animate-aurora-2 { animation: slow-pulse 18s infinite ease-in-out; }
-        .animate-float { animation: float-slow 6s infinite ease-in-out; }
-        .animate-spin-ring { animation: spin-slow 25s infinite linear; }
-    </style>
+  <!-- Three.js & Lucide Icons CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --bg-deep: #020611;
+      --glass-bg: rgba(255, 255, 255, 0.04);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --glass-blur: blur(20px);
+      --gold-neon: #ffd700;
+      --cyan-neon: #00f2fe;
+      --ocean-blue: #0077be;
+      --purple-neon: #7928ca;
+      --fire-red: #ff0055;
+      --text-pure: #ffffff;
+      --text-dim: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      background-color: var(--bg-deep);
+      color: var(--text-pure);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* 3D WebGL Background Canvas */
+    #webgl-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Ambient Lighting Overlays */
+    .ambient-spotlight {
+      position: fixed;
+      width: clamp(300px, 50vw, 650px);
+      height: clamp(300px, 50vw, 650px);
+      border-radius: 50%;
+      filter: blur(140px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.25;
+    }
+
+    .ocean-spot {
+      top: -10%;
+      left: 10%;
+      background: radial-gradient(circle, var(--cyan-neon), transparent 70%);
+    }
+
+    .gold-spot {
+      bottom: 10%;
+      right: 5%;
+      background: radial-gradient(circle, var(--gold-neon), transparent 70%);
+    }
+
+    /* Glass Card Base */
+    .glass-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-radius: 1.25rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    /* Header & Navigation */
+    .glass-navbar {
+      position: sticky;
+      top: 0.75rem;
+      margin: 0.75rem auto 0;
+      width: calc(100% - 1.5rem);
+      max-width: 1250px;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.65rem 1.2rem;
+      background: rgba(10, 15, 30, 0.82);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-radius: 9999px;
+      gap: 0.75rem;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, var(--gold-neon), var(--cyan-neon));
+      padding: 0.2rem 0.55rem;
+      font-weight: 900;
+      border-radius: 0.45rem;
+      font-size: 0.8rem;
+      color: #000;
+    }
+
+    .brand-name {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-dot {
+      color: var(--cyan-neon);
+    }
+
+    /* Desktop Navigation Tabs */
+    .nav-hubs {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-hubs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-hub-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-dim);
+      padding: 0.45rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .nav-hub-btn:hover, .nav-hub-btn.active {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .hub-badge {
+      font-size: 0.62rem;
+      padding: 0.1rem 0.35rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 9999px;
+      font-weight: 800;
+    }
+
+    /* Header Action Controls */
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .glass-icon-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      color: var(--text-dim);
+      padding: 0.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .glass-icon-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      border-color: var(--cyan-neon);
+    }
+
+    .glass-login-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, rgba(0, 242, 254, 0.18), rgba(255, 215, 0, 0.25));
+      border: 1px solid rgba(0, 242, 254, 0.35);
+      color: #ffffff;
+      padding: 0.4rem 0.85rem 0.4rem 0.45rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.82rem;
+      transition: all 0.2s ease;
+    }
+
+    .login-avatar-ring {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--cyan-neon);
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--glass-border);
+      color: #fff;
+      padding: 0.45rem;
+      border-radius: 0.6rem;
+      cursor: pointer;
+    }
+
+    /* Mobile Navigation Drawer */
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: min(85vw, 320px);
+      height: 100vh;
+      background: rgba(8, 14, 28, 0.95);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-left: 1px solid var(--glass-border);
+      z-index: 99;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+      transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .mobile-drawer.active {
+      right: 0;
+    }
+
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .drawer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      overflow-y: auto;
+    }
+
+    .drawer-link-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1rem;
+      border-radius: 0.75rem;
+      color: var(--text-pure);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .drawer-link-item:hover, .drawer-link-item.active {
+      background: rgba(0, 242, 254, 0.12);
+      border-color: rgba(0, 242, 254, 0.3);
+      color: #fff;
+    }
+
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 98;
+      display: none;
+    }
+
+    .drawer-backdrop.active {
+      display: block;
+    }
+
+    /* Main Hero Stage */
+    .hero-stage {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1rem, 4vw, 2rem) 6rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.35rem 0.9rem;
+      background: rgba(0, 242, 254, 0.08);
+      border: 1px solid rgba(0, 242, 254, 0.35);
+      backdrop-filter: blur(10px);
+      border-radius: 9999px;
+      font-size: clamp(0.75rem, 2vw, 0.85rem);
+      color: var(--cyan-neon);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.1rem, 6.5vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      word-break: break-word;
+    }
+
+    .gradient-glow-text {
+      background: linear-gradient(135deg, var(--gold-neon) 0%, var(--cyan-neon) 50%, #4facfe 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-description {
+      max-width: 650px;
+      color: var(--text-dim);
+      font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+      line-height: 1.6;
+      margin-bottom: clamp(2rem, 5vw, 3.5rem);
+      padding: 0 0.5rem;
+    }
+
+    /* Auto-Adjusting Hub Grid */
+    .hero-action-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(clamp(250px, 100%, 270px), 1fr));
+      gap: clamp(1rem, 2.5vw, 1.35rem);
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    .hub-card {
+      padding: 1.35rem;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .hub-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0, 242, 254, 0.4);
+    }
+
+    .hub-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.9rem;
+    }
+
+    .hub-icon-wrapper {
+      width: 40px;
+      height: 40px;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hub-mini-badge {
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 0.15rem 0.5rem;
+      border: 1px solid;
+      border-radius: 9999px;
+    }
+
+    .hub-card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+    }
+
+    .hub-card-text {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      margin-bottom: 0.9rem;
+    }
+
+    .hub-card-link {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--cyan-neon);
+    }
+
+    /* Live Notification Panel */
+    .notif-panel-container {
+      position: fixed;
+      bottom: clamp(1rem, 3vw, 2rem);
+      left: clamp(1rem, 3vw, 2rem);
+      z-index: 40;
+      width: clamp(240px, 85vw, 310px);
+      padding: 0.9rem 1.1rem;
+      background: rgba(10, 15, 30, 0.85);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 242, 254, 0.15);
+    }
+
+    .notif-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 0.55rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 0.65rem;
+    }
+
+    .notif-heading {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: #fff;
+    }
+
+    .notif-ping-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #00e676;
+      box-shadow: 0 0 8px #00e676;
+      animation: pulsePing 2s infinite;
+    }
+
+    @keyframes pulsePing {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.3); }
+    }
+
+    .notif-count-badge {
+      font-size: 0.65rem;
+      font-weight: 800;
+      background: rgba(0, 242, 254, 0.18);
+      color: var(--cyan-neon);
+      border: 1px solid rgba(0, 242, 254, 0.35);
+      padding: 0.15rem 0.45rem;
+      border-radius: 9999px;
+    }
+
+    .notif-body {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+    }
+
+    .notif-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 0.5rem;
+      background: rgba(0, 242, 254, 0.15);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      color: var(--cyan-neon);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .notif-content-box { flex: 1; overflow: hidden; }
+
+    .notif-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.15rem;
+    }
+
+    .notif-title {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .notif-time {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .notif-desc {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Modal Backdrop */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-backdrop.active { display: flex; }
+
+    .auth-modal {
+      width: 100%;
+      max-width: 420px;
+      padding: clamp(1.5rem, 5vw, 2.2rem);
+      background: rgba(10, 15, 30, 0.95);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .auth-tabs-row {
+      display: flex;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      border-radius: 0.75rem;
+      padding: 0.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .auth-tab-btn {
+      flex: 1;
+      padding: 0.55rem;
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-weight: 700;
+      font-size: 0.85rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .auth-tab-btn.active {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
+    .btn-google {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 0.75rem;
+      padding: 0.75rem;
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 1rem;
+    }
+
+    .btn-google:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .auth-divider::before, .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .input-group {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 1rem;
+      color: var(--text-dim);
+    }
+
+    .input-group input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      border-radius: 0.75rem;
+      padding: 0.75rem 1rem 0.75rem 2.8rem;
+      color: #fff;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .input-group input:focus { border-color: var(--cyan-neon); }
+
+    .form-options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    .glass-submit-btn {
+      margin-top: 0.25rem;
+      background: linear-gradient(135deg, var(--cyan-neon), var(--gold-neon));
+      color: #000;
+      font-weight: 800;
+      padding: 0.85rem;
+      border: none;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .modal-footer {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      margin-top: 1.25rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .signup-link, .forgot-link {
+      color: var(--cyan-neon);
+      text-decoration: none;
+    }
+
+    /* Real-Time Search Overlay */
+    .search-modal {
+      width: 100%;
+      max-width: 580px;
+      padding: 1.5rem;
+      background: rgba(8, 14, 28, 0.95);
+      border: 1px solid rgba(0, 242, 254, 0.35);
+      box-shadow: 0 0 50px rgba(0, 242, 254, 0.2);
+    }
+
+    .search-input-box {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      border-radius: 0.85rem;
+      padding: 0.85rem 1.1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .search-input-box input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .search-shortcut-pill {
+      font-size: 0.7rem;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 0.2rem 0.45rem;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 0.35rem;
+      color: var(--text-dim);
+    }
+
+    .search-results-list {
+      max-height: 320px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .search-result-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid transparent;
+      color: #fff;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .search-result-item:hover {
+      background: rgba(0, 242, 254, 0.12);
+      border-color: rgba(0, 242, 254, 0.35);
+    }
+
+    .result-info h4 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin-bottom: 0.15rem;
+    }
+
+    .result-info p {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .result-category-badge {
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 0.2rem 0.5rem;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--cyan-neon);
+    }
+
+    @media (max-width: 1024px) {
+      .nav-hubs { display: none; }
+      .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+    }
+
+    @media (max-width: 640px) {
+      .glass-navbar { padding: 0.5rem 0.85rem; }
+      .brand-name { font-size: 1rem; }
+      .hero-stage { padding-top: 2rem; padding-bottom: 8.5rem; }
+      .notif-panel-container { bottom: 0.75rem; left: 0.75rem; }
+    }
+  </style>
 </head>
-<body class="text-white">
+<body>
 
-    <div id="cursor-glow" class="hidden lg:block pointer-events-none fixed top-0 left-0 w-[300px] h-[300px] rounded-full mix-blend-screen filter blur-[90px] opacity-30 z-40 bg-gradient-to-r from-[#00E5FF] via-[#7B61FF] to-[#00FFA3] transition-transform duration-300 ease-out"></div>
+  <!-- WebGL 3D Responsive Canvas -->
+  <canvas id="webgl-canvas"></canvas>
 
-    <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <div class="absolute top-[-10%] left-[-20%] w-[80vw] h-[80vw] rounded-full bg-[#7B61FF]/10 blur-[140px] animate-aurora-1"></div>
-        <div class="absolute bottom-[20%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-[#00E5FF]/10 blur-[160px] animate-aurora-2"></div>
-        <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+  <!-- Ambient Glows -->
+  <div class="ambient-spotlight ocean-spot"></div>
+  <div class="ambient-spotlight gold-spot"></div>
+
+  <!-- Top Glass Navbar -->
+  <header class="glass-navbar">
+    <a href="index.html" class="nav-brand">
+      <span class="brand-badge">XT</span>
+      <span class="brand-name">xtrotio<span class="brand-dot">.com</span></span>
+    </a>
+
+    <!-- Desktop Navigation Hubs (Consolidated Movies & Series) -->
+    <nav class="nav-hubs">
+      <a href="index.html" class="nav-hub-btn active">
+        <i data-lucide="home" style="color: #00f2fe; width: 15px; height: 15px;"></i>
+        <span>Home</span>
+      </a>
+      <a href="today-special.html" class="nav-hub-btn">
+        <i data-lucide="flame" style="color: #ff4b4b; width: 15px; height: 15px;"></i>
+        <span>Today's Special</span>
+        <span class="hub-badge" style="color: #ff4b4b;">HOT</span>
+      </a>
+      <a href="watch-now.html" class="nav-hub-btn">
+        <i data-lucide="play-square" style="color: #00f2fe; width: 15px; height: 15px;"></i>
+        <span>Watch Now</span>
+      </a>
+      <a href="shop-now.html" class="nav-hub-btn">
+        <i data-lucide="shopping-bag" style="color: #4facfe; width: 15px; height: 15px;"></i>
+        <span>Shop Now</span>
+      </a>
+      <a href="shorts.html" class="nav-hub-btn">
+        <i data-lucide="zap" style="color: #fbc531; width: 15px; height: 15px;"></i>
+        <span>Shorts</span>
+      </a>
+      <a href="movies-series.html" class="nav-hub-btn">
+        <i data-lucide="film" style="color: #9b51e0; width: 15px; height: 15px;"></i>
+        <span>Movies & Series</span>
+        <span class="hub-badge" style="color: #9b51e0;">4K</span>
+      </a>
+      <a href="ongoing.html" class="nav-hub-btn">
+        <i data-lucide="radio" style="color: #00e676; width: 15px; height: 15px;"></i>
+        <span>Ongoing</span>
+      </a>
+      <a href="apps.html" class="nav-hub-btn">
+        <i data-lucide="smartphone" style="color: #e056fd; width: 15px; height: 15px;"></i>
+        <span>Apps</span>
+      </a>
+    </nav>
+
+    <!-- Header Actions -->
+    <div class="nav-actions">
+      <button class="glass-icon-btn" id="openSearchBtn" aria-label="Open Search Command">
+        <i data-lucide="search" style="width: 16px; height: 16px;"></i>
+      </button>
+
+      <button class="glass-login-btn" id="openLoginBtn">
+        <div class="login-avatar-ring">
+          <i data-lucide="user" style="width: 14px; height: 14px;"></i>
+        </div>
+        <span>Sign In</span>
+      </button>
+
+      <button class="mobile-menu-btn" id="openDrawerBtn" aria-label="Open Navigation Menu">
+        <i data-lucide="menu" style="width: 18px; height: 18px;"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Slideout Navigation Drawer -->
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="mobile-drawer" id="mobileDrawer">
+    <div class="drawer-header">
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <span class="brand-badge">XT</span>
+        <span class="brand-name">xtrotio<span class="brand-dot">.com</span></span>
+      </div>
+      <button id="closeDrawerBtn" style="background: none; border: none; color: var(--text-dim); cursor: pointer;">
+        <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+      </button>
     </div>
 
-    <header class="fixed top-0 inset-x-0 z-50 px-4 md:px-8 max-w-7xl mx-auto pt-4">
-        <nav class="glass-nav flex items-center justify-between px-6 py-4 rounded-full transition-all duration-300">
-            <div class="flex items-center gap-3 cursor-pointer group">
-                <div class="relative w-8 h-8 rounded-lg bg-gradient-to-tr from-[#00E5FF] to-[#7B61FF] flex items-center justify-center shadow-[0_0_20px_rgba(0,229,255,0.4)]">
-                    <span class="font-black text-black text-xs">X</span>
-                </div>
-                <span class="text-xl font-bold tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">XTROTIO</span>
-            </div>
+    <div class="drawer-links">
+      <a href="index.html" class="drawer-link-item active">
+        <span style="display: flex; align-items: center; gap: 0.6rem;">
+          <i data-lucide="home" style="color: #00f2fe; width: 18px; height: 18px;"></i>
+          Home Hub
+        </span>
+      </a>
+      <a href="today-special.html" class="drawer-link-item">
+        <span style="display: flex; align-items: center; gap: 0.6rem;">
+          <i data-lucide="flame" style="color: #ff4b4b; width: 18px; height: 18px;"></i>
+          Today's Special
+        </span>
+        <span class="hub-badge" style="color: #ff4b4b;">HOT</span>
+      </a>
+      <a href="watch-now.html" class="drawer-link-item">
+        <span style="display: flex; align-items: center; gap: 0.6rem;">
+          <i data-lucide="play-square" style="color: #00f2fe; width: 18px; height: 18px;"></i>
+          Watch Now
+        </span>
+        <span class="hub-badge" style="color: #00f2fe;">4K</span>
+      </a>
+      <a href="shop-now.html" class="drawer-link-item">
+        <span style="display: flex; align-items: center; gap: 0.6rem;">
+          <i data-lucide="shopping-bag" style="color: #4facfe; width: 18px; height: 18px;"></i>
+          Shop Now
+        </span>
+        <span class="hub-badge" style="color: #4facfe;">STORE</span>
+      </a>
+      <a href="shorts.html" class="drawer-link-item">
+        <span style="display: flex; align-items: center; gap: 0.6rem;">
+          <i data-lucide="zap" style="color: #fbc531; width: 18px; height: 18px;"></i>
+          Shorts
+        </span>
+        <span class="hub-badge" style="color: #fbc531;">REELS</span>
+      </a>
+      <a href="movies-series.html" class="drawer-link-item">
+        <span style="display: flex; align-items: center; gap: 0.6rem;">
+          <i data-lucide="film" style="color: #9b51e0; width: 18px; height: 18px;"></i>
+          Movies & Series
+        </span>
+        <span class="hub-badge" style="color: #9b51e0;">4K</span>
+      </a>
+      <a href="ongoing.html" class="drawer-link-item">
+        <span style="display: flex; align-items: center; gap: 0.6rem;">
+          <i data-lucide="radio" style="color: #00e676; width: 18px; height: 18px;"></i>
+          Ongoing Releases
+        </span>
+        <span class="hub-badge" style="color: #00e676;">LIVE</span>
+      </a>
+      <a href="apps.html" class="drawer-link-item">
+        <span style="display: flex; align-items: center; gap: 0.6rem;">
+          <i data-lucide="smartphone" style="color: #e056fd; width: 18px; height: 18px;"></i>
+          Apps & Software
+        </span>
+      </a>
+    </div>
+  </aside>
 
-            <div class="hidden lg:flex items-center gap-8">
-                <a href="#home" class="text-xs font-medium uppercase tracking-wider text-slate-400 hover:text-white transition-colors">Home</a>
-                <a href="#features" class="text-xs font-medium uppercase tracking-wider text-slate-400 hover:text-white transition-colors">Features</a>
-                <a href="#showcase" class="text-xs font-medium uppercase tracking-wider text-slate-400 hover:text-white transition-colors">Showcase</a>
-                <a href="#stats" class="text-xs font-medium uppercase tracking-wider text-slate-400 hover:text-white transition-colors">Stats</a>
-                <a href="#faq" class="text-xs font-medium uppercase tracking-wider text-slate-400 hover:text-white transition-colors">FAQ</a>
-                <a href="#contact" class="text-xs font-medium uppercase tracking-wider text-white transition-colors">Acquire Site</a>
-            </div>
+  <!-- Hero Content Stage -->
+  <main class="hero-stage">
+    <div class="hero-badge-pill">
+      <i data-lucide="sparkles" style="width: 14px; height: 14px; color: var(--cyan-neon);"></i>
+      <span>Next-Gen Interactive Digital Ecosystem</span>
+    </div>
 
-            <div class="hidden sm:flex items-center gap-4">
-                <a href="#contact" class="px-5 py-2 text-sm font-semibold text-black bg-white rounded-full transition-transform hover:scale-105 shadow-[0_4px_20px_rgba(255,255,255,0.2)]">Buy Asset Bundle</a>
-            </div>
-        </nav>
-    </header>
+    <h1 class="hero-title">
+      Speed. Motion. <br />
+      <span class="gradient-glow-text">Boundless Streaming & Apps.</span>
+    </h1>
 
-    <section id="home" class="relative pt-44 pb-20 md:pt-56 md:pb-32 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        <div class="lg:col-span-7 flex flex-col justify-center space-y-8 z-10">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#00FFA3]/20 bg-[#00FFA3]/5 backdrop-blur-md w-fit">
-            <span class="w-2 h-2 rounded-full bg-[#00FFA3] animate-pulse"></span>
-            <span class="text-[10px] font-bold tracking-widest uppercase text-[#00FFA3]">100% Verified Premium Digital Asset Package</span>
+    <p class="hero-description">
+      Experience 4K cinema releases, lightning-fast streaming, instant web apps, and exclusive daily specials wrapped in hyper-fluid glass visuals.
+    </p>
+
+    <!-- Auto-Adjusting Quick Hub Grid -->
+    <div class="hero-action-grid">
+      <a href="today-special.html" class="glass-card hub-card">
+        <div class="hub-card-header">
+          <div class="hub-icon-wrapper" style="background: rgba(255, 75, 75, 0.15); color: #ff4b4b;">
+            <i data-lucide="flame" style="width: 20px; height: 20px;"></i>
           </div>
-          <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05] text-white">
-            Create. Inspire.<br><span class="bg-clip-text text-transparent bg-gradient-to-r from-[#00E5FF] via-[#7B61FF] to-[#00FFA3]">Innovate.</span>
-          </h1>
-          <p class="text-base md:text-lg text-slate-400 max-w-xl font-normal leading-relaxed">
-            XTROTIO brings modern digital infrastructure structures together with elegant typography guidelines, advanced interaction models, and liquid glass aesthetics. The complete brand is up for acquisition.
-          </p>
-          <div class="flex flex-wrap items-center gap-5 pt-2">
-            <a href="#contact" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-[#00E5FF] to-[#7B61FF] text-black font-bold flex items-center gap-3 shadow-[0_0_30px_rgba(0,229,255,0.3)] transition-transform hover:scale-102">
-              <span>Acquire Entire Brand</span>
-              <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </a>
-            <a href="#features" class="px-8 py-4 rounded-2xl border border-white/15 bg-white/5 backdrop-blur-md text-white text-sm font-medium hover:bg-white/10 transition-colors">
-              Review Architecture Specs
-            </a>
-          </div>
+          <span class="hub-mini-badge" style="border-color: rgba(255, 75, 75, 0.3); color: #ff4b4b;">HOT</span>
         </div>
+        <h3 class="hub-card-title">Today's Special</h3>
+        <p class="hub-card-text">Curated daily drops & gear</p>
+        <div class="hub-card-link">
+          <span>Enter Hub</span>
+          <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i>
+        </div>
+      </a>
 
-        <div class="lg:col-span-5 relative w-full h-[350px] flex items-center justify-center z-10">
-          <div class="absolute w-[300px] h-[300px] md:w-[360px] md:h-[360px] rounded-full border border-[#00E5FF]/10 border-dashed animate-spin-ring"></div>
-          <div class="glass-panel animate-float relative w-56 h-72 md:w-64 md:h-80 rounded-[32px] p-6 shadow-2xl flex flex-col justify-between overflow-hidden">
-            <div class="flex items-center justify-between">
-              <div class="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center border border-white/10">
-                <i data-lucide="layers" class="text-[#00E5FF] w-5 h-5"></i>
-              </div>
-              <span class="text-[9px] tracking-widest text-slate-400 font-mono uppercase bg-white/5 px-2.5 py-1 rounded-full">Asset On Sale</span>
-            </div>
-            <div class="space-y-2">
-              <p class="text-[10px] text-[#00FFA3] font-mono">300 USDT FLAT PRICE</p>
-              <h3 class="text-lg font-bold">Includes Domain + Handles</h3>
-            </div>
+      <a href="watch-now.html" class="glass-card hub-card">
+        <div class="hub-card-header">
+          <div class="hub-icon-wrapper" style="background: rgba(0, 242, 254, 0.15); color: #00f2fe;">
+            <i data-lucide="play-square" style="width: 20px; height: 20px;"></i>
           </div>
+          <span class="hub-mini-badge" style="border-color: rgba(0, 242, 254, 0.3); color: #00f2fe;">LIVE</span>
         </div>
-    </section>
+        <h3 class="hub-card-title">Watch Now</h3>
+        <p class="hub-card-text">Direct 4K media gateway</p>
+        <div class="hub-card-link">
+          <span>Stream</span>
+          <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i>
+        </div>
+      </a>
 
-    <section id="features" class="py-24 px-6 max-w-7xl mx-auto text-center scroll-mt-20">
-        <div class="max-w-3xl mx-auto mb-16 space-y-4">
-          <h2 class="text-xs font-bold tracking-widest text-[#00E5FF] uppercase">Engineered Architecture</h2>
-          <p class="text-3xl md:text-5xl font-extrabold tracking-tight">Advanced Platform Parameters</p>
+      <a href="movies-series.html" class="glass-card hub-card">
+        <div class="hub-card-header">
+          <div class="hub-icon-wrapper" style="background: rgba(155, 81, 224, 0.15); color: #9b51e0;">
+            <i data-lucide="film" style="width: 20px; height: 20px;"></i>
+          </div>
+          <span class="hub-mini-badge" style="border-color: rgba(155, 81, 224, 0.3); color: #9b51e0;">4K HDR</span>
         </div>
+        <h3 class="hub-card-title">Movies & Series</h3>
+        <p class="hub-card-text">Cinema library & seasons</p>
+        <div class="hub-card-link">
+          <span>Watch Films</span>
+          <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i>
+        </div>
+      </a>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="glass-panel p-8 rounded-[28px] text-left transition-all duration-300 hover:-translate-y-2 hover:border-white/30 cursor-pointer group">
-            <div class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 text-white group-hover:text-[#00E5FF] transition-colors">
-              <i data-lucide="cpu"></i>
-            </div>
-            <h3 class="text-lg font-bold mb-3">Next-Gen Engine</h3>
-            <p class="text-xs leading-relaxed text-slate-400">Powered by a proprietary neural core architecture engineered for sub-millisecond data synchronization.</p>
+      <a href="shop-now.html" class="glass-card hub-card">
+        <div class="hub-card-header">
+          <div class="hub-icon-wrapper" style="background: rgba(79, 172, 254, 0.15); color: #4facfe;">
+            <i data-lucide="shopping-bag" style="width: 20px; height: 20px;"></i>
           </div>
-          <div class="glass-panel p-8 rounded-[28px] text-left transition-all duration-300 hover:-translate-y-2 hover:border-white/30 cursor-pointer group">
-            <div class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 text-white group-hover:text-[#00E5FF] transition-colors">
-              <i data-lucide="shield"></i>
-            </div>
-            <h3 class="text-lg font-bold mb-3">Quantum Security</h3>
-            <p class="text-xs leading-relaxed text-slate-400">End-to-end cryptographic infrastructure implementing post-quantum encryption models.</p>
-          </div>
-          <div class="glass-panel p-8 rounded-[28px] text-left transition-all duration-300 hover:-translate-y-2 hover:border-white/30 cursor-pointer group">
-            <div class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 text-white group-hover:text-[#00E5FF] transition-colors">
-              <i data-lucide="zap"></i>
-            </div>
-            <h3 class="text-lg font-bold mb-3">Hyper Performance</h3>
-            <p class="text-xs leading-relaxed text-slate-400">Optimized runtime compiling pipeline delivering smooth 120Hz interface renders perfectly.</p>
-          </div>
+          <span class="hub-mini-badge" style="border-color: rgba(79, 172, 254, 0.3); color: #4facfe;">STORE</span>
         </div>
-    </section>
+        <h3 class="hub-card-title">Shop Now</h3>
+        <p class="hub-card-text">Global shipping catalogue</p>
+        <div class="hub-card-link">
+          <span>Browse Store</span>
+          <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i>
+        </div>
+      </a>
 
-    <section id="showcase" class="py-24 px-6 max-w-7xl mx-auto scroll-mt-20">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        <div class="lg:col-span-5 space-y-6">
-          <h2 class="text-xs font-bold tracking-widest text-[#7B61FF] uppercase">Live Framework Canvas</h2>
-          <p class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">Immersive Sandbox Telemetry</p>
-          <p class="text-xs text-slate-400 leading-relaxed">
-            Interact directly with design variables. Our hardware-accelerated layouts render layout rules cleanly via static execution branches.
-          </p>
-        </div>
-        <div class="lg:col-span-7 flex justify-center">
-          <div class="glass-panel w-full max-w-[450px] p-5 rounded-2xl shadow-2xl font-mono text-xs space-y-3">
-            <p class="text-[#00FFA3]">&gt; xtrotio compile --target=cluster</p>
-            <p class="text-slate-500">Processing glass opacity rendering algorithms...</p>
-            <p class="text-[#00E5FF]">✔ Hardware composite matrices safely validated and running layout metrics.</p>
+      <a href="apps.html" class="glass-card hub-card">
+        <div class="hub-card-header">
+          <div class="hub-icon-wrapper" style="background: rgba(224, 86, 253, 0.15); color: #e056fd;">
+            <i data-lucide="smartphone" style="width: 20px; height: 20px;"></i>
           </div>
+          <span class="hub-mini-badge" style="border-color: rgba(224, 86, 253, 0.3); color: #e056fd;">TOOLS</span>
         </div>
+        <h3 class="hub-card-title">Web & Native Apps</h3>
+        <p class="hub-card-text">Windows & Android utilities</p>
+        <div class="hub-card-link">
+          <span>Get Apps</span>
+          <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i>
+        </div>
+      </a>
+    </div>
+  </main>
+
+  <!-- Live Notification Panel -->
+  <div class="glass-card notif-panel-container">
+    <div class="notif-top-row">
+      <div class="notif-heading">
+        <span class="notif-ping-dot"></span>
+        <span>LIVE BROADCAST</span>
       </div>
-    </section>
+      <span class="notif-count-badge" id="notifBadge">UPDATE</span>
+    </div>
 
-    <section id="stats" class="py-16 px-6 max-w-7xl mx-auto border-y border-white/5 bg-white/[0.01] text-center">
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
-        <div>
-          <p class="text-4xl md:text-5xl font-black bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-500">100K+</p>
-          <p class="text-[10px] font-bold uppercase tracking-widest text-[#00E5FF] mt-1">Active Nodes</p>
-        </div>
-        <div>
-          <p class="text-4xl md:text-5xl font-black bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-500">10M+</p>
-          <p class="text-[10px] font-bold uppercase tracking-widest text-[#00E5FF] mt-1">Daily Operations</p>
-        </div>
-        <div>
-          <p class="text-4xl md:text-5xl font-black bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-500">50+</p>
-          <p class="text-[10px] font-bold uppercase tracking-widest text-[#00E5FF] mt-1">Global Clusters</p>
-        </div>
-        <div>
-          <p class="text-4xl md:text-5xl font-black bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-500">99.99%</p>
-          <p class="text-[10px] font-bold uppercase tracking-widest text-[#00E5FF] mt-1">System Uptime</p>
-        </div>
+    <div class="notif-body">
+      <div class="notif-avatar" id="notifIcon">
+        <i data-lucide="sparkles" style="width: 16px; height: 16px; color: var(--cyan-neon);"></i>
       </div>
-    </section>
-
-    <section id="faq" class="py-24 px-6 max-w-3xl mx-auto scroll-mt-20">
-        <div class="text-center mb-14">
-          <p class="text-xs font-bold tracking-widest text-[#00E5FF] uppercase">Operation Guidelines</p>
-          <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mt-1">Frequently Asked Queries</h2>
+      <div class="notif-content-box">
+        <div class="notif-title-row">
+          <span class="notif-title" id="notifTitle">Binary Gold: Ep 6</span>
+          <span class="notif-time" id="notifTime">Just Now</span>
         </div>
-        <div class="space-y-4">
-          <div class="glass-panel rounded-2xl overflow-hidden p-6 cursor-pointer" onclick="this.querySelector('.faq-answer').classList.toggle('hidden')">
-            <div class="flex justify-between items-center font-semibold text-sm md:text-base">
-              <span>What is included in the 300 USDT brand acquisition bundle?</span>
-              <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400"></i>
-            </div>
-            <p class="faq-answer hidden text-xs text-slate-400 mt-4 pt-4 border-t border-white/5 leading-relaxed">
-              You receive total administrative transfer ownership of the original domain name registration rights, matching brand email (xtrotio@gmail.com), verified premium GitHub project organization handles, matching Instagram account footprint, and full rights to this static deployment source architecture.
-            </p>
-          </div>
-        </div>
-    </section>
-
-    <!-- Acquisition & Contact Hub -->
-    <section id="contact" class="py-24 px-6 max-w-4xl mx-auto scroll-mt-20">
-      <div itemscope itemtype="https://schema.org/Product" class="glass-panel p-8 md:p-12 rounded-[36px] shadow-2xl relative overflow-hidden">
-        
-        <!-- Premium Live Offer Sticker -->
-        <div class="absolute top-6 right-6 inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#00FFA3]/30 bg-[#00FFA3]/10 backdrop-blur-md">
-          <span class="w-2 h-2 rounded-full bg-[#00FFA3] animate-pulse"></span>
-          <span itemprop="offers" itemscope itemtype="https://schema.org/Offer" class="text-[11px] font-bold tracking-widest uppercase text-[#00FFA3]">
-            Fixed Price: <span itemprop="price">300</span> <span itemprop="priceCurrency">USDT</span>
-          </span>
-        </div>
-
-        <div class="text-center max-w-2xl mx-auto mb-10 mt-6">
-          <h2 itemprop="name" class="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400">
-            Acquire XTROTIO Premium Digital Assets
-          </h2>
-          <p itemprop="description" class="text-xs text-slate-400 mt-3 leading-relaxed max-w-lg mx-auto">
-            Secure ownership over the brand domain registry, full interactive interface framework source, and original developer social handles cleanly under a single secure handover structure.
-          </p>
-        </div>
-
-        <!-- Asset Matrix Structural Breakdown Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10 text-left">
-          <div class="p-4 rounded-xl bg-white/5 border border-white/5 flex items-start gap-3">
-            <i data-lucide="globe" class="text-[#00E5FF] w-5 h-5 shrink-0 mt-0.5"></i>
-            <div>
-              <h4 class="text-xs font-bold text-white">Domain Ecosystem</h4>
-              <p class="text-[10px] text-slate-400 mt-0.5">XTROTIO domain registry</p>
-            </div>
-          </div>
-          <div class="p-4 rounded-xl bg-white/5 border border-white/5 flex items-start gap-3">
-            <i data-lucide="mail" class="text-[#7B61FF] w-5 h-5 shrink-0 mt-0.5"></i>
-            <div>
-              <h4 class="text-xs font-bold text-white">Google Channel</h4>
-              <p class="text-[10px] text-slate-400 mt-0.5">xtrotio@gmail.com</p>
-            </div>
-          </div>
-          <div class="p-4 rounded-xl bg-white/5 border border-white/5 flex items-start gap-3">
-            <i data-lucide="github" class="text-[#00FFA3] w-5 h-5 shrink-0 mt-0.5"></i>
-            <div>
-              <h4 class="text-xs font-bold text-white">GitHub Org Account</h4>
-              <p class="text-[10px] text-slate-400 mt-0.5">Source files & Repos</p>
-            </div>
-          </div>
-          <div class="p-4 rounded-xl bg-white/5 border border-white/5 flex items-start gap-3">
-            <i data-lucide="instagram" class="text-[#FF61B6] w-5 h-5 shrink-0 mt-0.5"></i>
-            <div>
-              <h4 class="text-xs font-bold text-white">Instagram Vector</h4>
-              <p class="text-[10px] text-slate-400 mt-0.5">Verified brand profile</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Form Handling Engine and External Direct Route Link -->
-        <form class="space-y-5" onsubmit="event.preventDefault(); window.location.href='mailto:xtrotio@gmail.com?subject=XTROTIO Acquisition Intent - 300 USDT&body=Hello, I would like to buy the XTROTIO bundle (Domain, Code, GitHub, and Instagram) for 300 USDT.';">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <input type="text" required placeholder="Your Identity Name / Organization" class="w-full px-4 py-3 bg-white/5 rounded-xl border border-white/10 text-xs text-white outline-none focus:border-[#00E5FF] transition-all">
-            <input type="email" required placeholder="Your Contact Email Routing Vector" class="w-full px-4 py-3 bg-white/5 rounded-xl border border-white/10 text-xs text-white outline-none focus:border-[#00E5FF] transition-all">
-          </div>
-          <textarea rows="4" required placeholder="Include preferred escrow verification service or transition timeline parameters if applicable..." class="w-full px-4 py-3 bg-white/5 rounded-xl border border-white/10 text-xs text-white outline-none focus:border-[#00E5FF] resize-none transition-all"></textarea>
-          
-          <div class="flex flex-col sm:flex-row items-center gap-4 pt-2">
-            <button type="submit" class="w-full sm:w-2/3 py-4 rounded-xl bg-white font-bold text-black text-xs transition-all hover:scale-[1.01] shadow-[0_4px_20px_rgba(255,255,255,0.15)]">
-              Send Secure Acquisition Request
-            </button>
-            <a href="mailto:xtrotio@gmail.com?subject=XTROTIO Asset Bundle Acquisition - 300 USDT" class="w-full sm:w-1/3 py-4 rounded-xl border border-white/15 bg-white/5 text-center font-medium text-xs hover:bg-white/10 transition-colors flex items-center justify-center gap-2">
-              <i data-lucide="send" class="w-3.5 h-3.5"></i> Direct Email Node
-            </a>
-          </div>
-        </form>
-
+        <p class="notif-desc" id="notifDesc">4K HDR audio episode released to all subscribers.</p>
       </div>
-    </section>
+    </div>
+  </div>
 
-    <footer class="py-12 px-6 border-t border-white/10 bg-[#050816]/90 backdrop-blur-md text-xs text-slate-500">
-      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-        <div class="flex items-center gap-2">
-          <div class="w-4 h-4 rounded bg-gradient-to-tr from-[#00E5FF] to-[#7B61FF]"></div>
-          <span class="font-bold text-white tracking-wider">XTROTIO</span>
-        </div>
-        <p>© 2026 XTROTIO Infrastructure Labs. Channels Prepared For Asset Relocation.</p>
+  <!-- Search Modal -->
+  <div class="modal-backdrop" id="searchModal">
+    <div class="glass-card search-modal">
+      <div class="search-input-box">
+        <i data-lucide="search" style="color: var(--cyan-neon); width: 20px; height: 20px;"></i>
+        <input type="text" id="siteSearchInput" placeholder="Search pages, streams, apps, products..." autocomplete="off" />
+        <span class="search-shortcut-pill">ESC</span>
       </div>
-    </footer>
+      <div class="search-results-list" id="searchResultsList"></div>
+    </div>
+  </div>
 
-    <script>
-        // Start Lucide Icons rendering pipeline
-        lucide.createIcons();
+  <!-- Sign In / Sign Up Modal -->
+  <div class="modal-backdrop" id="authModal">
+    <div class="glass-card auth-modal">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <i data-lucide="shield-check" style="color: var(--cyan-neon); width: 20px; height: 20px;"></i>
+          <h3 style="font-size: 1.15rem; font-weight: 800;" id="authModalTitle">Welcome to xtrotio</h3>
+        </div>
+        <button class="modal-close-btn" id="closeAuthBtn">
+          <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+        </button>
+      </div>
 
-        // High-performance hardware smooth mouse cursor interpolation logic
-        const glow = document.getElementById('cursor-glow');
-        window.addEventListener('mousemove', (e) => {
-            glow.style.transform = `translate3d(${e.clientX - 150}px, ${e.clientY - 150}px, 0)`;
-        });
-    </script>
+      <div class="auth-tabs-row">
+        <button class="auth-tab-btn active" id="signInTabBtn" onclick="switchAuthMode('signin')">Sign In</button>
+        <button class="auth-tab-btn" id="signUpTabBtn" onclick="switchAuthMode('signup')">Create Account</button>
+      </div>
+
+      <button class="btn-google" id="googleAuthBtn" onclick="handleGoogleAuth()">
+        <svg width="18" height="18" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+          <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/>
+          <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 10.04 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+          <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+        </svg>
+        <span id="googleBtnText">Continue with Google</span>
+      </button>
+
+      <div class="auth-divider">or with email</div>
+
+      <form class="auth-form" id="authForm" onsubmit="handleFormAuth(event)">
+        <div class="input-group" id="nameFieldGroup" style="display: none;">
+          <i data-lucide="user" class="input-icon" style="width: 16px; height: 16px;"></i>
+          <input type="text" id="authNameInput" placeholder="Full Name" />
+        </div>
+
+        <div class="input-group">
+          <i data-lucide="mail" class="input-icon" style="width: 16px; height: 16px;"></i>
+          <input type="email" id="authEmailInput" placeholder="Email Address" required />
+        </div>
+
+        <div class="input-group">
+          <i data-lucide="lock" class="input-icon" style="width: 16px; height: 16px;"></i>
+          <input type="password" id="authPasswordInput" placeholder="Password" required />
+        </div>
+
+        <div class="form-options" id="authOptionsRow">
+          <label style="display: flex; align-items: center; gap: 0.35rem; cursor: pointer;">
+            <input type="checkbox" checked />
+            <span>Remember me</span>
+          </label>
+          <a href="#" class="forgot-link" id="forgotLink">Recover Key</a>
+        </div>
+
+        <button type="submit" class="glass-submit-btn" id="submitAuthBtn">
+          Sign In to xtrotio
+        </button>
+      </form>
+
+      <div class="modal-footer" id="modalFooterSwitch">
+        <span id="switchPromptText">New to xtrotio?</span>
+        <a href="javascript:void(0)" class="signup-link" id="switchLinkText" onclick="toggleAuthMode()">Create Account</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Three.js Engine: Night Deep Sea Waves & Pure Golden Winged Crow with xtrotio Bracelet -->
+  <script>
+    lucide.createIcons();
+
+    // ----------------- Live Notifications -----------------
+    const liveNotifications = [
+      { title: "Binary Gold: Chapter 6", desc: "4K HDR audio episode released to all subscribers.", time: "Just Now", icon: "sparkles", badge: "MEDIA" },
+      { title: "Baby Suction Clipper", desc: "Flash Deal: 40% OFF + Free Worldwide Shipping.", time: "2m ago", icon: "shopping-bag", badge: "DEAL" },
+      { title: "Live 4K Stream Online", desc: "CineBite Cinema Cuts now streaming 60 FPS.", time: "5m ago", icon: "play-square", badge: "LIVE" },
+      { title: "Auto-Cropper v1.4.2", desc: "Windows x64 update available for download.", time: "12m ago", icon: "smartphone", badge: "APP" }
+    ];
+
+    let notifIndex = 0;
+    function cycleNotifications() {
+      notifIndex = (notifIndex + 1) % liveNotifications.length;
+      const cur = liveNotifications[notifIndex];
+      document.getElementById('notifTitle').textContent = cur.title;
+      document.getElementById('notifDesc').textContent = cur.desc;
+      document.getElementById('notifTime').textContent = cur.time;
+      document.getElementById('notifBadge').textContent = cur.badge;
+      document.getElementById('notifIcon').innerHTML = `<i data-lucide="${cur.icon}" style="width: 16px; height: 16px; color: var(--cyan-neon);"></i>`;
+      lucide.createIcons();
+    }
+    setInterval(cycleNotifications, 4500);
+
+    // ----------------- Site Search -----------------
+    const searchIndex = [
+      { title: "Today's Special", desc: "Curated daily deals, hair clippers, and gear drops", url: "today-special.html", category: "Deals" },
+      { title: "Watch Now", desc: "4K live streaming channels and cinema broadcasts", url: "watch-now.html", category: "Streaming" },
+      { title: "Shop Store", desc: "Electric grooming gear, RFID kits, and digital books", url: "shop-now.html", category: "Store" },
+      { title: "Shorts Feed", desc: "Viral 9:16 vertical video reels and highlight cuts", url: "shorts.html", category: "Reels" },
+      { title: "Movies & Series", desc: "4K original film archives and episodic seasons", url: "movies-series.html", category: "Cinema" },
+      { title: "Ongoing Releases", desc: "Real-time pipeline tracking for apps, firmware, and video tools", url: "ongoing.html", category: "Pipeline" },
+      { title: "Windows Applications", desc: "Native x64 software: Video Auto-Cropper & COM Flasher", url: "apps.html#winSection", category: "Windows" },
+      { title: "Android Apps & APK", desc: "Direct APK downloads: AI Studio Mobile & Stream Companion", url: "apps.html#droidSection", category: "Android" }
+    ];
+
+    const searchModal = document.getElementById('searchModal');
+    const openSearchBtn = document.getElementById('openSearchBtn');
+    const siteSearchInput = document.getElementById('siteSearchInput');
+    const searchResultsList = document.getElementById('searchResultsList');
+
+    function openSearch() {
+      searchModal.classList.add('active');
+      siteSearchInput.value = '';
+      renderSearchResults('');
+      setTimeout(() => siteSearchInput.focus(), 50);
+    }
+    function closeSearch() { searchModal.classList.remove('active'); }
+
+    openSearchBtn.addEventListener('click', openSearch);
+    searchModal.addEventListener('click', (e) => { if (e.target === searchModal) closeSearch(); });
+    siteSearchInput.addEventListener('input', (e) => { renderSearchResults(e.target.value.trim().toLowerCase()); });
+
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openSearch(); }
+      if (e.key === 'Escape') { closeSearch(); closeAuth(); toggleDrawer(false); }
+    });
+
+    function renderSearchResults(query) {
+      searchResultsList.innerHTML = '';
+      const filtered = query === '' ? searchIndex.slice(0, 5) : searchIndex.filter(item => 
+        item.title.toLowerCase().includes(query) || item.desc.toLowerCase().includes(query) || item.category.toLowerCase().includes(query)
+      );
+
+      if (filtered.length === 0) {
+        searchResultsList.innerHTML = `<div style="text-align: center; padding: 2rem; color: var(--text-dim); font-size: 0.9rem;">No matching portals found for "<span style="color: #fff;">${query}</span>".</div>`;
+        return;
+      }
+
+      filtered.forEach(item => {
+        const row = document.createElement('a');
+        row.className = 'search-result-item';
+        row.href = item.url;
+        row.innerHTML = `<div class="result-info"><h4>${item.title}</h4><p>${item.desc}</p></div><span class="result-category-badge">${item.category}</span>`;
+        searchResultsList.appendChild(row);
+      });
+    }
+
+    // ----------------- Auth Modal -----------------
+    let currentAuthMode = 'signin';
+    const authModal = document.getElementById('authModal');
+    const openLoginBtn = document.getElementById('openLoginBtn');
+    const closeAuthBtn = document.getElementById('closeAuthBtn');
+    const signInTabBtn = document.getElementById('signInTabBtn');
+    const signUpTabBtn = document.getElementById('signUpTabBtn');
+    const nameFieldGroup = document.getElementById('nameFieldGroup');
+    const authNameInput = document.getElementById('authNameInput');
+    const submitAuthBtn = document.getElementById('submitAuthBtn');
+    const googleBtnText = document.getElementById('googleBtnText');
+    const switchPromptText = document.getElementById('switchPromptText');
+    const switchLinkText = document.getElementById('switchLinkText');
+    const authOptionsRow = document.getElementById('authOptionsRow');
+
+    function openAuth() { authModal.classList.add('active'); }
+    function closeAuth() { authModal.classList.remove('active'); }
+
+    openLoginBtn.addEventListener('click', openAuth);
+    closeAuthBtn.addEventListener('click', closeAuth);
+    authModal.addEventListener('click', (e) => { if (e.target === authModal) closeAuth(); });
+
+    function switchAuthMode(mode) {
+      currentAuthMode = mode;
+      if (mode === 'signin') {
+        signInTabBtn.classList.add('active');
+        signUpTabBtn.classList.remove('active');
+        nameFieldGroup.style.display = 'none';
+        authNameInput.removeAttribute('required');
+        submitAuthBtn.textContent = 'Sign In to xtrotio';
+        googleBtnText.textContent = 'Continue with Google';
+        authOptionsRow.style.display = 'flex';
+        switchPromptText.textContent = 'New to xtrotio?';
+        switchLinkText.textContent = 'Create Account';
+      } else {
+        signUpTabBtn.classList.add('active');
+        signInTabBtn.classList.remove('active');
+        nameFieldGroup.style.display = 'flex';
+        authNameInput.setAttribute('required', 'true');
+        submitAuthBtn.textContent = 'Create Free Account';
+        googleBtnText.textContent = 'Sign up with Google';
+        authOptionsRow.style.display = 'none';
+        switchPromptText.textContent = 'Already have an account?';
+        switchLinkText.textContent = 'Sign In';
+      }
+      lucide.createIcons();
+    }
+    function toggleAuthMode() { switchAuthMode(currentAuthMode === 'signin' ? 'signup' : 'signin'); }
+    function handleGoogleAuth() { alert(`Connecting to Google OAuth on xtrotio.com...`); closeAuth(); }
+    function handleFormAuth(e) { e.preventDefault(); alert(`Authentication token generated.`); closeAuth(); }
+
+    // Drawer Controls
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const drawerBackdrop = document.getElementById('drawerBackdrop');
+    function toggleDrawer(open) {
+      mobileDrawer.classList.toggle('active', open);
+      drawerBackdrop.classList.toggle('active', open);
+    }
+    document.getElementById('openDrawerBtn').addEventListener('click', () => toggleDrawer(true));
+    document.getElementById('closeDrawerBtn').addEventListener('click', () => toggleDrawer(false));
+    drawerBackdrop.addEventListener('click', () => toggleDrawer(false));
+
+    // ----------------------------------------------------------------
+    // 3D Three.js: Deep Ocean at Night & Undulating Waves (Clean Gold Crow)
+    // ----------------------------------------------------------------
+    const canvas = document.getElementById('webgl-canvas');
+    const scene = new THREE.Scene(); scene.fog = new THREE.FogExp2(0x020611, 0.016);
+
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 1.8, 6.2); camera.lookAt(0, 1.0, -10);
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: true,
+      alpha: true,
+      powerPreference: 'high-performance'
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // Night Ocean Atmosphere Lighting
+    scene.add(new THREE.AmbientLight(0x0b1e38, 1.2));
+
+    const moonLight = new THREE.DirectionalLight(0x7fe3ff, 2.0);
+    moonLight.position.set(8, 20, -15);
+    scene.add(moonLight);
+
+    const goldFill = new THREE.DirectionalLight(0xffd700, 1.8);
+    goldFill.position.set(4, 10, 8);
+    scene.add(goldFill);
+
+    // ----------------- 1. Procedural Deep Ocean Plane -----------------
+    const seaWidth = 90;
+    const seaDepth = 150;
+    const seaSegmentsW = 80;
+    const seaSegmentsD = 100;
+
+    const seaGeo = new THREE.PlaneGeometry(seaWidth, seaDepth, seaSegmentsW, seaSegmentsD);
+    seaGeo.rotateX(-Math.PI / 2);
+
+    const seaMat = new THREE.MeshStandardMaterial({
+      color: 0x031326,
+      roughness: 0.15,
+      metalness: 0.85,
+      flatShading: true
+    });
+
+    const oceanMesh = new THREE.Mesh(seaGeo, seaMat);
+    oceanMesh.position.set(0, -2.4, -40);
+    scene.add(oceanMesh);
+
+    const initialSeaPositions = seaGeo.attributes.position.array.slice();
+
+    // Deep-Sea Bioluminescent Plankton
+    const planktonCount = 450;
+    const planktonGeo = new THREE.BufferGeometry();
+    const planktonPositions = new Float32Array(planktonCount * 3);
+
+    for (let i = 0; i < planktonCount; i++) {
+      planktonPositions[i * 3] = (Math.random() - 0.5) * 55;
+      planktonPositions[i * 3 + 1] = Math.random() * 4 - 2.5;
+      planktonPositions[i * 3 + 2] = -Math.random() * 110 + 10;
+    }
+
+    planktonGeo.setAttribute('position', new THREE.BufferAttribute(planktonPositions, 3));
+    const planktonMat = new THREE.PointsMaterial({
+      size: 0.16,
+      color: 0x00f2fe,
+      transparent: true,
+      opacity: 0.75,
+      blending: THREE.AdditiveBlending
+    });
+
+    const plankton = new THREE.Points(planktonGeo, planktonMat);
+    scene.add(plankton);
+
+    // ----------------- 2. Realistic Procedural Crow -----------------
+    const crowGroup = new THREE.Group();
+    crowGroup.scale.set(0.52, 0.52, 0.52);
+
+    const blackFeatherMat = new THREE.MeshStandardMaterial({
+      color: 0x07080d,
+      roughness: 0.4,
+      metalness: 0.8
+    });
+
+    const eyeMat = new THREE.MeshBasicMaterial({ color: 0xffd700 });
+    const beakMat = new THREE.MeshStandardMaterial({ color: 0x12141c, roughness: 0.25, metalness: 0.85 });
+
+    // Pure Polished Metallic Golden Wings (Zero Fire)
+    const pureGoldenWingMat = new THREE.MeshPhysicalMaterial({
+      color: 0xffd700,
+      metalness: 0.95,
+      roughness: 0.14,
+      clearcoat: 0.95,
+      clearcoatRoughness: 0.08
+    });
+
+    // Anatomical Body
+    const bodyGeo = new THREE.ConeGeometry(0.38, 1.8, 16);
+    bodyGeo.rotateX(-Math.PI / 2);
+    const bodyMesh = new THREE.Mesh(bodyGeo, blackFeatherMat);
+    bodyMesh.position.set(0, 1.0, 0);
+    crowGroup.add(bodyMesh);
+
+    // Head
+    const headGeo = new THREE.SphereGeometry(0.28, 16, 16);
+    const headMesh = new THREE.Mesh(headGeo, blackFeatherMat);
+    headMesh.position.set(0, 1.18, -0.9);
+    crowGroup.add(headMesh);
+
+    // Raven Beak
+    const beakGeo = new THREE.ConeGeometry(0.1, 0.55, 8);
+    beakGeo.rotateX(-Math.PI / 2);
+    const beakMesh = new THREE.Mesh(beakGeo, beakMat);
+    beakMesh.position.set(0, 1.12, -1.35);
+    crowGroup.add(beakMesh);
+
+    // Eyes
+    const leftEye = new THREE.Mesh(new THREE.SphereGeometry(0.045, 8, 8), eyeMat);
+    leftEye.position.set(-0.16, 1.25, -1.0);
+    crowGroup.add(leftEye);
+
+    const rightEye = leftEye.clone();
+    rightEye.position.x = 0.16;
+    crowGroup.add(rightEye);
+
+    // Tail Feathers
+    const tailGroup = new THREE.Group();
+    tailGroup.position.set(0, 0.95, 0.9);
+    for (let i = -2; i <= 2; i++) {
+      const tailFeatherGeo = new THREE.BoxGeometry(0.12, 0.03, 0.85);
+      const tailMesh = new THREE.Mesh(tailFeatherGeo, i % 2 === 0 ? pureGoldenWingMat : blackFeatherMat);
+      tailMesh.position.set(i * 0.08, -Math.abs(i) * 0.02, 0.35);
+      tailMesh.rotation.y = i * 0.1;
+      tailMesh.rotation.x = -0.15;
+      tailGroup.add(tailMesh);
+    }
+    crowGroup.add(tailGroup);
+
+    // ----------------- Articulated Golden Wings -----------------
+    // Left Wing
+    const leftWingRoot = new THREE.Group();
+    leftWingRoot.position.set(-0.25, 1.1, -0.1);
+
+    const leftInnerGeo = new THREE.BoxGeometry(1.2, 0.04, 0.65);
+    leftInnerGeo.translate(-0.6, 0, 0);
+    const leftInnerWing = new THREE.Mesh(leftInnerGeo, pureGoldenWingMat);
+    leftWingRoot.add(leftInnerWing);
+
+    const leftOuterRoot = new THREE.Group();
+    leftOuterRoot.position.set(-1.2, 0, 0);
+    const leftOuterGeo = new THREE.BoxGeometry(1.3, 0.03, 0.5);
+    leftOuterGeo.translate(-0.65, 0, 0.08);
+    const leftOuterWing = new THREE.Mesh(leftOuterGeo, pureGoldenWingMat);
+    leftOuterRoot.add(leftOuterWing);
+    leftWingRoot.add(leftOuterRoot);
+
+    crowGroup.add(leftWingRoot);
+
+    // Right Wing
+    const rightWingRoot = new THREE.Group();
+    rightWingRoot.position.set(0.25, 1.1, -0.1);
+
+    const rightInnerGeo = new THREE.BoxGeometry(1.2, 0.04, 0.65);
+    rightInnerGeo.translate(0.6, 0, 0);
+    const rightInnerWing = new THREE.Mesh(rightInnerGeo, pureGoldenWingMat);
+    rightWingRoot.add(rightInnerWing);
+
+    const rightOuterRoot = new THREE.Group();
+    rightOuterRoot.position.set(1.2, 0, 0);
+    const rightOuterGeo = new THREE.BoxGeometry(1.3, 0.03, 0.5);
+    rightOuterGeo.translate(0.65, 0, 0.08);
+    const rightOuterWing = new THREE.Mesh(rightOuterGeo, pureGoldenWingMat);
+    rightOuterRoot.add(rightOuterWing);
+    rightWingRoot.add(rightOuterRoot);
+
+    crowGroup.add(rightWingRoot);
+
+    // ----------------- 3. xtrotio Logo Bracelet & Medallion -----------------
+    const legMat = new THREE.MeshStandardMaterial({ color: 0x161822, roughness: 0.4, metalness: 0.8 });
+    const leftLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.03, 0.45), legMat);
+    leftLeg.position.set(-0.14, 0.6, 0.1);
+    leftLeg.rotation.z = -0.2;
+    crowGroup.add(leftLeg);
+
+    const rightLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.03, 0.45), legMat);
+    rightLeg.position.set(0.14, 0.6, 0.1);
+    rightLeg.rotation.z = 0.2;
+    crowGroup.add(rightLeg);
+
+    const braceletGroup = new THREE.Group();
+    braceletGroup.position.set(0, 0.32, 0.15);
+
+    const goldBandMat = new THREE.MeshPhysicalMaterial({ color: 0xffd700, metalness: 0.95, roughness: 0.1 });
+    const bandMesh = new THREE.Mesh(new THREE.TorusGeometry(0.25, 0.04, 16, 32), goldBandMat);
+    braceletGroup.add(bandMesh);
+
+    function createXtrotioLogoTexture() {
+      const lCanvas = document.createElement('canvas');
+      lCanvas.width = 256;
+      lCanvas.height = 256;
+      const ctx = lCanvas.getContext('2d');
+
+      ctx.fillStyle = '#0a1222';
+      ctx.beginPath();
+      ctx.arc(128, 128, 120, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.lineWidth = 14;
+      ctx.strokeStyle = '#ffd700';
+      ctx.stroke();
+
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = '#00f2fe';
+      ctx.stroke();
+
+      ctx.font = '900 115px "Plus Jakarta Sans", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.shadowColor = '#00f2fe';
+      ctx.shadowBlur = 18;
+      ctx.fillStyle = '#00f2fe';
+      ctx.fillText('XT', 128, 130);
+
+      return new THREE.CanvasTexture(lCanvas);
+    }
+
+    const medallionGeo = new THREE.CylinderGeometry(0.2, 0.2, 0.04, 32);
+    medallionGeo.rotateX(Math.PI / 2);
+    const medallionMat = new THREE.MeshStandardMaterial({
+      map: createXtrotioLogoTexture(),
+      roughness: 0.2,
+      metalness: 0.7
+    });
+
+    const medallionDisc = new THREE.Mesh(medallionGeo, medallionMat);
+    medallionDisc.position.set(0, -0.28, 0.02);
+    braceletGroup.add(medallionDisc);
+
+    const medallionLight = new THREE.PointLight(0x00f2fe, 2.5, 3.5);
+    medallionLight.position.set(0, -0.28, 0.15);
+    braceletGroup.add(medallionLight);
+
+    crowGroup.add(braceletGroup);
+    scene.add(crowGroup);
+
+    // ----------------- Multi-Device Interaction Controls -----------------
+    let targetX = 0;
+    let targetY = 0;
+    let isSoaring = false;
+    let velocity = 0;
+    let lastX = 0;
+    let lastY = 0;
+    let lastTime = performance.now();
+
+    window.addEventListener('mousemove', (e) => {
+      targetX = (e.clientX / window.innerWidth - 0.5) * 2.2;
+      targetY = (e.clientY / window.innerHeight - 0.5) * 0.7;
+
+      const now = performance.now();
+      const dt = Math.max(now - lastTime, 16);
+      const dist = Math.hypot(e.clientX - lastX, e.clientY - lastY);
+      velocity = Math.min(dist / dt, 1.5);
+
+      lastX = e.clientX;
+      lastY = e.clientY;
+      lastTime = now;
+    });
+
+    window.addEventListener('mousedown', () => { isSoaring = true; });
+    window.addEventListener('mouseup', () => { isSoaring = false; });
+
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        targetX = (touch.clientX / window.innerWidth - 0.5) * 2.2;
+        targetY = (touch.clientY / window.innerHeight - 0.5) * 0.7;
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchstart', () => { isSoaring = true; }, { passive: true });
+    window.addEventListener('touchend', () => { isSoaring = false; }, { passive: true });
+
+    function handleResize() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      camera.aspect = w / h;
+      
+      if (w < 640) {
+        camera.position.set(0, 2.2, 7.2);
+      } else {
+        camera.position.set(0, 1.8, 6.2);
+      }
+
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    }
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    // ----------------- Deep Sea Night Waves & Soaring Animation Loop -----------------
+    const normalSpeed = 0.08;
+    const boostSpeed = 0.24;
+    let currentSpeed = 0.08;
+    let waveTime = 0;
+    let wingTime = 0;
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      velocity *= 0.94;
+
+      let targetSpeed = normalSpeed + velocity * 0.08;
+      if (isSoaring) targetSpeed = boostSpeed;
+
+      currentSpeed += (targetSpeed - currentSpeed) * 0.05;
+      waveTime += 0.025 + currentSpeed * 0.15;
+
+      // 1. Procedural Smooth Ocean Waves Math
+      const posArray = seaGeo.attributes.position.array;
+      for (let i = 0; i < posArray.length; i += 3) {
+        const u = initialSeaPositions[i];
+        const v = initialSeaPositions[i + 2];
+
+        const wave1 = Math.sin(u * 0.25 + waveTime * 1.5) * 0.45;
+        const wave2 = Math.cos(v * 0.18 + waveTime * 2.0) * 0.65;
+        const wave3 = Math.sin((u + v) * 0.12 + waveTime) * 0.35;
+
+        posArray[i + 1] = initialSeaPositions[i + 1] + wave1 + wave2 + wave3;
+      }
+      seaGeo.computeVertexNormals();
+      seaGeo.attributes.position.needsUpdate = true;
+
+      // 2. Bioluminescent Ocean Plankton Movement
+      const pkPos = planktonGeo.attributes.position.array;
+      for (let i = 0; i < planktonCount; i++) {
+        pkPos[i * 3 + 2] += currentSpeed * 1.8;
+        pkPos[i * 3 + 1] += Math.sin(waveTime + i) * 0.008;
+        if (pkPos[i * 3 + 2] > 10) {
+          pkPos[i * 3 + 2] = -100;
+          pkPos[i * 3] = (Math.random() - 0.5) * 55;
+        }
+      }
+      planktonGeo.attributes.position.needsUpdate = true;
+
+      // 3. Crow Wing Flapping Kinematics
+      const flapFrequency = 0.09 + currentSpeed * 0.5;
+      wingTime += flapFrequency;
+      const flapAngle = Math.sin(wingTime) * 0.45;
+
+      leftWingRoot.rotation.z = flapAngle;
+      leftOuterRoot.rotation.z = flapAngle * 0.65;
+      rightWingRoot.rotation.z = -flapAngle;
+      rightOuterRoot.rotation.z = -flapAngle * 0.65;
+
+      // 4. xtrotio Bracelet Stabilized Camera Facing
+      braceletGroup.rotation.z = Math.sin(wingTime * 0.8) * 0.12;
+      braceletGroup.rotation.y = -(targetX - crowGroup.position.x) * 0.35;
+
+      // 5. Crow Flight Steering & Banking
+      crowGroup.position.x += (targetX - crowGroup.position.x) * 0.04;
+      crowGroup.position.y = 0.85 - targetY * 0.5 + Math.sin(wingTime) * 0.08;
+      crowGroup.rotation.z = -(targetX - crowGroup.position.x) * 0.42;
+      crowGroup.rotation.y = -(targetX - crowGroup.position.x) * 0.22;
+      crowGroup.rotation.x = -targetY * 0.2 + Math.cos(wingTime) * 0.03;
+
+      // 6. Smooth Camera Lag
+      camera.position.x += (targetX * 0.4 - camera.position.x) * 0.03;
+      camera.position.y += ((window.innerWidth < 640 ? 2.2 : 1.8) - targetY * 0.3 - camera.position.y) * 0.03;
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  </script>
 </body>
 </html>
