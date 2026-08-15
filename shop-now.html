@@ -4,29 +4,49 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Shop Now | xtrotio.com</title>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+
   <style>
-    :root { --bg-deep: #020611; --glass-bg: rgba(255, 255, 255, 0.04); --glass-border: rgba(255, 255, 255, 0.12); --glass-blur: blur(20px); --gold-neon: #ffd700; --cyan-neon: #00f2fe; --text-pure: #ffffff; --text-dim: #94a3b8; }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-deep: #020611;
+      --glass-bg: rgba(255, 255, 255, 0.04);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --glass-blur: blur(20px);
+      --gold-neon: #ffd700;
+      --cyan-neon: #00f2fe;
+      --blue-neon: #4facfe;
+      --text-pure: #ffffff;
+      --text-dim: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     html, body { width: 100%; min-height: 100%; background: var(--bg-deep); color: var(--text-pure); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+
     #webgl-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none; }
     .glass-card { background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: var(--glass-blur); border-radius: 1.25rem; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); }
+
     .glass-navbar { position: sticky; top: 0.75rem; margin: 0.75rem auto 0; width: calc(100% - 1.5rem); max-width: 1250px; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0.65rem 1.2rem; background: rgba(10, 15, 30, 0.82); border: 1px solid var(--glass-border); backdrop-filter: var(--glass-blur); border-radius: 9999px; gap: 0.75rem; }
-    .nav-brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+    .nav-brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; flex-shrink: 0; }
     .brand-badge { background: linear-gradient(135deg, var(--gold-neon), var(--cyan-neon)); padding: 0.2rem 0.55rem; font-weight: 900; border-radius: 0.45rem; font-size: 0.8rem; color: #000; }
     .brand-name { font-size: 1.1rem; font-weight: 800; color: #fff; }
     .brand-dot { color: var(--cyan-neon); }
+
     .nav-hubs { display: flex; align-items: center; gap: 0.25rem; overflow-x: auto; scrollbar-width: none; }
     .nav-hubs::-webkit-scrollbar { display: none; }
     .nav-hub-btn { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--text-dim); padding: 0.45rem 0.75rem; border-radius: 9999px; font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: 0.2s; white-space: nowrap; }
     .nav-hub-btn:hover, .nav-hub-btn.active { background: rgba(255, 255, 255, 0.12); color: #fff; }
     .hub-badge { font-size: 0.62rem; padding: 0.1rem 0.35rem; background: rgba(255, 255, 255, 0.1); border-radius: 9999px; font-weight: 800; }
+
+    .nav-actions { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
     .glass-home-btn { display: inline-flex; align-items: center; gap: 0.45rem; background: linear-gradient(135deg, rgba(0, 242, 254, 0.18), rgba(255, 215, 0, 0.25)); border: 1px solid rgba(0, 242, 254, 0.35); color: #fff; padding: 0.4rem 0.85rem; border-radius: 9999px; text-decoration: none; font-size: 0.82rem; font-weight: 700; }
     .mobile-menu-btn { display: none; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--glass-border); color: #fff; padding: 0.45rem; border-radius: 0.6rem; cursor: pointer; }
+
     .mobile-drawer { position: fixed; top: 0; right: -100%; width: min(85vw, 320px); height: 100vh; background: rgba(8, 14, 28, 0.95); backdrop-filter: blur(24px); border-left: 1px solid var(--glass-border); z-index: 99; display: flex; flex-direction: column; padding: 1.5rem; transition: right 0.35s ease; }
     .mobile-drawer.active { right: 0; }
     .drawer-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
@@ -34,8 +54,15 @@
     .drawer-link-item { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1rem; border-radius: 0.75rem; color: #fff; text-decoration: none; font-weight: 600; font-size: 0.95rem; background: rgba(255, 255, 255, 0.03); }
     .drawer-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 98; display: none; }
     .drawer-backdrop.active { display: block; }
+
     .page-stage { position: relative; z-index: 2; max-width: 1250px; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
-    @media (max-width: 1024px) { .nav-hubs { display: none; } .mobile-menu-btn { display: flex; align-items: center; justify-content: center; } }
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.75rem; }
+    .product-card { padding: 1.6rem; display: flex; flex-direction: column; justify-content: space-between; }
+
+    @media (max-width: 1024px) {
+      .nav-hubs { display: none; }
+      .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+    }
   </style>
 </head>
 <body>
@@ -76,10 +103,12 @@
 
   <main class="page-stage">
     <h1 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 2rem;">Global <span style="color: #4facfe;">Store</span></h1>
-    <div class="glass-card" style="padding: 2rem;">
-      <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">Baby Suction Hair Clipper</h3>
-      <p style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 1.5rem;">Whisper-quiet electric vacuum hair trimmer with ceramic blades.</p>
-      <span style="font-family: 'JetBrains Mono'; font-size: 1.25rem; font-weight: 900;">$29.99</span>
+    <div class="products-grid">
+      <div class="glass-card product-card">
+        <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">Baby Suction Hair Clipper</h3>
+        <p style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 1.5rem;">Whisper-quiet electric vacuum suction clipper with ceramic blades.</p>
+        <span style="font-family: 'JetBrains Mono'; font-size: 1.25rem; font-weight: 900;">$29.99</span>
+      </div>
     </div>
   </main>
 
@@ -98,12 +127,24 @@
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    scene.add(new THREE.AmbientLight(0x0b1e38, 1.2));
+    scene.add(new THREE.AmbientLight(0xffffff, 1.2));
     const moon = new THREE.DirectionalLight(0x7fe3ff, 2.0); moon.position.set(8, 20, -15); scene.add(moon);
-    const seaGeo = new THREE.PlaneGeometry(90, 150, 80, 100); seaGeo.rotateX(-Math.PI / 2);
-    const ocean = new THREE.Mesh(seaGeo, new THREE.MeshStandardMaterial({ color: 0x031326, roughness: 0.15, metalness: 0.85, flatShading: true }));
+    const seaGeo = new THREE.PlaneGeometry(90, 150, 60, 60); seaGeo.rotateX(-Math.PI / 2);
+    const ocean = new THREE.Mesh(seaGeo, new THREE.MeshStandardMaterial({ color: 0x031326, roughness: 0.2, metalness: 0.8, flatShading: true }));
     ocean.position.set(0, -2.4, -40); scene.add(ocean);
     const initialPos = seaGeo.attributes.position.array.slice();
+
+    const particleCount = 400;
+    const particleGeo = new THREE.BufferGeometry();
+    const particlePos = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+      particlePos[i * 3] = (Math.random() - 0.5) * 45;
+      particlePos[i * 3 + 1] = Math.random() * 12 - 1;
+      particlePos[i * 3 + 2] = -Math.random() * 100;
+    }
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePos, 3));
+    const particleSystem = new THREE.Points(particleGeo, new THREE.PointsMaterial({ size: 0.15, color: 0x00f2fe, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending }));
+    scene.add(particleSystem);
 
     const crowGroup = new THREE.Group(); crowGroup.scale.set(0.52, 0.52, 0.52);
     const bodyM = new THREE.MeshStandardMaterial({ color: 0x07080d, roughness: 0.4, metalness: 0.8 });
@@ -115,13 +156,37 @@
     rightWingRoot.add(new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.04, 0.65), wingM)); crowGroup.add(rightWingRoot);
     scene.add(crowGroup);
 
+    let targetX = 0, targetY = 0;
+    window.addEventListener('mousemove', (e) => {
+      targetX = (e.clientX / window.innerWidth - 0.5) * 2.2;
+      targetY = (e.clientY / window.innerHeight - 0.5) * 0.7;
+    });
+
+    let clock = new THREE.Clock();
     function animate() {
       requestAnimationFrame(animate);
+      const time = clock.getElapsedTime();
+
       const p = seaGeo.attributes.position.array;
       for (let i = 0; i < p.length; i += 3) {
-        p[i + 1] = initialPos[i + 1] + Math.sin(initialPos[i]*0.25 + Date.now()*0.001)*0.45;
+        p[i + 1] = initialPos[i + 1] + Math.sin(initialPos[i]*0.25 + time*2.0)*0.45 + Math.cos(initialPos[i+2]*0.18 + time*2.5)*0.65;
       }
       seaGeo.computeVertexNormals(); seaGeo.attributes.position.needsUpdate = true;
+
+      const pp = particleGeo.attributes.position.array;
+      for (let i = 0; i < particleCount; i++) {
+        pp[i * 3 + 2] += 0.05;
+        if (pp[i * 3 + 2] > 5) pp[i * 3 + 2] = -100;
+      }
+      particleGeo.attributes.position.needsUpdate = true;
+
+      const flap = Math.sin(time * 10) * 0.45;
+      leftWingRoot.rotation.z = flap; rightWingRoot.rotation.z = -flap;
+
+      crowGroup.position.x += (targetX - crowGroup.position.x) * 0.05;
+      crowGroup.position.y = 0.85 - targetY * 0.5 + Math.sin(time * 5) * 0.08;
+      crowGroup.rotation.z = -(targetX - crowGroup.position.x) * 0.42;
+
       renderer.render(scene, camera);
     }
     animate();
