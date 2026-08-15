@@ -79,7 +79,7 @@
   <div class="ambient-spotlight gold-spot"></div>
 
   <!-- Navbar with Direct Home Navigation -->
-  <header class="glass-navbar">
+ <header class="glass-navbar">
     <a href="index.html" class="nav-brand">
       <span class="brand-badge">XT</span>
       <span class="brand-name">xtrotio<span class="brand-dot">.com</span></span>
@@ -87,52 +87,38 @@
 
     <nav class="nav-hubs">
       <a href="index.html" class="nav-hub-btn"><i data-lucide="home" style="color: #00f2fe; width: 15px; height: 15px;"></i><span>Home</span></a>
-      <a href="today-special.html" class="nav-hub-btn"><i data-lucide="flame" style="color: #ff4b4b; width: 15px; height: 15px;"></i><span>Today's Special</span></a>
+      <a href="today-special.html" class="nav-hub-btn active"><i data-lucide="flame" style="color: #ff4b4b; width: 15px; height: 15px;"></i><span>Today's Special</span><span class="hub-badge" style="color: #ff4b4b;">HOT</span></a>
       <a href="watch-now.html" class="nav-hub-btn"><i data-lucide="play-square" style="color: #00f2fe; width: 15px; height: 15px;"></i><span>Watch Now</span></a>
-      <a href="shop-now.html" class="nav-hub-btn active"><i data-lucide="shopping-bag" style="color: #4facfe; width: 15px; height: 15px;"></i><span>Shop Now</span><span class="hub-badge" style="color: #4facfe;">STORE</span></a>
+      <a href="shop-now.html" class="nav-hub-btn"><i data-lucide="shopping-bag" style="color: #4facfe; width: 15px; height: 15px;"></i><span>Shop Now</span></a>
       <a href="shorts.html" class="nav-hub-btn"><i data-lucide="zap" style="color: #fbc531; width: 15px; height: 15px;"></i><span>Shorts</span></a>
-      <a href="movies.html" class="nav-hub-btn"><i data-lucide="film" style="color: #9b51e0; width: 15px; height: 15px;"></i><span>Movies</span></a>
-      <a href="series.html" class="nav-hub-btn"><i data-lucide="tv" style="color: #a29bfe; width: 15px; height: 15px;"></i><span>Series</span></a>
+      <a href="movies-series.html" class="nav-hub-btn"><i data-lucide="film" style="color: #9b51e0; width: 15px; height: 15px;"></i><span>Movies & Series</span></a>
       <a href="ongoing.html" class="nav-hub-btn"><i data-lucide="radio" style="color: #00e676; width: 15px; height: 15px;"></i><span>Ongoing</span></a>
       <a href="apps.html" class="nav-hub-btn"><i data-lucide="smartphone" style="color: #e056fd; width: 15px; height: 15px;"></i><span>Apps</span></a>
     </nav>
 
     <div class="nav-actions">
-      <a href="index.html" class="glass-home-btn">
-        <i data-lucide="home" style="width: 14px; height: 14px;"></i>
-        <span>Home Hub</span>
-      </a>
-      <button class="mobile-menu-btn" id="openDrawerBtn" aria-label="Open Navigation Menu">
-        <i data-lucide="menu" style="width: 18px; height: 18px;"></i>
-      </button>
+      <a href="index.html" class="glass-home-btn"><i data-lucide="home" style="width: 14px; height: 14px;"></i><span>Home Hub</span></a>
+      <button class="mobile-menu-btn" id="openDrawerBtn"><i data-lucide="menu" style="width: 18px; height: 18px;"></i></button>
     </div>
   </header>
 
-  <!-- Mobile Drawer -->
   <div class="drawer-backdrop" id="drawerBackdrop"></div>
   <aside class="mobile-drawer" id="mobileDrawer">
     <div class="drawer-header">
-      <a href="index.html" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
-        <span class="brand-badge">XT</span>
-        <span class="brand-name">xtrotio<span class="brand-dot">.com</span></span>
-      </a>
-      <button id="closeDrawerBtn" style="background: none; border: none; color: var(--text-dim); cursor: pointer;">
-        <i data-lucide="x" style="width: 20px; height: 20px;"></i>
-      </button>
+      <a href="index.html" style="color:#fff; text-decoration:none; font-weight:800;">xtrotio.com</a>
+      <button id="closeDrawerBtn" style="background:none; border:none; color:#fff; cursor:pointer;"><i data-lucide="x"></i></button>
     </div>
     <div class="drawer-links">
-      <a href="index.html" class="drawer-link-item"><span style="display: flex; align-items: center; gap: 0.6rem;"><i data-lucide="home" style="color: #00f2fe; width: 18px; height: 18px;"></i>Home Hub</span></a>
-      <a href="today-special.html" class="drawer-link-item"><span style="display: flex; align-items: center; gap: 0.6rem;"><i data-lucide="flame" style="color: #ff4b4b; width: 18px; height: 18px;"></i>Today's Special</span></a>
-      <a href="watch-now.html" class="drawer-link-item"><span style="display: flex; align-items: center; gap: 0.6rem;"><i data-lucide="play-square" style="color: #00f2fe; width: 18px; height: 18px;"></i>Watch Now</span></a>
-      <a href="shop-now.html" class="drawer-link-item"><span style="display: flex; align-items: center; gap: 0.6rem;"><i data-lucide="shopping-bag" style="color: #4facfe; width: 18px; height: 18px;"></i>Shop Now</span><span class="hub-badge" style="color: #4facfe;">STORE</span></a>
-      <a href="shorts.html" class="drawer-link-item"><span style="display: flex; align-items: center; gap: 0.6rem;"><i data-lucide="zap" style="color: #fbc531; width: 18px; height: 18px;"></i>Shorts</span></a>
-      <a href="movies.html" class="drawer-link-item"><span style="display: flex; align-items: center; gap: 0.6rem;"><i data-lucide="film" style="color: #9b51e0; width: 18px; height: 18px;"></i>Movies</span></a>
-      <a href="series.html" class="drawer-link-item"><span style="display: flex; align-items: center; gap: 0.6rem;"><i data-lucide="tv" style="color: #a29bfe; width: 18px; height: 18px;"></i>Series</span></a>
-      <a href="ongoing.html" class="drawer-link-item"><span style="display: flex; align-items: center; gap: 0.6rem;"><i data-lucide="radio" style="color: #00e676; width: 18px; height: 18px;"></i>Ongoing</span></a>
-      <a href="apps.html" class="drawer-link-item"><span style="display: flex; align-items: center; gap: 0.6rem;"><i data-lucide="smartphone" style="color: #e056fd; width: 18px; height: 18px;"></i>Apps</span></a>
+      <a href="index.html" class="drawer-link-item"><span>Home Hub</span></a>
+      <a href="today-special.html" class="drawer-link-item"><span>Today's Special</span></a>
+      <a href="watch-now.html" class="drawer-link-item"><span>Watch Now</span></a>
+      <a href="shop-now.html" class="drawer-link-item"><span>Shop Now</span></a>
+      <a href="shorts.html" class="drawer-link-item"><span>Shorts</span></a>
+      <a href="movies-series.html" class="drawer-link-item"><span>Movies & Series</span></a>
+      <a href="ongoing.html" class="drawer-link-item"><span>Ongoing</span></a>
+      <a href="apps.html" class="drawer-link-item"><span>Apps & Software</span></a>
     </div>
   </aside>
-
   <main class="page-stage">
     <div class="shop-header">
       <h1 class="shop-title">Discover <span class="gradient-blue">Curated Products</span></h1>
