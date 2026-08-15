@@ -4,82 +4,45 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Watch Now | xtrotio.com</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-
   <style>
-    :root {
-      --bg-deep: #020611;
-      --glass-bg: rgba(255, 255, 255, 0.04);
-      --glass-border: rgba(255, 255, 255, 0.12);
-      --glass-blur: blur(20px);
-      --gold-neon: #ffd700;
-      --cyan-neon: #00f2fe;
-      --purple-neon: #7928ca;
-      --text-pure: #ffffff;
-      --text-dim: #94a3b8;
-    }
+    :root { --bg-deep: #020611; --glass-bg: rgba(255, 255, 255, 0.04); --glass-border: rgba(255, 255, 255, 0.12); --glass-blur: blur(20px); --gold-neon: #ffd700; --cyan-neon: #00f2fe; --text-pure: #ffffff; --text-dim: #94a3b8; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { width: 100%; min-height: 100%; background: var(--bg-deep); color: var(--text-pure); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
     #webgl-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none; }
     .glass-card { background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: var(--glass-blur); border-radius: 1.25rem; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); }
-
     .glass-navbar { position: sticky; top: 0.75rem; margin: 0.75rem auto 0; width: calc(100% - 1.5rem); max-width: 1250px; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 0.65rem 1.2rem; background: rgba(10, 15, 30, 0.82); border: 1px solid var(--glass-border); backdrop-filter: var(--glass-blur); border-radius: 9999px; gap: 0.75rem; }
     .nav-brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
     .brand-badge { background: linear-gradient(135deg, var(--gold-neon), var(--cyan-neon)); padding: 0.2rem 0.55rem; font-weight: 900; border-radius: 0.45rem; font-size: 0.8rem; color: #000; }
     .brand-name { font-size: 1.1rem; font-weight: 800; color: #fff; }
     .brand-dot { color: var(--cyan-neon); }
-
-    .nav-hubs { display: flex; align-items: center; gap: 0.25rem; }
-    .nav-hub-btn { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--text-dim); padding: 0.45rem 0.75rem; border-radius: 9999px; font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: 0.2s; }
+    .nav-hubs { display: flex; align-items: center; gap: 0.25rem; overflow-x: auto; scrollbar-width: none; }
+    .nav-hubs::-webkit-scrollbar { display: none; }
+    .nav-hub-btn { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--text-dim); padding: 0.45rem 0.75rem; border-radius: 9999px; font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: 0.2s; white-space: nowrap; }
     .nav-hub-btn:hover, .nav-hub-btn.active { background: rgba(255, 255, 255, 0.12); color: #fff; }
     .hub-badge { font-size: 0.62rem; padding: 0.1rem 0.35rem; background: rgba(255, 255, 255, 0.1); border-radius: 9999px; font-weight: 800; }
-
     .glass-home-btn { display: inline-flex; align-items: center; gap: 0.45rem; background: linear-gradient(135deg, rgba(0, 242, 254, 0.18), rgba(255, 215, 0, 0.25)); border: 1px solid rgba(0, 242, 254, 0.35); color: #fff; padding: 0.4rem 0.85rem; border-radius: 9999px; text-decoration: none; font-size: 0.82rem; font-weight: 700; }
     .mobile-menu-btn { display: none; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--glass-border); color: #fff; padding: 0.45rem; border-radius: 0.6rem; cursor: pointer; }
-
     .mobile-drawer { position: fixed; top: 0; right: -100%; width: min(85vw, 320px); height: 100vh; background: rgba(8, 14, 28, 0.95); backdrop-filter: blur(24px); border-left: 1px solid var(--glass-border); z-index: 99; display: flex; flex-direction: column; padding: 1.5rem; transition: right 0.35s ease; }
     .mobile-drawer.active { right: 0; }
     .drawer-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
-    .drawer-links { display: flex; flex-direction: column; gap: 0.5rem; }
+    .drawer-links { display: flex; flex-direction: column; gap: 0.5rem; overflow-y: auto; }
     .drawer-link-item { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1rem; border-radius: 0.75rem; color: #fff; text-decoration: none; font-weight: 600; font-size: 0.95rem; background: rgba(255, 255, 255, 0.03); }
     .drawer-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 98; display: none; }
     .drawer-backdrop.active { display: block; }
-
-    .page-stage { position: relative; z-index: 2; max-width: 1250px; margin: 0 auto; padding: 2.5rem 1.5rem 6rem; }
-    .watch-header { text-align: center; margin-bottom: 2.5rem; }
-    .watch-title { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 900; margin-bottom: 0.5rem; }
-    .gradient-cyan { background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #7928ca 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-    .theatre-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; }
-    .video-viewport { width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 0.85rem; display: flex; align-items: center; justify-content: center; position: relative; border: 1px solid rgba(255,255,255,0.08); margin-bottom: 1rem; }
-    .play-btn-pulse { width: 68px; height: 68px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan-neon), var(--purple-neon)); display: flex; align-items: center; justify-content: center; color: #000; cursor: pointer; box-shadow: 0 0 30px rgba(0,242,254,0.6); }
-
-    .queue-card { padding: 1.25rem; display: flex; flex-direction: column; }
-    .queue-item { display: flex; align-items: center; gap: 0.85rem; padding: 0.75rem; border-radius: 0.75rem; background: rgba(255,255,255,0.02); cursor: pointer; transition: 0.2s; margin-bottom: 0.5rem; }
-    .queue-item:hover, .queue-item.active { background: rgba(0,242,254,0.12); border: 1px solid rgba(0,242,254,0.3); }
-
-    @media (max-width: 1024px) {
-      .nav-hubs { display: none; }
-      .theatre-layout { grid-template-columns: 1fr; }
-      .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
-    }
+    .page-stage { position: relative; z-index: 2; max-width: 1250px; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+    @media (max-width: 1024px) { .nav-hubs { display: none; } .mobile-menu-btn { display: flex; align-items: center; justify-content: center; } }
   </style>
 </head>
 <body>
   <canvas id="webgl-canvas"></canvas>
 
   <header class="glass-navbar">
-    <a href="index.html" class="nav-brand">
-      <span class="brand-badge">XT</span>
-      <span class="brand-name">xtrotio<span class="brand-dot">.com</span></span>
-    </a>
-
+    <a href="index.html" class="nav-brand"><span class="brand-badge">XT</span><span class="brand-name">xtrotio<span class="brand-dot">.com</span></span></a>
     <nav class="nav-hubs">
       <a href="index.html" class="nav-hub-btn"><i data-lucide="home" style="color: #00f2fe; width: 15px; height: 15px;"></i><span>Home</span></a>
       <a href="today-special.html" class="nav-hub-btn"><i data-lucide="flame" style="color: #ff4b4b; width: 15px; height: 15px;"></i><span>Today's Special</span></a>
@@ -90,64 +53,32 @@
       <a href="ongoing.html" class="nav-hub-btn"><i data-lucide="radio" style="color: #00e676; width: 15px; height: 15px;"></i><span>Ongoing</span></a>
       <a href="apps.html" class="nav-hub-btn"><i data-lucide="smartphone" style="color: #e056fd; width: 15px; height: 15px;"></i><span>Apps</span></a>
     </nav>
-
     <div class="nav-actions">
-      <a href="index.html" class="glass-home-btn">
-        <i data-lucide="home" style="width: 14px; height: 14px;"></i>
-        <span>Home Hub</span>
-      </a>
-      <button class="mobile-menu-btn" id="openDrawerBtn" aria-label="Open Navigation Menu">
-        <i data-lucide="menu" style="width: 18px; height: 18px;"></i>
-      </button>
+      <a href="index.html" class="glass-home-btn"><i data-lucide="home" style="width: 14px; height: 14px;"></i><span>Home Hub</span></a>
+      <button class="mobile-menu-btn" id="openDrawerBtn"><i data-lucide="menu" style="width: 18px; height: 18px;"></i></button>
     </div>
   </header>
 
   <div class="drawer-backdrop" id="drawerBackdrop"></div>
   <aside class="mobile-drawer" id="mobileDrawer">
-    <div class="drawer-header">
-      <a href="index.html" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
-        <span class="brand-badge">XT</span>
-        <span class="brand-name">xtrotio<span class="brand-dot">.com</span></span>
-      </a>
-      <button id="closeDrawerBtn" style="background: none; border: none; color: var(--text-dim); cursor: pointer;">
-        <i data-lucide="x" style="width: 20px; height: 20px;"></i>
-      </button>
-    </div>
+    <div class="drawer-header"><span class="brand-badge">XT</span><button id="closeDrawerBtn" style="background:none; border:none; color:#fff; cursor:pointer;"><i data-lucide="x"></i></button></div>
     <div class="drawer-links">
-      <a href="index.html" class="drawer-link-item"><span><i data-lucide="home" style="color: #00f2fe; width: 18px; height: 18px;"></i> Home Hub</span></a>
-      <a href="today-special.html" class="drawer-link-item"><span><i data-lucide="flame" style="color: #ff4b4b; width: 18px; height: 18px;"></i> Today's Special</span></a>
-      <a href="watch-now.html" class="drawer-link-item"><span><i data-lucide="play-square" style="color: #00f2fe; width: 18px; height: 18px;"></i> Watch Now</span><span class="hub-badge" style="color: #00f2fe;">4K</span></a>
-      <a href="shop-now.html" class="drawer-link-item"><span><i data-lucide="shopping-bag" style="color: #4facfe; width: 18px; height: 18px;"></i> Shop Now</span></a>
-      <a href="shorts.html" class="drawer-link-item"><span><i data-lucide="zap" style="color: #fbc531; width: 18px; height: 18px;"></i> Shorts</span></a>
-      <a href="movies-series.html" class="drawer-link-item"><span><i data-lucide="film" style="color: #9b51e0; width: 18px; height: 18px;"></i> Movies & Series</span></a>
-      <a href="ongoing.html" class="drawer-link-item"><span><i data-lucide="radio" style="color: #00e676; width: 18px; height: 18px;"></i> Ongoing</span></a>
-      <a href="apps.html" class="drawer-link-item"><span><i data-lucide="smartphone" style="color: #e056fd; width: 18px; height: 18px;"></i> Apps</span></a>
+      <a href="index.html" class="drawer-link-item"><span>Home Hub</span></a>
+      <a href="today-special.html" class="drawer-link-item"><span>Today's Special</span></a>
+      <a href="watch-now.html" class="drawer-link-item"><span>Watch Now</span></a>
+      <a href="shop-now.html" class="drawer-link-item"><span>Shop Now</span></a>
+      <a href="shorts.html" class="drawer-link-item"><span>Shorts</span></a>
+      <a href="movies-series.html" class="drawer-link-item"><span>Movies & Series</span></a>
+      <a href="ongoing.html" class="drawer-link-item"><span>Ongoing</span></a>
+      <a href="apps.html" class="drawer-link-item"><span>Apps & Software</span></a>
     </div>
   </aside>
 
   <main class="page-stage">
-    <div class="watch-header">
-      <h1 class="watch-title">Stream <span class="gradient-cyan">Live Channels & Cinema</span></h1>
-    </div>
-
-    <div class="theatre-layout">
-      <div class="glass-card" style="padding: 1.25rem;">
-        <div class="video-viewport">
-          <div class="play-btn-pulse" onclick="alert('Buffering 4K stream...')">
-            <i data-lucide="play" style="width: 28px; height: 28px; margin-left: 3px;"></i>
-          </div>
-        </div>
-        <h2 id="nowPlayingTitle" style="font-size: 1.4rem; font-weight: 800;">Binary Gold: Feature Screening</h2>
-        <p id="nowPlayingSub" style="color: var(--text-dim); font-size: 0.9rem;">Channel 01 • Cyber Mystery Premiere • 12,480 Viewers</p>
-      </div>
-
-      <div class="glass-card queue-card">
-        <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 1rem;">Live Channels</h3>
-        <div class="queue-item active" onclick="switchStream('Binary Gold: Feature Screening', 'Channel 01 • Cyber Mystery Premiere')">
-          <i data-lucide="film" style="color: var(--cyan-neon);"></i>
-          <div><div style="font-weight: 700; font-size: 0.9rem;">Binary Gold Screening</div><div style="font-size: 0.75rem; color: var(--text-dim);">Live • 4K HDR</div></div>
-        </div>
-      </div>
+    <h1 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 2rem;">Watch <span style="color: #00f2fe;">Now</span></h1>
+    <div class="glass-card" style="padding: 2rem; text-align: center;">
+      <p style="color: var(--text-dim); margin-bottom: 1.5rem;">4K Live Stream Gateway is active and ready.</p>
+      <button onclick="alert('Streaming live 4K channel...')" style="background: linear-gradient(135deg, #00f2fe, #7928ca); color: #000; padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 800; border: none; cursor: pointer;">Start Stream</button>
     </div>
   </main>
 
@@ -159,25 +90,15 @@
     document.getElementById('closeDrawerBtn').addEventListener('click', () => { mobileDrawer.classList.remove('active'); drawerBackdrop.classList.remove('active'); });
     drawerBackdrop.addEventListener('click', () => { mobileDrawer.classList.remove('active'); drawerBackdrop.classList.remove('active'); });
 
-    function switchStream(t, s) {
-      document.getElementById('nowPlayingTitle').textContent = t;
-      document.getElementById('nowPlayingSub').textContent = s;
-    }
-
-    // 3D Scene
     const canvas = document.getElementById('webgl-canvas');
     const scene = new THREE.Scene(); scene.fog = new THREE.FogExp2(0x020611, 0.016);
     const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.set(0, 1.8, 6.2); camera.lookAt(0, 1.0, -10);
-
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     scene.add(new THREE.AmbientLight(0x0b1e38, 1.2));
     const moon = new THREE.DirectionalLight(0x7fe3ff, 2.0); moon.position.set(8, 20, -15); scene.add(moon);
-    const goldL = new THREE.DirectionalLight(0xffd700, 1.8); goldL.position.set(4, 10, 8); scene.add(goldL);
-
     const seaGeo = new THREE.PlaneGeometry(90, 150, 80, 100); seaGeo.rotateX(-Math.PI / 2);
     const ocean = new THREE.Mesh(seaGeo, new THREE.MeshStandardMaterial({ color: 0x031326, roughness: 0.15, metalness: 0.85, flatShading: true }));
     ocean.position.set(0, -2.4, -40); scene.add(ocean);
@@ -186,43 +107,20 @@
     const crowGroup = new THREE.Group(); crowGroup.scale.set(0.52, 0.52, 0.52);
     const bodyM = new THREE.MeshStandardMaterial({ color: 0x07080d, roughness: 0.4, metalness: 0.8 });
     const wingM = new THREE.MeshPhysicalMaterial({ color: 0xffd700, metalness: 0.95, roughness: 0.14 });
-
     const bodyMesh = new THREE.Mesh(new THREE.ConeGeometry(0.38, 1.8, 16), bodyM); bodyMesh.rotateX(-Math.PI/2); bodyMesh.position.y = 1.0; crowGroup.add(bodyMesh);
     const leftWingRoot = new THREE.Group(); leftWingRoot.position.set(-0.25, 1.1, -0.1);
-    const leftInner = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.04, 0.65), wingM); leftInner.position.x = -0.6; leftWingRoot.add(leftInner);
-    crowGroup.add(leftWingRoot);
+    leftWingRoot.add(new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.04, 0.65), wingM)); crowGroup.add(leftWingRoot);
     const rightWingRoot = new THREE.Group(); rightWingRoot.position.set(0.25, 1.1, -0.1);
-    const rightInner = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.04, 0.65), wingM); rightInner.position.x = 0.6; rightWingRoot.add(rightInner);
-    crowGroup.add(rightWingRoot);
+    rightWingRoot.add(new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.04, 0.65), wingM)); crowGroup.add(rightWingRoot);
     scene.add(crowGroup);
-
-    let targetX = 0, targetY = 0, waveTime = 0, wingTime = 0;
-    window.addEventListener('mousemove', (e) => {
-      targetX = (e.clientX / window.innerWidth - 0.5) * 2.2;
-      targetY = (e.clientY / window.innerHeight - 0.5) * 0.7;
-    });
-
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
 
     function animate() {
       requestAnimationFrame(animate);
-      waveTime += 0.03; wingTime += 0.12;
-      const flap = Math.sin(wingTime) * 0.45;
-      leftWingRoot.rotation.z = flap; rightWingRoot.rotation.z = -flap;
-
       const p = seaGeo.attributes.position.array;
       for (let i = 0; i < p.length; i += 3) {
-        p[i + 1] = initialPos[i + 1] + Math.sin(initialPos[i]*0.25 + waveTime*1.5)*0.45 + Math.cos(initialPos[i+2]*0.18 + waveTime*2.0)*0.65;
+        p[i + 1] = initialPos[i + 1] + Math.sin(initialPos[i]*0.25 + Date.now()*0.001)*0.45;
       }
       seaGeo.computeVertexNormals(); seaGeo.attributes.position.needsUpdate = true;
-
-      crowGroup.position.x += (targetX - crowGroup.position.x) * 0.04;
-      crowGroup.position.y = 0.85 - targetY * 0.5 + Math.sin(wingTime) * 0.08;
-      crowGroup.rotation.z = -(targetX - crowGroup.position.x) * 0.42;
-
       renderer.render(scene, camera);
     }
     animate();
